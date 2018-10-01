@@ -22,13 +22,29 @@ var UsersController = require('./app/controllers/userscontroller');
 var ProductsController = require('./app/controllers/productscontroller');
 var ProvidersController = require('./app/controllers/providerscontroller');
 
+//create AplicationContext
+
 var dispatcher = server();
+
+dispatcher.run(80, function(port) {
+    console.log(`Server listening port: ${port}`);
+});
+
+dispatcher.bind_middleware("/", function(req, res, next) {
+    //handle authentication [optional]
+    next();
+});
+
 dispatcher
     .bind_controller("/users", UsersController)
     .bind_controller("/products", ProductsController)
     .bind_controller("/providers", ProvidersController);
 
+dispatcher.bind_middleware("/", function(req, res, next) {
+    //handle 404
+    res.status(404).send('Sorry, we cannot find that!');
+});
 
-dispatcher.run(80, function(port) {
-    console.log(`Server listening port: ${port}`);
+dispatcher.bind_event('connection', (socket) => {
+    //handle log
 });

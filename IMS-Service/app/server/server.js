@@ -11,7 +11,6 @@ module.exports = function() {
     var credentials = certificate();
     var serverHttp;
     var serverHttps;
-    var errorHandle;
 
     return {
         run (port, callback) {
@@ -27,14 +26,13 @@ module.exports = function() {
             app.use(path, controller(router, applicationContext));
             return this;
         },
-        bind_event() {
-
+        bind_event(event, callback) {
+            serverHttps.on(event, (err, socket) => {
+                callback(err, socket);
+            });
         },
-        bind_middleware() {
-
-        },
-        setErrorHandle(callback) {
-            errorHandle = callback;
+        bind_middleware(path, callback) {
+            app.use(path, callback);
         }
     }
 }
