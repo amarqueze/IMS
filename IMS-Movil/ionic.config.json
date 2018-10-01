@@ -1,0 +1,7 @@
+{
+  "name": "IMS-Movil",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title text-center>
+            IMS Notification
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <hr class="style-eight" data="September 27" />
+    <section *ngFor="let item of items">
+        <ion-card [ngClass]="item.type" >
+            <ion-card-header>
+                <ion-icon name="{{item.icon}}" color="{{item.type}}"></ion-icon>
+                {{ item.title }}
+                <div class="date">{{ item.date }}</div>
+            </ion-card-header>
+            <ion-card-content>
+                {{ item.text }}
+            </ion-card-content>
+        </ion-card>
+    </section>
+    <hr class="style-eight" data="September 26" />
+</ion-content>

@@ -1,0 +1,43 @@
+page-home {
+
+    .style-eight {
+        margin: 7% 2% 7% 2%;
+		background-color: white;
+    	overflow: visible; /* For IE */
+    	padding: 0;
+    	border-top: 2px dashed gray;
+    	text-align: center;
+	}
+
+	.style-eight:after {
+    	content: attr(data);
+    	display: inline-block;
+    	position: relative;
+    	top: -0.7em;
+    	font-size: 1em;
+    	padding: 0 0.25em;
+    	background: white;
+    }
+
+    .date {
+        float: right;
+        color: gray;
+        font-size: 0.8em;
+    }
+
+    .alert {
+        border-left: 2px solid map-get($colors, alert);
+    }
+
+    .warning {
+        border-left: 2px solid map-get($colors, warning);
+    }
+
+    .connected {
+        border-left: 2px solid map-get($colors, connected);
+    }
+
+    .secure {
+        border-left: 2px solid map-get($colors, secure);
+    }
+}
