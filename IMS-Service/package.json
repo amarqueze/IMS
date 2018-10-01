@@ -1,0 +1,21 @@
+{
+  "name": "ims-service",
+  "version": "1.0.0",
+  "description": "ims nodejs services",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "service",
+    "ims",
+    "mongodb"
+  ],
+  "author": "Alan M.E",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "express": "^4.16.3",
+    "winston": "^3.1.0"
+  }
+}
