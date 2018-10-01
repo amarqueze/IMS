@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="464.0" prefWidth="793.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutX="457.0" layoutY="60.0" prefHeight="370.0" prefWidth="306.0" style="-fx-background-color: #0984e3;">
+         <children>
+            <Label layoutX="106.0" layoutY="314.0" text="Forgot Password?" textFill="WHITE" underline="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <JFXPasswordField focusColor="#7f8384" layoutX="39.0" layoutY="164.0" prefHeight="26.0" prefWidth="227.0" promptText="Password" style="-fx-prompt-text-fill: #f5f3f3;" unFocusColor="WHITE" />
+            <JFXButton layoutX="57.0" layoutY="218.0" prefHeight="39.0" prefWidth="191.0" style="-fx-background-color: #70a1ff;" text="Sign In" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXTextField focusColor="#7f8384" layoutX="39.0" layoutY="103.0" prefHeight="26.0" prefWidth="227.0" promptText="Email" style="-fx-prompt-text-fill: #f0efef;" unFocusColor="WHITE" />
+            <Label layoutX="125.0" layoutY="41.0" text="Sign In" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <JFXCheckBox checkedColor="#b2b2b2" layoutX="56.0" layoutY="272.0" text="Remember Password" textFill="WHITE" unCheckedColor="#f5f5f5" />
+         </children></AnchorPane>
+      <AnchorPane prefHeight="464.0" prefWidth="426.0" style="-fx-background-color: #0984e3;">
+         <children>
+            <ImageView fitHeight="255.0" fitWidth="387.0" layoutX="20.0" layoutY="104.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/Inventory-Management-System.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="41.0" layoutY="146.0" text="Inventory Management System" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="41.0" layoutY="182.0" prefHeight="35.0" prefWidth="330.0" text="Increase your sales and keep track of every unit with our &#10;powerful stock management." textFill="WHITE" wrapText="true" />
+            <JFXButton layoutX="41.0" layoutY="228.0" prefHeight="30.0" prefWidth="156.0" style="-fx-background-color: #70a1ff;" text="Sign Up" textFill="WHITE">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Label layoutX="41.0" layoutY="409.0" text="v1.0.0 IMS" textFill="WHITE" />
+            <Label layoutX="278.0" layoutY="409.0" text="By AMECodeLabs" textFill="#f8f8f8" />
+         </children>
+      </AnchorPane>
+      <FontAwesomeIcon fill="#0984e3" iconName="TIMES" layoutX="755.0" layoutY="35.0" size="2em" />
+   </children>
+</AnchorPane>

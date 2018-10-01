@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="513.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="112.0" prefWidth="956.0" style="-fx-background-color: #0984e3;">
+         <children>
+            <ImageView fitHeight="82.0" fitWidth="91.0" layoutX="38.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/storage-2.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="127.0" layoutY="38.0" prefHeight="35.0" prefWidth="49.0" text="IMS" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="127.0" layoutY="70.0" prefHeight="18.0" prefWidth="198.0" text="Inventory Manager system" textFill="#f8f8f8">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" layoutX="569.0" layoutY="87.0" prefHeight="18.0" prefWidth="308.0" text="joedoe@ims.com.co" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <FontAwesomeIcon fill="WHITE" iconName="USER" layoutX="890.0" layoutY="105.0" size="2em" />
+            <FontAwesomeIcon fill="WHITE" iconName="TIMES" layoutX="899.0" layoutY="38.0" size="2em" wrappingWidth="18.85714703798294" />
+            <FontAwesomeIcon fill="WHITE" iconName="MINUS" layoutX="863.0" layoutY="38.0" size="2em" />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="402.0" prefWidth="932.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <HBox alignment="CENTER" layoutX="51.0" layoutY="222.0" prefHeight="112.0" prefWidth="844.0">
+               <children>
+                  <JFXButton contentDisplay="TOP" layoutX="561.0" layoutY="48.0" prefHeight="90.0" prefWidth="118.0" style="-fx-background-color: #70a1ff;" text="Transactions" textFill="WHITE">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" iconName="LIST" size="4em" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="60.0" top="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton contentDisplay="TOP" prefHeight="90.0" prefWidth="118.0" style="-fx-background-color: #70a1ff;" text="Settings" textFill="WHITE">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" iconName="COG" size="4em" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="60.0" top="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton contentDisplay="TOP" layoutX="748.0" layoutY="108.0" prefHeight="90.0" prefWidth="118.0" style="-fx-background-color: #70a1ff;" text="Help" textFill="WHITE">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" iconName="QUESTION" size="4em" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="60.0" top="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="44.0" layoutY="89.0" prefHeight="112.0" prefWidth="844.0">
+               <children>
+                  <JFXButton contentDisplay="TOP" layoutX="561.0" layoutY="48.0" prefHeight="90.0" prefWidth="118.0" style="-fx-background-color: #70a1ff;" text="Statistics" textFill="WHITE">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" iconName="SIGNAL" size="4em" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="60.0" top="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton contentDisplay="TOP" prefHeight="90.0" prefWidth="118.0" style="-fx-background-color: #70a1ff;" text="Products" textFill="WHITE">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" iconName="CUBES" size="4em" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="60.0" top="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton contentDisplay="TOP" layoutX="748.0" layoutY="108.0" prefHeight="90.0" prefWidth="118.0" style="-fx-background-color: #70a1ff;" text="Users" textFill="WHITE">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" iconName="USERS" size="4em" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="60.0" top="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton contentDisplay="TOP" layoutX="537.0" layoutY="20.0" prefHeight="90.0" prefWidth="118.0" style="-fx-background-color: #70a1ff;" text="Providers" textFill="WHITE">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" iconName="TRUCK" size="4em" />
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
