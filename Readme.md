@@ -7,6 +7,11 @@
     <img src="docs/img/deploymentview.png" alt="deploy" />
 </p>
 
+### IMS-Desktop JavaFX
+<p align="center">
+    <img src="docs/img/imslogindesktop.png" alt="deploy" />
+</p>
+
 ### IMS-Movil Ionic Framework
 
 <p align="center">
