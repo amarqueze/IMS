@@ -1,0 +1,41 @@
+{
+    "uri": "/users",
+    "description": "",
+    "services": [
+        {
+            "status": 200,
+            "uri": "/list",
+            "description": ""
+        },
+        {
+            "status": 200,
+            "uri": "/find",
+            "description": ""
+        },
+        {
+            "status": 200,
+            "uri": "/find/:id",
+            "description": ""
+        },
+        {
+            "status": 200,
+            "uri": "/delete",
+            "description": ""
+        },
+        {
+            "status": 200,
+            "uri": "/delete/:id",
+            "description": ""
+        },
+        {
+            "status": 200,
+            "uri": "/create",
+            "description": ""
+        },
+        {
+            "status": 200,
+            "uri": "/edit",
+            "description": ""
+        }
+    ]
+}
