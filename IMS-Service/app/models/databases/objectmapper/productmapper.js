@@ -1,7 +1,9 @@
 
+module.exports = function(connect) {
 
-function ProductMapper(connect) {
-
-    
-
+    return {
+        getObject() {
+            return "ProductMapper";
+        }
+    }
 }
