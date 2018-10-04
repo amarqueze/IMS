@@ -11,6 +11,10 @@ module.exports = function() {
     var credentials = certificate();
     var serverHttp;
     var serverHttps;
+    //listeners
+    var onBindController;
+    var onBindEvent;
+    var onBindMiddleware;
 
     return {
         run (port, callback) {
