@@ -15,6 +15,7 @@ module.exports = function (router, applicationContext) {
             res.json({status: 200, message: "Products List"});
         })
         .get("/find", function(req, res) {
+            console.log(req.query);
             res.json({status: 200, message: "Products Find params"});
         })
         .get("/find/:id", function(req, res) {

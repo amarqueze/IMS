@@ -1,15 +1,8 @@
-var ObjectMapperFactory = require("../app/models/databases/objectmapperfactory");
+var ObjectMapperFactory = require("../app/models/databases/mongodb/objectmapperfactory");
 
-var databases = ObjectMapperFactory.databases;
-
-var ObjectMapper = ObjectMapperFactory.createUserMapper(databases.mongodb);
-
-console.log(ObjectMapper.getObject());
-
-ObjectMapper = ObjectMapperFactory.createProductMapper(databases.mongodb);
-
-console.log(ObjectMapper.getObject());
-
-ObjectMapper = ObjectMapperFactory.createProviderMapper(databases.mongodb);
-
-console.log(ObjectMapper.getObject());
+var productMapper = ObjectMapperFactory.createProductMapper();
+productMapper.find(
+    {description: 'Papas'},
+    (res) => console.log(res[0].categorydetail),
+    (err) => console.log(err)
+);
