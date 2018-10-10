@@ -2,7 +2,7 @@ var ObjectMapperFactory = require("../app/models/databases/mongodb/objectmapperf
 
 var productMapper = ObjectMapperFactory.createProductMapper();
 productMapper.find(
-    {description: 'Papas'},
-    (res) => console.log(res[0].categorydetail),
+    {_id: '5bbe29d60175822f308cef0a'},
+    (res) => console.log(res),
     (err) => console.log(err)
 );

@@ -1,6 +1,7 @@
 var https = require('https');
 var http = require('http');
 var express = require('express');
+var bodyParser = require('body-parser');
 var certificate = require('./certificate');
 
 module.exports = function() {
@@ -8,6 +9,9 @@ module.exports = function() {
     const portHttp = 80;
 
     var app = express();
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
+
     var credentials = certificate();
     var serverHttp;
     var serverHttps;

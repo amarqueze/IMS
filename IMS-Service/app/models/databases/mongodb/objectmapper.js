@@ -1,7 +1,7 @@
 var ConnectorMongodb = require('./connectormongodb');
 
 module.exports = function() {
-    var connector = ConnectorMongodb.createConnector();  
+    var connector = ConnectorMongodb.createConnector();
 
     return {
         insert(collectionName, documents, success, fail) {
@@ -9,7 +9,7 @@ module.exports = function() {
                 (dbo) => {
                     dbo.collection(collectionName).insertMany(documents, function(err, res) {
                         if (err) fail(err);
-                        success(res);
+                        else success(res);
                         connector.close();
                     });
                 },
@@ -19,9 +19,9 @@ module.exports = function() {
         update(collectionName, params, updatedDocument, success, fail) {
             connector.open(
                 (dbo) => {
-                    dbo.collection(collectionName).updateOne(params, updatedDocument, function(err, res) {
+                    dbo.collection(collectionName).updateMany(params, updatedDocument, function(err, res) {
                         if (err) fail(err);
-                        success(res);
+                        else success(res);
                         connector.close();
                     });
                 },
@@ -33,7 +33,7 @@ module.exports = function() {
                 (dbo) => {
                     dbo.collection(collectionName).find(params).toArray(function(err, result) {
                         if (err) fail(err);
-                        success(result);
+                        else success(result);
                         connector.close();
                     });
                 },
@@ -43,9 +43,9 @@ module.exports = function() {
         delete(collectionName, params, success, fail) {
             connector.open(
                 (dbo) => {
-                    dbo.collection(collectionName).deleteOne(params, function(err, res) {
+                    dbo.collection(collectionName).deleteMany(params, function(err, res) {
                         if (err) fail(err);
-                        success(res);
+                        else success(res);
                         connector.close();
                     });
                 },

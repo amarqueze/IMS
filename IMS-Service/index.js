@@ -21,6 +21,8 @@ var server = require("./app/server/server");
 var UsersController = require('./app/controllers/userscontroller');
 var ProductsController = require('./app/controllers/productscontroller');
 var ProvidersController = require('./app/controllers/providerscontroller');
+var CategoriesController = require('./app/controllers/categoriescontroller');
+var StockProductsController = require('./app/controllers/stockproductscontroller');
 
 //create AplicationContext
 
@@ -38,7 +40,9 @@ dispatcher.bind_middleware("/", function(req, res, next) {
 dispatcher
     .bind_controller("/users", UsersController)
     .bind_controller("/products", ProductsController)
-    .bind_controller("/providers", ProvidersController);
+    .bind_controller("/providers", ProvidersController)
+    .bind_controller("/categories", CategoriesController)
+    .bind_controller("/stock", StockProductsController);
 
 dispatcher.bind_middleware("/", function(req, res, next) {
     //handle 404

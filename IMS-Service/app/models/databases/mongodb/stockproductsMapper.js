@@ -7,7 +7,7 @@ module.exports = function(objectmapper) {
             objectmapper.insert(collectionName, documents, success, fail);
         },
         update(params, updatedDocument, success, fail) {
-            objectmapper.update(collectionName, documents, success, fail);
+            objectmapper.update(collectionName, params, {$set: updatedDocument}, success, fail);
         },
         find(params, success, fail) {
             objectmapper.find(collectionName, params, success, fail);

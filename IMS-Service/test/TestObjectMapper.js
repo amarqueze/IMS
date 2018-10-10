@@ -4,7 +4,7 @@ var ObjectMapper =  require('../app/models/databases/mongodb/objectmapper');
 var Connector = ConnectorMongodb.createConnector();
 var objectMapper = ObjectMapper(Connector);
 
-objectMapper.insert(
+/*objectMapper.insert(
     'products',
     [
         { description: 'Papas', price: '$12' },
@@ -12,16 +12,16 @@ objectMapper.insert(
     ],
     (response) => console.log("success: " + response.insertedCount),
     (err) => console.log(err)
-);
+);*/
 
 objectMapper.find(
     'products',
-    {},
+    {description: "Papas"},
     (response) => console.log(response),
     (err) => console.log(err)
 );
 
-objectMapper.update(
+/*objectMapper.update(
     'products',
     {description: 'apple'},
     {$set: {price: '$7'}},
@@ -34,4 +34,4 @@ objectMapper.delete(
     {description: 'apple'},
     (response) => console.log("success"),
     (err) => console.log(err)
-);
+);*/

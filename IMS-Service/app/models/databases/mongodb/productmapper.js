@@ -7,7 +7,7 @@ module.exports = function(objectmapper) {
             objectmapper.insert(collectionName, documents, success, fail);
         },
         update(params, updatedDocument, success, fail) {
-            objectmapper.update(collectionName, documents, success, fail);
+            objectmapper.update(collectionName, params, {$set: updatedDocument}, success, fail);
         },
         find(params, success, fail) {
             connector.open(
@@ -20,7 +20,7 @@ module.exports = function(objectmapper) {
                             $lookup: {
                                 from: 'categories',
                                 localField: 'category',
-                                foreignField: 'codigo',
+                                foreignField: '_id',
                                 as: 'categorydetail'
                             }
                         }

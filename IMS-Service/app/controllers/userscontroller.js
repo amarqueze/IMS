@@ -1,36 +1,59 @@
 var fs = require("fs");
-/**
-* Users Controller
-*
-*/
+var factory = require("../models/databases/mongodb/objectmapperfactory");
+
 module.exports = function (router, applicationContext) {
+    var usermapper = factory.createUserMapper();
+
     router
         .get("/", function(req, res) {
             fs.readFile(__dirname + '/descriptor/users.json', 'utf8', (err, data) => {
                 if (err) throw err;
-                res.json(JSON.parse(data));
+                res.set('Content-Type', 'application/json');
+                res.send(data);
             });
         })
         .get("/list", function(req, res) {
-            res.json({status: 200, message: "Users List"});
+            usermapper.find({},
+                (response) => res.json(response),
+                (err) => res.json({ok: 0, message: err.message})
+            );
         })
         .get("/find", function(req, res) {
-            res.json({status: 200, message: "User Find params"});
+            usermapper.find(req.query,
+                (response) => res.json(response),
+                (err) => res.json({ok: 0, message: err.message})
+            );
         })
         .get("/find/:id", function(req, res) {
-            res.json({status: 200, message: "User Find id"});
+            usermapper.find({dni: req.params.id},
+                (response) => res.json((response[0]) ? response[0] : {}),
+                (err) => res.json({ok: 0, message: err.message})
+            );
         })
         .get("/delete", function(req, res) {
-            res.json({status: 200, message: "User Delete Params"});
+            usermapper.delete(req.query,
+                (response) => res.json(response),
+                (err) => res.json({ok: 0, message: err.message})
+            );
         })
         .get("/delete/:id", function(req, res) {
-            res.json({status: 200, message: "User Delete id"});
+            usermapper.delete({dni: req.params.id},
+                (response) => res.json(response),
+                (err) => res.json({ok: 0, message: err.message})
+            );
         })
         .post("/create", function(req, res) {
-            res.json({status: 200, message: "User create"});
+            usermapper.insert(req.body,
+                (response) => res.json(response),
+                (err) => res.json({ok: 0, message: err.message})
+            );
         })
         .post("/edit", function(req, res) {
-            res.json({status: 200, message: "User edit"});
+            usermapper.update(req.query,
+                req.body,
+                (response) => res.json(response),
+                (err) => res.json({ok: 0, message: err.message})
+            );
         })
 
     return router;
