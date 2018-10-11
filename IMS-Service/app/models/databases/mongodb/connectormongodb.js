@@ -12,9 +12,11 @@ function ConnectorMongodb() {
         open(success, fail) {
             MongoDriver.connect(url, { useNewUrlParser: true }, function(err, MongoClient) {
                 if (err) fail(err);
-                client = MongoClient;
-                var dbo = client.db("ims");
-                success(dbo);
+                else {
+                    client = MongoClient;
+                    var dbo = client.db("ims");
+                    success(dbo);
+                }
             });
         },
         close() {

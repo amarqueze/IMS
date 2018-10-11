@@ -1,6 +1,5 @@
-module.exports = function(session, log) {
+module.exports = function(log) {
     var attributes = {};
-    const handleSession = session;
     const handleLog = log;
 
     return {
@@ -9,12 +8,6 @@ module.exports = function(session, log) {
         },
         getAtrribute(key) {
             return attributes[key];
-        },
-        setSession(token, value) {
-
-        },
-        getSession(token) {
-
         },
         getLog() {
             return handleLog;

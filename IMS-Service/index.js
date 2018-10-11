@@ -14,8 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-var server = require("./app/server/server");
-// logger libreria
+var Server = require("./app/server/server");
+var Certificate = require("./app/server/certificate");
+var Log = require("./app/models/log/logger");
+var ApplicationContext = require('./app/models/applicationcontext');
 
 /* import controllers */
 var UsersController = require('./app/controllers/userscontroller');
@@ -24,31 +26,36 @@ var ProvidersController = require('./app/controllers/providerscontroller');
 var CategoriesController = require('./app/controllers/categoriescontroller');
 var StockProductsController = require('./app/controllers/stockproductscontroller');
 
-//create AplicationContext
+var dispatcher = Server(Certificate());
 
-var dispatcher = server();
-
-dispatcher.run(80, function(port) {
-    console.log(`Server listening port: ${port}`);
-});
-
-dispatcher.bind_middleware("/", function(req, res, next) {
+dispatcher.addMiddleware("/", function(req, res, next) {
     //handle authentication [optional]
     next();
 });
 
-dispatcher
-    .bind_controller("/users", UsersController)
-    .bind_controller("/products", ProductsController)
-    .bind_controller("/providers", ProvidersController)
-    .bind_controller("/categories", CategoriesController)
-    .bind_controller("/stock", StockProductsController);
+var log = Log.Logger('Server Nodejs', [
+    {filename: "temp/error", level: "error"},
+    {filename: "temp/notice", level: "notice"},
+    {filename: "temp/server"}
+])
+var applicationContext = ApplicationContext(log);
 
-dispatcher.bind_middleware("/", function(req, res, next) {
-    //handle 404
-    res.status(404).send('Sorry, we cannot find that!');
+dispatcher
+    .setControllerListener((path, router) => applicationContext.getLog().info(`Controller linked to '${path}'`))
+    .setEventListener((event) => applicationContext.getLog().info(`EventListener linked to '${event}'`));
+
+dispatcher
+    .addController("/users", UsersController, applicationContext)
+    .addController("/products", ProductsController, applicationContext)
+    .addController("/providers", ProvidersController, applicationContext)
+    .addController("/categories", CategoriesController, applicationContext)
+    .addController("/stock", StockProductsController, applicationContext)
+    .addMiddleware("/", (req, res, next) => res.status(404).send('Sorry, we cannot find that service!'));
+
+dispatcher.run(function(port) {
+    applicationContext.getLog().info(`Server listening port: ${port}`);
 });
 
-dispatcher.bind_event('connection', (socket) => {
-    //handle log
+dispatcher.addEventServer('request', (request, response) => {
+    applicationContext.getLog().info(`incoming request to server: ${request.socket.remoteAddress}`);
 });

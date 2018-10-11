@@ -1,15 +1,7 @@
 var winston = require("winston");
 
-exports.levels = {
-    critical: 2,
-    error: 3,
-    warning: 4,
-    notice: 5,
-    info: 6,
-    debug: 7
-};
-
 exports.Logger = function (context, filespath = []) {
+    var levels = {critical: 2, error: 3, warning: 4, notice: 5, info: 6, debug: 7};
 
     const { combine, timestamp, label, printf } = winston.format;
 
@@ -17,7 +9,6 @@ exports.Logger = function (context, filespath = []) {
         return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`;
     });
 
-    console.log(getTransport(filespath));
     var winstonLog = winston.createLogger({
         levels: levels,
         format: combine(
