@@ -2,45 +2,74 @@ var https = require('https');
 var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
-var certificate = require('./certificate');
 
-module.exports = function() {
-    const portHttps = 443;
-    const portHttp = 80;
+module.exports = function(certificate) {
+    var portHttps = 443;
+    var portHttp = 80;
 
     var app = express();
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: true }));
 
-    var credentials = certificate();
     var serverHttp;
     var serverHttps;
-    //listeners
+
     var onBindController;
-    var onBindEvent;
+    var onBindEventServer;
     var onBindMiddleware;
 
+    (function server() {
+        app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({ extended: true }));
+    })();
+
     return {
-        run (port, callback) {
+        run (callback) {
             if(!callback)
                 throw Error('No exist function callback');
-
-            sslOptions = {key: credentials.getPrivateKey(), cert: credentials.getCertificate()};
-            serverHttp = http.createServer(app).listen(port, () => callback(port));
-            serverHttps = https.createServer(sslOptions, app).listen(portHttps, () => callback(portHttps));
+            if(certificate) {
+                sslOptions = {key: certificate.getPrivateKey(), cert: certificate.getCertificate()};
+                serverHttps = https.createServer(sslOptions, app).listen(portHttps, () => callback(portHttps));
+            }
+            serverHttp = http.createServer(app).listen(portHttp, () => callback(portHttp));
         },
-        bind_controller(path, controller, applicationContext) {
+        addController(path, controller, applicationContext) {
             let router = express.Router({caseSensitive: true, strict: true, mergeParams: false});
             app.use(path, controller(router, applicationContext));
+
+            if (onBindController) onBindController(path, router);
             return this;
         },
-        bind_event(event, callback) {
-            serverHttps.on(event, (err, socket) => {
-                callback(err, socket);
-            });
+        addEventServer(event, callback) {
+            if(serverHttps) serverHttps.on(event, (err, socket) => callback(err, socket));
+            else serverHttp.on(event, (err, socket) => callback(err, socket));
+
+            if (onBindEventServer) onBindEventServer(event);
+            return this;
         },
-        bind_middleware(path, callback) {
+        addMiddleware(path, callback) {
             app.use(path, callback);
+
+            if (onBindMiddleware) onBindMiddleware(path);
+            return this;
+        },
+        setControllerListener(callback) {
+            onBindController = callback;
+            return this;
+        },
+        setEventListener(callback) {
+            onBindEventServer = callback;
+            return this;
+        },
+        setMiddlewareListener(callback) {
+            onBindMiddleware = callback;
+            return this;
+        },
+        setPortHttp(port) {
+            portHttp = port;
+            return this;
+        },
+        setPortHttps(port) {
+            portHttps = port;
+            return this;
         }
     }
 }
