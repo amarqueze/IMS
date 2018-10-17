@@ -24,7 +24,7 @@ exports.Logger = function (context, filespath = []) {
         var date = new Date();
         filespath.forEach((element) => {
             transports.push(new winston.transports.File({
-                filename: `${element.filename}-${date.getFullYear()}-${date.getMonth()}-${date.getDay()}_${date.getHours()}-${date.getMinutes()}.log`,
+                filename: `${element.filename}.log`,
                 level: element.level
             })
             );

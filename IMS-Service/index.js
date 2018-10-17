@@ -25,13 +25,9 @@ var ProductsController = require('./app/controllers/productscontroller');
 var ProvidersController = require('./app/controllers/providerscontroller');
 var CategoriesController = require('./app/controllers/categoriescontroller');
 var StockProductsController = require('./app/controllers/stockproductscontroller');
+var AuthenticationController = require('./app/controllers/authenticationcontroller');
 
 var dispatcher = Server(Certificate());
-
-dispatcher.addMiddleware("/", function(req, res, next) {
-    //handle authentication [optional]
-    next();
-});
 
 var log = Log.Logger('Server Nodejs', [
     {filename: "temp/error", level: "error"},
@@ -45,6 +41,7 @@ dispatcher
     .setEventListener((event) => applicationContext.getLog().info(`EventListener linked to '${event}'`));
 
 dispatcher
+    .addController("/", AuthenticationController, applicationContext)
     .addController("/users", UsersController, applicationContext)
     .addController("/products", ProductsController, applicationContext)
     .addController("/providers", ProvidersController, applicationContext)

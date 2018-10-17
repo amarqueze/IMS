@@ -1,0 +1,9 @@
+2018-10-17T00:53:26.200Z [Server Nodejs] info: Controller linked to '/'
+2018-10-17T00:53:26.202Z [Server Nodejs] info: Controller linked to '/users'
+2018-10-17T00:53:26.203Z [Server Nodejs] info: Controller linked to '/products'
+2018-10-17T00:53:26.203Z [Server Nodejs] info: Controller linked to '/providers'
+2018-10-17T00:53:26.204Z [Server Nodejs] info: Controller linked to '/categories'
+2018-10-17T00:53:26.204Z [Server Nodejs] info: Controller linked to '/stock'
+2018-10-17T00:53:26.218Z [Server Nodejs] info: EventListener linked to 'request'
+2018-10-17T00:53:26.219Z [Server Nodejs] info: Server listening port: 443
+2018-10-17T00:53:26.220Z [Server Nodejs] info: Server listening port: 80
