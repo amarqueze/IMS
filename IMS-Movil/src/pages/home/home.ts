@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+    selector: 'page-home',
+    templateUrl: 'home.html'
 })
 export class HomePage {
     items: Array<Object> = [
@@ -44,8 +44,17 @@ export class HomePage {
         }
     ]
 
-    constructor(public navCtrl: NavController) {
-
+    constructor(public navCtrl: NavController, public navParams: NavParams) {
+        alert(this.navParams.get('title'));
+        if(this.navParams.get('title')) {
+            let Notification: Object = {
+                title: this.navParams.get('title'),
+                date: this.navParams.get('date'),
+                text: this.navParams.get('text'),
+                type: this.navParams.get('type'),
+                icon: this.navParams.get('icon'),
+            }
+            this.items.push(Notification);
+        }
     }
-
 }

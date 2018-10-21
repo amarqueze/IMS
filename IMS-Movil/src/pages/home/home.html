@@ -11,7 +11,7 @@
     <section *ngFor="let item of items">
         <ion-card [ngClass]="item.type" >
             <ion-card-header>
-                <ion-icon name="{{item.icon}}" color="{{item.type}}"></ion-icon>
+                <ion-icon name="{{ item.icon }}" color="{{ item.type }}"></ion-icon>
                 {{ item.title }}
                 <div class="date">{{ item.date }}</div>
             </ion-card-header>
