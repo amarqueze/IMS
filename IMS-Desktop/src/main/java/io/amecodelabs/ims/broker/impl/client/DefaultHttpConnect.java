@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.apache.http.Header;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -21,7 +22,7 @@ public class DefaultHttpConnect implements HttpConnect {
 	private HttpSuccess httpSuccess = (res) -> {};
 	private HttpClient client;
 	
-	public DefaultHttpConnect()  {
+	public DefaultHttpConnect() {
 		
 	}
 
@@ -46,6 +47,9 @@ public class DefaultHttpConnect implements HttpConnect {
 		Runnable backgroundTask = () -> {
 			try {
 				org.apache.http.HttpResponse response = client.execute(httpUriRequest);
+				
+				Header[] cookies = response.getHeaders("Set-Cookie");
+				int nroCookies = cookies.length;
 				this.httpSuccess.onSuccess(new HttpResponse() {
 					@Override
 					public int getHttpStatus() {
@@ -59,8 +63,12 @@ public class DefaultHttpConnect implements HttpConnect {
 
 					@Override
 					public String getCookie(String name) {
-						//mappear
-						return response.getFirstHeader("Set-Cookie").getValue();
+						for(int i=0; i<nroCookies; i++) {
+							if(cookies[i].getName().equals(name)) {
+								return cookies[i].getValue();
+							}
+						}
+						return null;
 					}
 
 					@Override
@@ -85,7 +93,7 @@ public class DefaultHttpConnect implements HttpConnect {
 			} catch (ClientProtocolException e) {
 				this.httpError.onError(new HttpConnectErrorException("Error in the HTTP protocol"));
 			} catch (IOException e) {
-				this.httpError.onError(new HttpConnectErrorException(e.getMessage()/*"Connect failed or interrupted"*/, e.getCause()));
+				this.httpError.onError(new HttpConnectErrorException("Connect failed or interrupted", e.getCause()));
 			} finally {
 				try {
 					((CloseableHttpClient) client).close();
