@@ -1,7 +1,9 @@
 package io.amecodelabs.ims.models.utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -26,6 +28,23 @@ public class ContentValues implements JSONExportable {
 			throw new JSONImportException(e.getMessage());
 		} 
 		return new ContentValues(name, properties);
+	}
+	
+	public static ContentValues[] newInstanceOfImportArrayJSON(String name, String json) throws JSONImportException {
+		List<Object> arrayProperties;
+		ContentValues[] properties = null;
+		try {
+			arrayProperties = new ObjectMapper().readValue(json, List.class);
+			
+			int sizeArray = arrayProperties.size();
+			properties = new ContentValues[sizeArray];
+			for(int i = 0; i < sizeArray; i++)
+				properties[i] = new ContentValues(name, (Map<String, Object>) arrayProperties.get(i));
+		} catch (IOException  e) {
+			throw new JSONImportException(e.getMessage());
+		} 
+		
+		return properties;
 	}
 	
 	public static ContentValues newCopy(String name, ContentValues contentValues) {
@@ -76,9 +95,9 @@ public class ContentValues implements JSONExportable {
 	
 	public void put(String key, ContentValues... arrayContentValues) {
 		int arraySize = arrayContentValues.length;
-		LinkedHashMap<String,Object>[] arrayProperties = new LinkedHashMap[arraySize];
+		ArrayList<Object> arrayProperties = new ArrayList<>();
 		for (int i = 0; i < arraySize; i++) 
-			arrayProperties[i] = new LinkedHashMap<String,Object>(arrayContentValues[i].properties);
+			arrayProperties.add(arrayContentValues[i].properties);
 		
 		this.properties.put(key, arrayProperties);
 	}
@@ -102,13 +121,13 @@ public class ContentValues implements JSONExportable {
 	}
 	
 	public ContentValues[] getArrayContentValues(String key) {
-		Map<String, Object>[] arrayproperties = (Map[]) get(key);
-		int arraySize = arrayproperties.length;
+		List<Object> arrayproperties = (List<Object>) get(key);
+		int arraySize = arrayproperties.size();
 		
 		ContentValues[] arrayContentValues = new ContentValues[arraySize];
 
 		for (int i = 0; i < arraySize; i++) 
-			arrayContentValues[i] = new ContentValues(key, arrayproperties[i]);
+			arrayContentValues[i] = new ContentValues(key, (Map<String, Object>) arrayproperties.get(i));
 		
 		return arrayContentValues;
 	}
