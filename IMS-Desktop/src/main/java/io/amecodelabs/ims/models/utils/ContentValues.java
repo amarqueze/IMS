@@ -112,8 +112,20 @@ public class ContentValues implements JSONExportable {
 		return false;
 	}
 	
-	public String getValue(String key) {
+	public Object getValue(String key) {
+		return get(key);
+	}
+	
+	public String getValueString(String key) {
 		return (String) get(key);
+	}
+	
+	public int getValueInteger(String key) {
+		return (Integer) get(key);
+	}
+	
+	public double getValueDouble(String key) {
+		return (Double) get(key);
 	}
 	
 	public ContentValues getContentValues(String key) {

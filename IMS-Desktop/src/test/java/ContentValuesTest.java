@@ -62,7 +62,7 @@ public class ContentValuesTest {
 		try {
 			ContentValues provider = ContentValues.newInstanceOfImportJSON("Provider", this.provider_json);
 			
-			String company = provider.getValue("company");
+			String company = provider.getValueString("company");
 			ContentValues[] products = provider.getArrayContentValues("Products");
 			
 			assertArrayEquals(new String[] {"Acme Inc", product1_json, product2_json, product3_json}, 
