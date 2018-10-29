@@ -3,12 +3,10 @@ package io.amecodelabs.ims.view.context;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.scene.image.Image;
-
 public class ApplicationContext {
 	private final String name;
 	private final String description;
-	private final Image icon;
+	private final String icon;
 	
 	private Map<String, Object> attributes;
 	
@@ -22,7 +20,7 @@ public class ApplicationContext {
 	private ApplicationContext() {
 		name = "IMS";
 		description = "";
-		icon = new Image(getClass().getResourceAsStream("/images/storage-2.png"));
+		icon = "/images/storage-2.png";
 		attributes = new HashMap<String, Object>();
 	}
 	
@@ -42,7 +40,7 @@ public class ApplicationContext {
 		return description;
 	}
 
-	public Image getIcon() {
+	public String getIcon() {
 		return icon;
 	}
 }
