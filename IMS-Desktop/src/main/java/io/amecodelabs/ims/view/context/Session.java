@@ -37,7 +37,7 @@ public class Session implements Serializable {
 		return session;
 	}
 	
-	public static Session createNewSession(String email, String password, String token) {
+	public static Session createNewSessionLocal(String email, String password, String token) {
 		session = new Session(email, password, token);
 		
 		String homeUser = System.getProperty("user.home");
@@ -50,6 +50,10 @@ public class Session implements Serializable {
 			//e.printStackTrace();
 		}
 		return session;
+	}
+	
+	public static Session createNewSession(String email, String password, String token) {
+		return session = new Session(email, password, token);
 	}
 	
 	private Session(String email, String password, String token) {
