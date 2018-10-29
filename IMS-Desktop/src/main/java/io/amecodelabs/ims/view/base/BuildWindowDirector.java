@@ -25,8 +25,9 @@ public class BuildWindowDirector {
 		return create( get(nameBuildable) );
 	}
 	
-	public void prepare(String nameBuildable, BuildableWindow buildableWindow) {
+	public BuildWindowDirector prepare(String nameBuildable, BuildableWindow buildableWindow) {
 		buildables.put(nameBuildable, buildableWindow);
+		return this;
 	}
 	
 	public BuildableWindow get(String nameBuildable) {
