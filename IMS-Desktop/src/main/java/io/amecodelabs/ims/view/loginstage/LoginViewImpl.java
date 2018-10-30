@@ -51,6 +51,7 @@ public class LoginViewImpl implements LoginView, Initializable {
 	public void showProgress() {
 		Platform.runLater(
 			() -> {
+				btnSignIn.setDisable(true);
 				lblLoad.setImage(load);
 			}
 		);
@@ -60,6 +61,7 @@ public class LoginViewImpl implements LoginView, Initializable {
 	public void hiddenProgress() {
 		Platform.runLater(
 			() -> {
+				btnSignIn.setDisable(false);
 				lblLoad.setImage(null);
 			}
 		);
