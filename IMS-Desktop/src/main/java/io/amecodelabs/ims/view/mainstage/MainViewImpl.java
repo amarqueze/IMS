@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
-import io.amecodelabs.ims.view.base.PrimaryStage;
 import io.amecodelabs.ims.view.base.SubStage;
 import io.amecodelabs.ims.view.context.ApplicationContext;
 import javafx.application.HostServices;
@@ -17,7 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class MainViewImpl implements MainView, PrimaryStage, Initializable {
+public class MainViewImpl implements MainView, Initializable {
 	@FXML
     private VBox root;
     @FXML
