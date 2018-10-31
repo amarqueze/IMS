@@ -1,7 +1,6 @@
 package io.amecodelabs.ims.view.loginstage;
 
 import io.amecodelabs.ims.models.utils.ContentValues;
-import io.amecodelabs.ims.models.utils.JSONImportException;
 import io.amecodelabs.ims.service.AuthenticationService;
 import io.amecodelabs.ims.view.context.Session;
 
@@ -27,18 +26,14 @@ public class PresenterLoginViewImpl implements PresenterLoginView {
 		authService.authenticate(user);
 	}
 
-	protected void onSuccess(String response) {
+	protected void onSuccess(ContentValues response) {
 		this.loginView.hiddenProgress();
-		try {
-			ContentValues responseJson = ContentValues.newInstanceOfImportJSON("response", response);
-			if(responseJson.getValueInteger("ok") == 0) 
-				this.loginView.setErrorMessage(responseJson.getValueString("message"));
-			else {
-				createSession(responseJson.getValueString("token"));
-				this.loginView.invokeMainView();
-			}
-		} catch (JSONImportException e) {
-			e.printStackTrace();
+		
+		if(response.getValueInteger("ok") == 0) 
+			this.loginView.setErrorMessage(response.getValueString("message"));
+		else {
+			createSession(response.getValueString("token"));
+			this.loginView.invokeMainView();
 		}
 	}
 	

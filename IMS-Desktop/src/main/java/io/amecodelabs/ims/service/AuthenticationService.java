@@ -6,14 +6,16 @@ import java.util.function.Consumer;
 import io.amecodelabs.ims.broker.client.HttpConnect;
 import io.amecodelabs.ims.broker.impl.client.HttpBroker;
 import io.amecodelabs.ims.broker.impl.client.HttpPostRequest;
+import io.amecodelabs.ims.models.utils.ContentValues;
 import io.amecodelabs.ims.models.utils.JSONExportable;
+import io.amecodelabs.ims.models.utils.JSONImportException;
 
 public class AuthenticationService implements Service {
 	private final String LOCATION_URI = "http://localhost/auth";
-	private Consumer<String> success;
+	private Consumer<ContentValues> success;
 	private Consumer<String> fail;
 	
-	public AuthenticationService(Consumer<String> success, Consumer<String> fail) {
+	public AuthenticationService(Consumer<ContentValues> success, Consumer<String> fail) {
 		this.success = success;
 		this.fail = fail;
 	}
@@ -22,7 +24,13 @@ public class AuthenticationService implements Service {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 		httpConnect
 			.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
-			.setSuccessHandler( (res) -> success.accept(res.getBody()) );
+			.setSuccessHandler( (res) -> {
+				try {
+					success.accept(ContentValues.newInstanceOfImportJSON("response", res.getBody()));
+				} catch (JSONImportException e) {
+					fail.accept(e.getMessage());
+				}
+			});
 		
 		HttpPostRequest request = null;
 		try {
