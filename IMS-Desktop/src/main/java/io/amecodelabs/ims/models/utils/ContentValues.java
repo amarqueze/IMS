@@ -154,11 +154,12 @@ public class ContentValues implements JSONExportable {
 	}
 	
 	@Override
-	public String exportJSON() throws JSONExportException {
+	public String exportJSON() {
 		try {
 			return new ObjectMapper().writeValueAsString(properties);
 		} catch (JsonProcessingException e) {
-			throw new JSONExportException(e.getMessage());
+			e.printStackTrace();
+			return null;
 		}
 	}
 	

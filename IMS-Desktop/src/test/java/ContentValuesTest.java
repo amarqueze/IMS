@@ -3,7 +3,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import io.amecodelabs.ims.models.utils.ContentValues;
-import io.amecodelabs.ims.models.utils.JSONExportException;
 import io.amecodelabs.ims.models.utils.JSONImportException;
 
 public class ContentValuesTest {
@@ -36,13 +35,9 @@ public class ContentValuesTest {
         
         provider.put("Products", product1, product2, product3);
         
-        try {
-        	String result = provider.exportJSON();
+        String result = provider.exportJSON();
 			
-			assertEquals(expectedResult, result);
-		} catch (JSONExportException e) {
-			fail(e.getMessage());
-		}
+		assertEquals(expectedResult, result);
 	}
 	
 	@Test
@@ -52,7 +47,7 @@ public class ContentValuesTest {
 			ContentValues provider = ContentValues.newInstanceOfImportJSON("Provider", this.provider_json);
 			
 			assertEquals(expectedResult, provider.exportJSON());
-		} catch (JSONImportException | JSONExportException e) {
+		} catch (JSONImportException e) {
 			fail(e.getMessage());
 		}
 	}
@@ -68,7 +63,7 @@ public class ContentValuesTest {
 			assertArrayEquals(new String[] {"Acme Inc", product1_json, product2_json, product3_json}, 
 					new String[] {company, products[0].exportJSON(), products[1].exportJSON(), products[2].exportJSON()});
 			
-		} catch (JSONImportException | JSONExportException e) {
+		} catch (JSONImportException e) {
 			fail(e.getLocalizedMessage());
 		}
 	}
@@ -80,7 +75,7 @@ public class ContentValuesTest {
 			
 			assertArrayEquals(new String[] {product1_json, product2_json, product3_json}, 
 					new String[] {products[0].exportJSON(), products[1].exportJSON(), products[2].exportJSON()});
-		} catch (JSONImportException | JSONExportException e) {
+		} catch (JSONImportException e) {
 			fail(e.getLocalizedMessage());
 		}
 	}

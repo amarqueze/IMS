@@ -6,7 +6,6 @@ import java.util.function.Consumer;
 import io.amecodelabs.ims.broker.client.HttpConnect;
 import io.amecodelabs.ims.broker.impl.client.HttpBroker;
 import io.amecodelabs.ims.broker.impl.client.HttpPostRequest;
-import io.amecodelabs.ims.models.utils.JSONExportException;
 import io.amecodelabs.ims.models.utils.JSONExportable;
 
 public class AuthenticationService implements Service {
@@ -19,7 +18,7 @@ public class AuthenticationService implements Service {
 		this.fail = fail;
 	}
 	
-	public void authenticate(JSONExportable user) throws JSONExportException {
+	public void authenticate(JSONExportable user) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 		httpConnect
 			.setErrorHandler( (err) -> fail.accept(err.getMessage()) )

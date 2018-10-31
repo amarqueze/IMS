@@ -1,7 +1,6 @@
 package io.amecodelabs.ims.view.loginstage;
 
 import io.amecodelabs.ims.models.utils.ContentValues;
-import io.amecodelabs.ims.models.utils.JSONExportException;
 import io.amecodelabs.ims.models.utils.JSONImportException;
 import io.amecodelabs.ims.service.AuthenticationService;
 import io.amecodelabs.ims.view.context.Session;
@@ -24,12 +23,8 @@ public class PresenterLoginViewImpl implements PresenterLoginView {
 		user.put("email", email);
 		user.put("password", password);
 		
-		try {
-			this.loginView.showProgress();
-			authService.authenticate(user);
-		} catch (JSONExportException e) {
-			e.printStackTrace();
-		}
+		this.loginView.showProgress();
+		authService.authenticate(user);
 	}
 
 	protected void onSuccess(String response) {

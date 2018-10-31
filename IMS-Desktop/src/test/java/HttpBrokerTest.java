@@ -11,7 +11,6 @@ import io.amecodelabs.ims.broker.impl.client.HttpBroker;
 import io.amecodelabs.ims.broker.impl.client.HttpGetRequest;
 import io.amecodelabs.ims.broker.impl.client.HttpPostRequest;
 import io.amecodelabs.ims.models.utils.ContentValues;
-import io.amecodelabs.ims.models.utils.JSONExportException;
 
 public class HttpBrokerTest {
 	Logger log = Logger.getLogger(HttpBrokerTest.class.getName());
@@ -64,7 +63,7 @@ public class HttpBrokerTest {
 	}
 	
 	@Test
-	public void testPOSTRequest() throws URISyntaxException, JSONExportException {
+	public void testPOSTRequest() throws URISyntaxException {
 		final String url = "http://localhost/user/create";
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 		
