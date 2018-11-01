@@ -13,7 +13,6 @@ import com.jfoenix.controls.JFXTextField;
 import io.amecodelabs.ims.models.utils.ContentValues;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -28,7 +27,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -244,7 +242,7 @@ public class ProvidersViewImpl implements ProvidersView<ContentValues>, Initiali
 			new PropertyValueFactory<DataModelProviders, String>("provider")
 		);
 		colProvider.setCellFactory(cellFactory);
-		colProvider.setOnEditCommit( event -> event.getRowValue().setPhone(event.getNewValue()) );
+		colProvider.setOnEditCommit( event -> event.getRowValue().setProvider(event.getNewValue()) );
 		
 		colPhone.setCellValueFactory(
 			new PropertyValueFactory<DataModelProviders, String>("phone")
@@ -276,22 +274,8 @@ public class ProvidersViewImpl implements ProvidersView<ContentValues>, Initiali
 		colComments.setCellFactory(cellFactory);
 		colComments.setOnEditCommit( event -> event.getRowValue().setComments(event.getNewValue()) );
 		
-		colEdit.setCellValueFactory((Callback<CellDataFeatures<DataModelProviders, DataModelProviders>, ObservableValue<DataModelProviders>>) 
-			new Callback<TableColumn.CellDataFeatures<DataModelProviders, DataModelProviders>, ObservableValue<DataModelProviders>>() {
-				@Override
-				public ObservableValue<DataModelProviders> call(TableColumn.CellDataFeatures<DataModelProviders, DataModelProviders> p) {
-					return new SimpleObjectProperty<DataModelProviders>(p.getValue());
-				}
-			}
-		);
-		colEdit.setCellFactory(
-			new Callback<TableColumn<DataModelProviders, DataModelProviders>, TableCell<DataModelProviders, DataModelProviders>>() {
-				@Override
-				public TableCell<DataModelProviders, DataModelProviders> call(TableColumn<DataModelProviders, DataModelProviders> p) {
-					return new ButtonCell();
-				}
-			}
-		);
+		colEdit.setCellValueFactory( (p) -> new SimpleObjectProperty<DataModelProviders>(p.getValue()));
+		colEdit.setCellFactory( (p) -> new ButtonCell());
 		
 		configFiltered();
 		
@@ -346,7 +330,7 @@ public class ProvidersViewImpl implements ProvidersView<ContentValues>, Initiali
 	public void remove(String id) {
 		Platform.runLater(
 			() -> {
-					data.removeIf((model) -> model.getId().equals(id));
+				data.removeIf((model) -> model.getId().equals(id));
 			}
 		);
 	}
