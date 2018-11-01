@@ -1,5 +1,6 @@
 package io.amecodelabs.ims.view.context;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -54,6 +55,12 @@ public class Session implements Serializable {
 	
 	public static Session createNewSession(String email, String password, String token) {
 		return session = new Session(email, password, token);
+	}
+	
+	public static void deleteLocalSession() {
+		String homeUser = System.getProperty("user.home");
+		File fichero = new File(homeUser + "/t.tmp");
+		fichero.delete();
 	}
 	
 	private Session(String email, String password, String token) {
