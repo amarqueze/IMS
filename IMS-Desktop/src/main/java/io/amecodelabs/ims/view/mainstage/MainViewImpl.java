@@ -5,8 +5,10 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import io.amecodelabs.ims.view.base.BuildWindowDirector;
 import io.amecodelabs.ims.view.base.SubStage;
 import io.amecodelabs.ims.view.context.ApplicationContext;
+import io.amecodelabs.ims.view.providerstage.ProvidersBuildable;
 import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -71,7 +73,7 @@ public class MainViewImpl implements MainView, Initializable {
 
     @FXML
     void showProvidersView(ActionEvent event) {
-    	
+    	BuildWindowDirector.getDirector().create(new ProvidersBuildable());
     }
 
     @FXML
