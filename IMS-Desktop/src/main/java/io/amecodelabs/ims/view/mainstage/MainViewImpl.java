@@ -10,6 +10,7 @@ import io.amecodelabs.ims.view.base.SubStage;
 import io.amecodelabs.ims.view.context.ApplicationContext;
 import io.amecodelabs.ims.view.providerstage.ProvidersBuildable;
 import io.amecodelabs.ims.view.settingstage.SettingBuildable;
+import io.amecodelabs.ims.view.userstage.UsersBuildable;
 import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -94,7 +95,7 @@ public class MainViewImpl implements MainView, Initializable {
 
     @FXML
     void showUsersView(ActionEvent event) {
-    	
+    	BuildWindowDirector.getDirector().create(new UsersBuildable());
     }
     
     @Override

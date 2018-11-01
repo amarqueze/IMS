@@ -10,15 +10,18 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="678.0" prefWidth="1059.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="678.0" prefWidth="1059.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.amecodelabs.ims.view.userstage.UsersViewImpl">
    <children>
-      <TreeView layoutX="26.0" layoutY="279.0" prefHeight="116.0" prefWidth="363.0" />
+      <StackPane fx:id="stackPane" layoutX="-1.0" layoutY="2.0" onMouseClicked="#onCloseStackPane" prefHeight="678.0" prefWidth="1059.0" />
+      <TreeView fx:id="tvPrivileges" focusTraversable="false" layoutX="26.0" layoutY="279.0" prefHeight="116.0" prefWidth="363.0" />
       <AnchorPane prefHeight="54.0" prefWidth="1059.0" style="-fx-background-color: #0984e3;">
          <children>
-            <Button layoutX="26.0" layoutY="11.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="75.0">
+            <Button fx:id="btnClose" layoutX="26.0" layoutY="11.0" mnemonicParsing="false" onAction="#onCloseStage" prefHeight="32.0" prefWidth="75.0">
                <graphic>
                   <FontAwesomeIcon iconName="ARROW_LEFT" size="2em" />
                </graphic>
@@ -26,7 +29,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button layoutX="942.0" layoutY="11.0" mnemonicParsing="false" text="New User">
+            <Button fx:id="btnNewUser" layoutX="942.0" layoutY="11.0" mnemonicParsing="false" onAction="#onNewUser" text="New User">
                <graphic>
                   <FontAwesomeIcon iconName="PLUS" size="2em" />
                </graphic>
@@ -34,7 +37,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button layoutX="829.0" layoutY="11.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="90.0" text="Reset">
+            <Button fx:id="btnReset" layoutX="829.0" layoutY="11.0" mnemonicParsing="false" onAction="#onReset" prefHeight="32.0" prefWidth="90.0" text="Reset">
                <graphic>
                   <FontAwesomeIcon iconName="UNDO" size="2em" />
                </graphic>
@@ -47,8 +50,9 @@
                   <Font size="18.0" />
                </font>
             </Label>
+            <ImageView fx:id="lblLoad" fitHeight="26.0" fitWidth="30.0" layoutX="112.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
          </children></AnchorPane>
-      <TextField layoutX="26.0" layoutY="146.0" prefHeight="26.0" prefWidth="363.0" />
+      <TextField fx:id="txtEmail" layoutX="26.0" layoutY="146.0" prefHeight="26.0" prefWidth="363.0" />
       <Label layoutX="26.0" layoutY="126.0" text="Email:">
          <font>
             <Font size="14.0" />
@@ -70,16 +74,16 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <PasswordField layoutX="26.0" layoutY="217.0" prefHeight="26.0" prefWidth="363.0" />
-      <TextField layoutX="496.0" layoutY="146.0" prefHeight="26.0" prefWidth="203.0" />
-      <TextField layoutX="723.0" layoutY="146.0" prefHeight="26.0" prefWidth="308.0" />
-      <TextField layoutX="496.0" layoutY="217.0" prefHeight="26.0" prefWidth="534.0" />
-      <Label layoutX="496.0" layoutY="126.0" text="FirstName:">
+      <PasswordField fx:id="txtPassword" layoutX="26.0" layoutY="217.0" prefHeight="26.0" prefWidth="363.0" />
+      <TextField fx:id="txtFirstName" layoutX="496.0" layoutY="146.0" prefHeight="26.0" prefWidth="203.0" />
+      <TextField fx:id="txtLastName" layoutX="723.0" layoutY="146.0" prefHeight="26.0" prefWidth="308.0" />
+      <TextField fx:id="txtDNI" layoutX="496.0" layoutY="217.0" prefHeight="26.0" prefWidth="534.0" />
+      <Label layoutX="496.0" layoutY="126.0" text="First Name:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="723.0" layoutY="126.0" text="LastName:">
+      <Label layoutX="723.0" layoutY="126.0" text="Last Name:">
          <font>
             <Font size="14.0" />
          </font>
@@ -89,8 +93,8 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="496.0" layoutY="289.0" prefHeight="26.0" prefWidth="534.0" />
-      <TextField layoutX="496.0" layoutY="368.0" prefHeight="26.0" prefWidth="534.0" />
+      <TextField fx:id="txtPhone" layoutX="496.0" layoutY="289.0" prefHeight="26.0" prefWidth="534.0" />
+      <TextField fx:id="txtAddress" layoutX="496.0" layoutY="368.0" prefHeight="26.0" prefWidth="534.0" />
       <Label layoutX="496.0" layoutY="339.0" text="Address (optional):">
          <font>
             <Font size="14.0" />
@@ -101,15 +105,15 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TableView layoutX="26.0" layoutY="442.0" prefHeight="221.0" prefWidth="1011.0">
+      <TableView fx:id="tbUsers" editable="true" layoutX="26.0" layoutY="442.0" prefHeight="221.0" prefWidth="1011.0">
         <columns>
-          <TableColumn prefWidth="136.80004501342773" text="FirstName" />
-            <TableColumn prefWidth="260.00001525878906" text="LastName" />
-            <TableColumn prefWidth="157.60003662109375" text="Email" />
-          <TableColumn prefWidth="104.800048828125" text="DNI" />
-            <TableColumn prefWidth="106.39996337890625" text="Phone" />
-            <TableColumn prefWidth="159.2000732421875" text="Address" />
-            <TableColumn prefWidth="91.199951171875" text="Edit/Delete" />
+          <TableColumn fx:id="colFirstName" prefWidth="136.80004501342773" text="First Name" />
+            <TableColumn fx:id="colLastName" prefWidth="215.99998474121094" text="Last Name" />
+            <TableColumn fx:id="colEmail" prefWidth="171.99996948242188" text="Email" />
+          <TableColumn fx:id="colDNI" prefWidth="118.39996337890625" text="DNI" />
+            <TableColumn fx:id="colPhone" prefWidth="113.60003662109375" text="Phone" />
+            <TableColumn fx:id="colAddress" prefWidth="157.60003662109375" text="Address" />
+            <TableColumn fx:id="colEdit" prefWidth="93.5999755859375" text="Edit/Delete" />
         </columns>
       </TableView>
    </children>
