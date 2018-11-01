@@ -7,11 +7,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="598.0" prefWidth="1382.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="598.0" prefWidth="1382.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.amecodelabs.ims.view.providerstage.ProvidersViewImpl">
    <children>
+      <StackPane fx:id="stackPane" layoutX="-2.0" onMouseClicked="#toBackStackPane" prefHeight="598.0" prefWidth="1382.0" />
       <AnchorPane prefHeight="598.0" prefWidth="338.0" style="-fx-background-color: #0984e3;">
          <children>
             <Label layoutX="39.0" layoutY="77.0" text="Add New Provider" textFill="WHITE">
@@ -19,38 +22,40 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <JFXTextField focusColor="#a7a7a7" layoutX="39.0" layoutY="127.0" prefHeight="26.0" prefWidth="260.0" promptText="Name Provider" style="-fx-prompt-text-fill: #ffffff;" unFocusColor="WHITE" />
-            <JFXTextField focusColor="#a7a7a7" layoutX="39.0" layoutY="173.0" prefHeight="26.0" prefWidth="260.0" promptText="Phone" style="-fx-prompt-text-fill: #ffffff;" unFocusColor="WHITE" />
-            <JFXTextField focusColor="#a7a7a7" layoutX="39.0" layoutY="221.0" prefHeight="26.0" prefWidth="260.0" promptText="Email" style="-fx-prompt-text-fill: #ffffff;" unFocusColor="WHITE" />
-            <JFXTextArea focusColor="#a7a7a7" layoutX="39.0" layoutY="379.0" prefHeight="126.0" prefWidth="260.0" promptText="Comments" style="-fx-prompt-text-fill: #ffffff;" unFocusColor="WHITE" />
-            <JFXTextField focusColor="#a7a7a7" layoutX="39.0" layoutY="270.0" prefHeight="26.0" prefWidth="260.0" promptText="Address (optional)" style="-fx-prompt-text-fill: #ffffff;" unFocusColor="WHITE" />
-            <JFXTextField focusColor="#a7a7a7" layoutX="39.0" layoutY="322.0" prefHeight="26.0" prefWidth="260.0" promptText="City (optional)" style="-fx-prompt-text-fill: #ffffff;" unFocusColor="WHITE" />
-            <Button layoutX="214.0" layoutY="546.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" text="Save" />
-            <Button disable="true" layoutX="119.0" layoutY="546.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" text="Reset" />
-            <Button layoutX="39.0" layoutY="22.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="66.0">
+            <JFXTextField fx:id="txtNameProvider" focusColor="#a7a7a7" layoutX="39.0" layoutY="127.0" prefHeight="26.0" prefWidth="260.0" promptText="Name Provider" style="-fx-prompt-text-fill: #ffffff;" unFocusColor="WHITE" />
+            <JFXTextField fx:id="txtPhone" focusColor="#a7a7a7" layoutX="39.0" layoutY="173.0" prefHeight="26.0" prefWidth="260.0" promptText="Phone" style="-fx-prompt-text-fill: #ffffff;" unFocusColor="WHITE" />
+            <JFXTextField fx:id="txtEmail" focusColor="#a7a7a7" layoutX="39.0" layoutY="221.0" prefHeight="26.0" prefWidth="260.0" promptText="Email" style="-fx-prompt-text-fill: #ffffff;" unFocusColor="WHITE" />
+            <JFXTextArea fx:id="txtComments" focusColor="#a7a7a7" layoutX="39.0" layoutY="379.0" prefHeight="126.0" prefWidth="260.0" promptText="Comments (optional) " style="-fx-prompt-text-fill: #ffffff;" unFocusColor="WHITE" />
+            <JFXTextField fx:id="txtAddress" focusColor="#a7a7a7" layoutX="39.0" layoutY="270.0" prefHeight="26.0" prefWidth="260.0" promptText="Address (optional)" style="-fx-prompt-text-fill: #ffffff;" unFocusColor="WHITE" />
+            <JFXTextField fx:id="txtCity" focusColor="#a7a7a7" layoutX="39.0" layoutY="322.0" prefHeight="26.0" prefWidth="260.0" promptText="City (optional)" style="-fx-prompt-text-fill: #ffffff;" unFocusColor="WHITE" />
+            <Button fx:id="btnSave" layoutX="214.0" layoutY="546.0" mnemonicParsing="false" onAction="#onSave" prefHeight="26.0" prefWidth="85.0" text="Save" />
+            <Button fx:id="btnReset" layoutX="119.0" layoutY="546.0" mnemonicParsing="false" onAction="#onReset" prefHeight="26.0" prefWidth="85.0" text="Reset" />
+            <Button fx:id="btnClose" layoutX="39.0" layoutY="22.0" mnemonicParsing="false" onAction="#onCloseStage" prefHeight="32.0" prefWidth="66.0">
                <graphic>
                   <FontAwesomeIcon iconName="ARROW_LEFT" size="2em" />
                </graphic>
             </Button>
-            <Button layoutX="233.0" layoutY="22.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="66.0">
+            <Button fx:id="btnPrint" layoutX="233.0" layoutY="22.0" mnemonicParsing="false" onAction="#onPrint" prefHeight="32.0" prefWidth="66.0">
                <graphic>
                   <FontAwesomeIcon iconName="PRINT" size="2em" />
                </graphic>
             </Button>
+            <ImageView fx:id="lblLoadSave" fitHeight="17.0" fitWidth="21.0" layoutX="223.0" layoutY="551.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
-      <TableView layoutX="364.0" layoutY="75.0" prefHeight="498.0" prefWidth="991.0">
+      <TableView fx:id="tbProviders" editable="true" layoutX="364.0" layoutY="75.0" prefHeight="498.0" prefWidth="991.0">
         <columns>
-          <TableColumn prefWidth="123.20001220703125" text="Provider" />
-          <TableColumn prefWidth="98.4000244140625" text="Phone" />
-            <TableColumn prefWidth="138.4000244140625" text="Email" />
-            <TableColumn prefWidth="162.4000244140625" text="Address" />
-            <TableColumn prefWidth="95.199951171875" text="City" />
-            <TableColumn prefWidth="294.39996337890625" text="Comments" />
-            <TableColumn prefWidth="77.5999755859375" text="Edit/Delete" />
+          <TableColumn fx:id="colProvider" prefWidth="123.20001220703125" text="Provider" />
+          <TableColumn fx:id="colPhone" prefWidth="120.00003051757812" text="Phone" />
+            <TableColumn fx:id="colEmail" prefWidth="136.79998779296875" text="Email" />
+            <TableColumn fx:id="colAddress" prefWidth="136.0" text="Address" />
+            <TableColumn fx:id="colCity" prefWidth="125.5999755859375" text="City" />
+            <TableColumn fx:id="colComments" prefWidth="254.4000244140625" text="Comments" />
+            <TableColumn fx:id="colEdit" prefWidth="99.199951171875" text="Edit/Delete" />
         </columns>
       </TableView>
-      <JFXTextField focusColor="BLACK" layoutX="397.0" layoutY="20.0" prefHeight="26.0" prefWidth="957.0" promptText="Search.." />
+      <JFXTextField fx:id="txtFiltered" focusColor="BLACK" layoutX="397.0" layoutY="20.0" prefHeight="26.0" prefWidth="910.0" promptText="Search.." />
       <FontAwesomeIcon iconName="SEARCH" layoutX="364.0" layoutY="42.0" size="2em" wrappingWidth="20.685739517211914" />
+      <ImageView fx:id="lblLoadProvider" fitHeight="17.0" fitWidth="21.0" layoutX="1314.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
