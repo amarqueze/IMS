@@ -24,7 +24,8 @@ module.exports = function(router, applicationContext) {
                     (err) => {
                         applicationContext.getLog().error(err.message);
                         res.json({ok: 0, message: err.message})
-                    }
+                    },
+                    true
                 );
             }
         })

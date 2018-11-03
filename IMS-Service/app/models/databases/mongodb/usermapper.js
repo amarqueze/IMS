@@ -8,8 +8,8 @@ module.exports = function(objectmapper) {
         update(params, updatedDocument, success, fail) {
             objectmapper.update(collectionName, params, {$set: updatedDocument}, success, fail);
         },
-        find(params, success, fail) {
-            params.root = {$exists:false};
+        find(params, success, fail, isRoot) {
+            if(!isRoot) params.root = {$exists:false};
             objectmapper.find(collectionName, params, success, fail);
         },
         delete(params, success, fail) {
