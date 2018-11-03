@@ -1,6 +1,7 @@
 package io.amecodelabs.ims.view.loginstage;
 
 import io.amecodelabs.ims.models.utils.ContentValues;
+import io.amecodelabs.ims.models.utils.Digest;
 import io.amecodelabs.ims.service.AuthenticationService;
 import io.amecodelabs.ims.view.context.Session;
 
@@ -8,19 +9,18 @@ public class PresenterLoginViewImpl implements PresenterLoginView {
 	AuthenticationService authService;
 	private LoginView loginView;
 	private boolean remember;
-	private ContentValues user;
 	
 	public PresenterLoginViewImpl(LoginView loginView) {
 		this.loginView = loginView;
 		this.authService = new AuthenticationService(this::onSuccess, this::onError);
-		this.user = ContentValues.newInstanceEmpy("user");
 	}
 	
 	@Override
 	public void authenticate(String email, String password, boolean remember) {
 		this.remember = remember;
+		ContentValues user = ContentValues.newInstanceEmpy("user");
 		user.put("email", email);
-		user.put("password", password);
+		user.put("password", Digest.encrypt(password));
 		
 		this.loginView.showProgress();
 		authService.authenticate(user);
@@ -28,20 +28,19 @@ public class PresenterLoginViewImpl implements PresenterLoginView {
 
 	protected void onSuccess(ContentValues response) {
 		this.loginView.hiddenProgress();
-		
-		if(response.getValueInteger("ok") == 0) 
+		if(response.getValueInteger("ok") == 0) {
 			this.loginView.setErrorMessage(response.getValueString("message"));
-		else {
-			createSession(response.getValueString("token"));
+		} else {
+			createSession(response.getContentValues("response"), response.getValueString("token"));
 			this.loginView.invokeMainView();
 		}
 	}
 	
-	private void createSession(String token) {
+	private void createSession(ContentValues user, String token) {
 		if(this.remember)
-			Session.createNewSessionLocal(user.getValueString("email"), user.getValueString("password"), token);
+			Session.createNewSessionLocal(user, token);
 		else 
-			Session.createNewSession(user.getValueString("email"), user.getValueString("password"), token);
+			Session.createNewSession(user, token);
 	}
 
 	protected void onError(String err) {

@@ -8,13 +8,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import io.amecodelabs.ims.models.utils.ContentValues;
+
 public class Session implements Serializable {
 	private static final long serialVersionUID = -8719475938868694268L;
 	private static boolean isSession;
 	private static Session session;
 	
-	private String email;
-	private String password;
+	private ContentValues user;
 	private String token;
 	
 	static {
@@ -38,8 +39,8 @@ public class Session implements Serializable {
 		return session;
 	}
 	
-	public static Session createNewSessionLocal(String email, String password, String token) {
-		session = new Session(email, password, token);
+	public static Session createNewSessionLocal(ContentValues user, String token) {
+		session = createNewSession(user, token);
 		
 		String homeUser = System.getProperty("user.home");
 		try {
@@ -48,13 +49,13 @@ public class Session implements Serializable {
 			ObjectOutputStream.close();
 			isSession = true;
 		} catch (IOException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 		return session;
 	}
 	
-	public static Session createNewSession(String email, String password, String token) {
-		return session = new Session(email, password, token);
+	public static Session createNewSession(ContentValues user, String token) {
+		return session = new Session(user, token);
 	}
 	
 	public static void deleteLocalSession() {
@@ -63,18 +64,35 @@ public class Session implements Serializable {
 		fichero.delete();
 	}
 	
-	private Session(String email, String password, String token) {
-		this.email = email;
-		this.password = password;
+	private Session(ContentValues user, String token) {
+		this.user = user;
 		this.token = token;
 	}
 	
 	public String getPassword() {
-		return password;
+		return user.getValueString("password");
 	}
 
 	public String getEmail() {
-		return email;
+		return user.getValueString("email");
+	}
+	
+	public boolean isManagerProduct() {
+		return user.getContentValues("privileges")
+				.getContentValues("product")
+				.getValueBoolean("create");
+	}
+	
+	public boolean isManagerUsers() {
+		return user.getContentValues("privileges")
+				.getContentValues("user")
+				.getValueBoolean("create");
+	}
+	
+	public boolean isManagerProviders() {
+		return user.getContentValues("privileges")
+				.getContentValues("provider")
+				.getValueBoolean("create");
 	}
 	
 	public String getToken() {

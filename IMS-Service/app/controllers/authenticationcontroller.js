@@ -18,7 +18,7 @@ module.exports = function(router, applicationContext) {
                         if(response.length === 0) res.status(403).json(unauthorizedObject);
                         else {
                             var token = jwtAuthentication.auth(response[0]);
-                            res.json({ok: 1, token});
+                            res.json({ok: 1, token, response: response[0]});
                         }
                     },
                     (err) => {
