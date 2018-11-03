@@ -8,7 +8,6 @@ module.exports = function(router, applicationContext) {
 
     router
         .post("/auth", function(req, res) {
-            console.log(req.body);
             if(!req.body.email || !req.body.password)
                 res.status(403).json(unauthorizedObject);
             else if(req.body.email === '' || req.body.password === '')

@@ -49,7 +49,7 @@ module.exports = function (router, applicationContext) {
             );
         })
         .get("/delete/:id", function(req, res) {
-            usermapper.delete({dni: req.params.id},
+            usermapper.delete({_id: req.params.id},
                 (response) => res.json({ok: 1, response}),
                 (err) => {
                     applicationContext.getLog().error(err.message);
