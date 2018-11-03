@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 
 import io.amecodelabs.ims.models.utils.ContentValues;
+import io.amecodelabs.ims.models.utils.Digest;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -327,7 +328,7 @@ public class UsersViewImpl implements UsersView<ContentValues>, Initializable {
     		ContentValues userRoot = ContentValues.newInstanceEmpy("");
     		userRoot.put("_id", UUID.randomUUID().toString());
     		userRoot.put("email", txtEmail.getText());
-    		userRoot.put("password", txtPassword.getText());
+    		userRoot.put("password", Digest.encrypt(txtPassword.getText()));
     		userRoot.put("firstname", txtFirstName.getText());
     		userRoot.put("lastname", txtLastName.getText());
     		userRoot.put("dni", txtDNI.getText());
