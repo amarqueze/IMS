@@ -1,6 +1,7 @@
 package io.amecodelabs.ims.models.utils;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -9,7 +10,8 @@ import java.util.Map;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ContentValues implements JSONExportable {
+public class ContentValues implements JSONExportable, Serializable {
+	private static final long serialVersionUID = 3395851606106872853L;
 	private String nameObject;
 	private Map<String, Object> properties;
 	
@@ -126,6 +128,10 @@ public class ContentValues implements JSONExportable {
 	
 	public double getValueDouble(String key) {
 		return (Double) get(key);
+	}
+	
+	public boolean getValueBoolean(String key) {
+		return (Boolean) get(key);
 	}
 	
 	public ContentValues getContentValues(String key) {
