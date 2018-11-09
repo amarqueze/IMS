@@ -15,8 +15,7 @@ public class PresenterUserViewImpl implements PresenterUsersView<ContentValues> 
 	@Override
 	public void addUser(ContentValues user) {
 		this.usersView.showLoadProgress();
-		service.createUser(
-			user, 
+		service.createUser(user, 
 			(response, document) -> {
 				this.usersView.hiddenloadProgress();
 				if(response.getValueInteger("ok") == 1) {
@@ -56,8 +55,7 @@ public class PresenterUserViewImpl implements PresenterUsersView<ContentValues> 
 	@Override
 	public void editUser(ContentValues user) {
 		this.usersView.showLoadProgress();
-		service.editUsers(
-			user, 
+		service.editUsers(user, 
 			(response) -> {
 				this.usersView.hiddenloadProgress();
 				if(response.getValueInteger("ok") == 1) {
@@ -76,8 +74,7 @@ public class PresenterUserViewImpl implements PresenterUsersView<ContentValues> 
 	@Override
 	public void deleteUser(String id) {
 		this.usersView.showLoadProgress();
-		service.deleteUsers(
-			id, 
+		service.deleteUsers(id, 
 			(response) -> {
 				this.usersView.hiddenloadProgress();
 				if(response.getValueInteger("ok") == 1) {
