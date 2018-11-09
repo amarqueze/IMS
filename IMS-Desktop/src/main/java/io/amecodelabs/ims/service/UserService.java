@@ -21,20 +21,20 @@ public class UserService implements Service {
 		
 	}
 	
-	public void createUser(ContentValues provider, BiConsumer<ContentValues, ContentValues> success, Consumer<String> fail) {
+	public void createUser(ContentValues user, BiConsumer<ContentValues, ContentValues> success, Consumer<String> fail) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 	
 		HttpPostRequest request = null;
 		try {
 			request = new HttpPostRequest(LOCATION_URI + "/create");
 			addHead(request);
-			addBody(request, provider);
+			addBody(request, user);
 			
 			httpConnect
 			.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
 			.setSuccessHandler( (res) -> {
 				try {
-					success.accept(ContentValues.newInstanceOfImportJSON("response", res.getBody()), provider);
+					success.accept(ContentValues.newInstanceOfImportJSON("response", res.getBody()), user);
 				} catch (JSONImportException e) {
 					fail.accept(e.getMessage());
 				}
@@ -72,15 +72,15 @@ public class UserService implements Service {
 		} 
 	}
 	
-	public void editUsers(ContentValues updatedprovider, Consumer<ContentValues> success, Consumer<String> fail) {
+	public void editUsers(ContentValues updatedUser, Consumer<ContentValues> success, Consumer<String> fail) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 		
 		HttpPostRequest request = null;
 		try {
 			request = new HttpPostRequest(LOCATION_URI + "/edit");
 			addHead(request);
-			request.addParams("_id", updatedprovider.getValueString("_id"));
-			request.setContent(updatedprovider.exportJSON(), "application/json");
+			request.addParams("_id", updatedUser.getValueString("_id"));
+			request.setContent(updatedUser.exportJSON(), "application/json");
 			
 			httpConnect
 			.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
