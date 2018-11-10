@@ -4,10 +4,10 @@ import java.util.Locale;
 
 import io.amecodelabs.ims.view.context.Session;
 
-public class PresenterSettingImpl implements PresenterSetting {
-	private SettingView settingview;
+public class PresenterSettingsViewImpl implements PresenterSettingsView {
+	private SettingsView settingview;
 	
-	public PresenterSettingImpl(SettingView settingview) {
+	public PresenterSettingsViewImpl(SettingsView settingview) {
 		this.settingview = settingview;
 	}
 	
@@ -22,7 +22,7 @@ public class PresenterSettingImpl implements PresenterSetting {
 	}
 
 	@Override
-	public SettingView getView() {
+	public SettingsView getView() {
 		return settingview;
 	}
 

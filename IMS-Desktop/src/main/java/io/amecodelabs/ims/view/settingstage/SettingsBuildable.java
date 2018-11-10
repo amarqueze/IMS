@@ -5,7 +5,7 @@ import io.amecodelabs.ims.view.base.Window;
 import io.amecodelabs.ims.view.base.WindowBuilder;
 import io.amecodelabs.ims.view.context.ApplicationContext;
 
-public class SettingBuildable implements BuildableWindow {
+public class SettingsBuildable implements BuildableWindow {
 
 	@Override
 	public Window build() {

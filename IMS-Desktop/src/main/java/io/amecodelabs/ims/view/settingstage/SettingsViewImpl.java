@@ -19,7 +19,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class SettingViewImpl implements SettingView, Initializable {
+public class SettingsViewImpl implements SettingsView, Initializable {
 	@FXML
     private AnchorPane root;
 	@FXML
@@ -31,12 +31,12 @@ public class SettingViewImpl implements SettingView, Initializable {
     @FXML
     private Button btnDeleteSession;
     
-    private PresenterSetting presenter;
+    private PresenterSettingsView presenter;
 
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		presenter = new PresenterSettingImpl(this);
+		presenter = new PresenterSettingsViewImpl(this);
 		
 		cbLanguage.getItems().addAll("English");
 		cbLanguage.setValue("English");
@@ -100,7 +100,7 @@ public class SettingViewImpl implements SettingView, Initializable {
 	}
 
 	@Override
-	public PresenterSetting getPresenter() {
+	public PresenterSettingsView getPresenter() {
 		return presenter;
 	}
 

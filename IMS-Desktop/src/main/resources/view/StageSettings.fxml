@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="355.0" prefWidth="455.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.amecodelabs.ims.view.settingstage.SettingViewImpl">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="355.0" prefWidth="455.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.amecodelabs.ims.view.settingstage.SettingsViewImpl">
    <children>
       <StackPane fx:id="stackPane" onMouseClicked="#onCloseStackPane" prefHeight="355.0" prefWidth="455.0" />
       <AnchorPane prefHeight="50.0" prefWidth="455.0" style="-fx-background-color: #0984e3;">

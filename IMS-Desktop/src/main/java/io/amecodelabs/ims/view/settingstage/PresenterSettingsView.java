@@ -2,9 +2,9 @@ package io.amecodelabs.ims.view.settingstage;
 
 import java.util.Locale;
 
-public interface PresenterSetting {
+public interface PresenterSettingsView {
 	void setLanguage(Locale locale);
 	void deleteSession();
-	SettingView getView();
+	SettingsView getView();
 		
 }
