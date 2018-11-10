@@ -15,6 +15,7 @@ public class WindowBuilder {
 	private String title;
 	private String iconLocation;
 	private boolean isDecorated;
+	private PrimaryStage primary;
 	private Map<String, Object> params;
 	
 	public WindowBuilder(String fxmlLocation, Stage stage) {
@@ -42,6 +43,11 @@ public class WindowBuilder {
 		return this;
 	}
 	
+	public WindowBuilder setPrimaryStage(PrimaryStage primary) {
+		this.primary = primary;
+		return this;
+	}
+	
 	public WindowBuilder setParams(Map<String, Object> params) {
 		this.params = params;
 		return this;
@@ -60,13 +66,13 @@ public class WindowBuilder {
 					if(isDecorated) setUndecoratedWindow(sceneGraph);
 					AbstractView viewHandler = (AbstractView) loader.getController();
 					
+					if(viewHandler instanceof SubStage) ((SubStage)viewHandler).setPrimaryStage(primary);
 					if(params != null) viewHandler.setParams(params);
 					
 					Scene scene = new Scene(sceneGraph);
 					stage.setScene(scene);
 					stage.setTitle(title);
 					stage.getIcons().add(new Image(iconLocation));
-					
 					this.show();
 				} catch (IOException | IllegalArgumentException | SecurityException e) {
 					e.printStackTrace();
