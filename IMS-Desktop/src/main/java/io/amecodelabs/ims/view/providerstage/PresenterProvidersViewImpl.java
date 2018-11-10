@@ -3,11 +3,11 @@ package io.amecodelabs.ims.view.providerstage;
 import io.amecodelabs.ims.models.utils.ContentValues;
 import io.amecodelabs.ims.service.ProviderService;
 
-public class PresenterProvidersImpl implements PresenterProvidersView<ContentValues> {
+public class PresenterProvidersViewImpl implements PresenterProvidersView<ContentValues> {
 	private ProviderService service;
 	private ProvidersView<ContentValues> providerView;
 	
-	public PresenterProvidersImpl(ProvidersView<ContentValues> providerView) {
+	public PresenterProvidersViewImpl(ProvidersView<ContentValues> providerView) {
 		this.providerView = providerView;
 		service = new ProviderService();
 	}

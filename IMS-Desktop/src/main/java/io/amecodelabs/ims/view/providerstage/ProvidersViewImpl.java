@@ -234,7 +234,7 @@ public class ProvidersViewImpl implements ProvidersView<ContentValues>, Initiali
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		this.presenter = new PresenterProvidersImpl(this);
+		this.presenter = new PresenterProvidersViewImpl(this);
 		
 		Callback<TableColumn<DataModelProviders, String>, TableCell<DataModelProviders, String>> cellFactory = (p) -> new EditingCell();
 		
