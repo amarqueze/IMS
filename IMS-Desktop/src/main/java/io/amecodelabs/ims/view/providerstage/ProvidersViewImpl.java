@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
 import io.amecodelabs.ims.models.utils.ContentValues;
+import io.amecodelabs.ims.view.base.PrimaryStage;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -92,6 +93,7 @@ public class ProvidersViewImpl implements ProvidersView<ContentValues>, Initiali
     private ImageView lblLoadProvider;
 	/* Fin JavaFX Components  */
 
+	private PrimaryStage primary;
 	private Image load = new Image("/images/load.gif", true);
 	private final ObservableList<DataModelProviders> data = FXCollections.observableArrayList();
 	private PresenterProvidersView<ContentValues> presenter;
@@ -451,6 +453,12 @@ public class ProvidersViewImpl implements ProvidersView<ContentValues>, Initiali
 	@FXML
 	void onCloseStage(ActionEvent event) {
 		((Stage) root.getScene().getWindow()).close();
+		primary.updateStage(this, "close");
+	}
+	
+	@Override
+	public void setPrimaryStage(PrimaryStage primary) {
+		this.primary = primary;
 	}
 	
 	@Override

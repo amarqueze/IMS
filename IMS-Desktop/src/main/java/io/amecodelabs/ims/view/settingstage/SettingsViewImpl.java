@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 
+import io.amecodelabs.ims.view.base.PrimaryStage;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,9 +32,9 @@ public class SettingsViewImpl implements SettingsView, Initializable {
     @FXML
     private Button btnDeleteSession;
     
+    private PrimaryStage primary;
     private PresenterSettingsView presenter;
 
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		presenter = new PresenterSettingsViewImpl(this);
@@ -58,7 +59,7 @@ public class SettingsViewImpl implements SettingsView, Initializable {
 					presenter.setLanguage(null);
 					dialog.close();
 					stackPane.toBack();
-					((Stage) root.getScene().getWindow()).close();
+					onCloseStage(null);
 				});
 				JFXButton btnNo = new JFXButton("No");
 				btnNo.setOnAction((event) ->  {
@@ -77,7 +78,6 @@ public class SettingsViewImpl implements SettingsView, Initializable {
 		stackPane.toBack();
     }
 	
-
     @FXML
     void onDeleteSession(ActionEvent event) {
     	btnDeleteSession.setDisable(true);
@@ -85,18 +85,24 @@ public class SettingsViewImpl implements SettingsView, Initializable {
     }
     
     @FXML
-    void onCloseStage(MouseEvent event) {
-    	((Stage) root.getScene().getWindow()).close();
-    }
-
-    @FXML
     void onSave(ActionEvent event) {
     	setMessage("Setting", "¿Apply changes?");
     }
-	
+    
+    @FXML
+    void onCloseStage(MouseEvent event) {
+    	((Stage) root.getScene().getWindow()).close();
+    	primary.updateStage(this, "close");
+    }
+    
+    @Override
+    public void setPrimaryStage(PrimaryStage primary) {
+    	this.primary = primary;
+    }
+    
 	@Override
 	public String getName() {
-		return "Setting";
+		return "SettingsView";
 	}
 
 	@Override

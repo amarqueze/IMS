@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXDialogLayout;
 
 import io.amecodelabs.ims.models.utils.ContentValues;
 import io.amecodelabs.ims.models.utils.Digest;
+import io.amecodelabs.ims.view.base.PrimaryStage;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -100,6 +101,7 @@ public class UsersViewImpl implements UsersView<ContentValues>, Initializable {
     private final Node productIcon =  new ImageView(new Image("/images/product.png", true));
     
     private final ObservableList<DataModelUsers> data = FXCollections.observableArrayList();
+    private PrimaryStage primary;
     private PresenterUsersView<ContentValues> presenter;
     private boolean userPrivileges;
     private boolean providerPrivileges;
@@ -459,6 +461,12 @@ public class UsersViewImpl implements UsersView<ContentValues>, Initializable {
     @FXML
     void onCloseStage(ActionEvent event) {
     	((Stage) root.getScene().getWindow()).close();
+    	primary.updateStage(this, "close");
+    }
+    
+    @Override
+    public void setPrimaryStage(PrimaryStage primary) {
+    	this.primary = primary;
     }
 	
 	@Override
