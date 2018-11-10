@@ -1,4 +1,4 @@
-package io.amecodelabs.ims.view.productstage;
+package io.amecodelabs.ims.view.addproduct;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 
 import io.amecodelabs.ims.models.utils.ContentValues;
+import io.amecodelabs.ims.view.base.PrimaryStage;
 import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -31,7 +32,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class ProductViewImpl implements ProductView<ContentValues>, Initializable {
+public class AddProductViewImpl implements AddProductView<ContentValues>, Initializable {
 	/* JavaFx Components */
 	@FXML
     private AnchorPane root;
@@ -57,14 +58,15 @@ public class ProductViewImpl implements ProductView<ContentValues>, Initializabl
     private ImageView lblLoad;
 	/* Fin JavaFx Components */
 	
-	private PresenterProductView<ContentValues> presenter;
+    private PrimaryStage primary;
+	private PresenterAddProductView<ContentValues> presenter;
 	private Image load = new Image("/images/load.gif", true);
 	ObservableList<ContentValues> optionsProviders = FXCollections.observableArrayList();
 	ObservableList<ContentValues> optionsCategories = FXCollections.observableArrayList();
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		presenter = new PresenterProductViewImpl(this);
+		presenter = new PresenterAddProductViewImpl(this);
 		
 		Callback<ListView<ContentValues>, ListCell<ContentValues>> cellFactory = (list) -> {
 			return new ListCell<ContentValues>() {
@@ -130,6 +132,11 @@ public class ProductViewImpl implements ProductView<ContentValues>, Initializabl
 	}
 	
 	@Override
+	public void updateProduct(ContentValues product) {
+		primary.updateStage(this, product);
+	}
+	
+	@Override
 	public void clearForm() {
 		txtAvailableStock.setText("0");
 		txtMinimumStock.setText("15");
@@ -150,9 +157,9 @@ public class ProductViewImpl implements ProductView<ContentValues>, Initializabl
 			product.put("_id", UUID.randomUUID().toString());
 			product.put("description", txtDescription.getText());
 			product.put("unit", txtUnit.getText());
-			product.put("available_stock", txtAvailableStock.getText());
-			product.put("maximum_stock", txtMaximumStock.getText());
-			product.put("minimum_stock", txtMinimumStock.getText());
+			product.put("available_stock", Integer.parseInt(txtAvailableStock.getText()));
+			product.put("maximum_stock", Integer.parseInt(txtMaximumStock.getText()));
+			product.put("minimum_stock", Integer.parseInt(txtMinimumStock.getText()));
 			product.put("provider_main", cbProviders.getSelectionModel().getSelectedItem().getValueString("name"));
 			product.put("category", cbCategories.getSelectionModel().getSelectedItem().getValueString("_id"));
 			
@@ -212,7 +219,12 @@ public class ProductViewImpl implements ProductView<ContentValues>, Initializabl
 	@FXML
 	void onCloseStage(MouseEvent event) {
 		((Stage) root.getScene().getWindow()).close();
-		//primary.updateStage(this, "close");
+		primary.updateStage(this, "close");
+	}
+	
+	@Override
+	public void setPrimaryStage(PrimaryStage primary) {
+		this.primary = primary;
 	}
 	
 	@Override
@@ -221,7 +233,7 @@ public class ProductViewImpl implements ProductView<ContentValues>, Initializabl
 	}
 
 	@Override
-	public PresenterProductView<ContentValues> getPresenter() {
+	public PresenterAddProductView<ContentValues> getPresenter() {
 		return presenter;
 	}
 

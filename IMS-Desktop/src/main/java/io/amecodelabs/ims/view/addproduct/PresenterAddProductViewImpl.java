@@ -1,18 +1,18 @@
-package io.amecodelabs.ims.view.productstage;
+package io.amecodelabs.ims.view.addproduct;
 
 import io.amecodelabs.ims.models.utils.ContentValues;
 import io.amecodelabs.ims.service.CategoryService;
 import io.amecodelabs.ims.service.ProductService;
 import io.amecodelabs.ims.service.ProviderService;
 
-public class PresenterProductViewImpl implements PresenterProductView<ContentValues> {
-	private ProductView<ContentValues> productView;
+public class PresenterAddProductViewImpl implements PresenterAddProductView<ContentValues> {
+	private AddProductView<ContentValues> addProductView;
 	private ProductService productService;
 	private ProviderService providerService;
 	private CategoryService categoryService;
 	
-	public PresenterProductViewImpl(ProductView<ContentValues> productView) {
-		this.productView = productView;
+	public PresenterAddProductViewImpl(AddProductView<ContentValues> productView) {
+		this.addProductView = productView;
 		productService = new ProductService();
 		providerService = new ProviderService();
 		categoryService = new CategoryService();
@@ -20,20 +20,20 @@ public class PresenterProductViewImpl implements PresenterProductView<ContentVal
 
 	@Override
 	public void saveProduct(ContentValues product) {
-		this.productView.showRegisterProgress();
+		this.addProductView.showRegisterProgress();
 		productService.createProduct(product, 
 			(res, document) -> {
-				this.productView.hiddenRegisterProgress();
+				this.addProductView.hiddenRegisterProgress();
 				if(res.getValueInteger("ok") == 1) {
-					this.productView.showMessage("Success", "Product has been successfully added");
-					this.productView.clearForm();
+					this.addProductView.showMessage("Success", "Product has been successfully added");
+					this.addProductView.clearForm();
 				} else {
-					this.productView.showMessage("Error", "Product could not be added");
+					this.addProductView.showMessage("Error", "Product could not be added");
 				}
 			}, 
 			(err) -> {
-				this.productView.hiddenRegisterProgress();
-				this.productView.showMessage("Error", "Connect failed or interrupted");
+				this.addProductView.hiddenRegisterProgress();
+				this.addProductView.showMessage("Error", "Connect failed or interrupted");
 			}
 		);
 	}
@@ -44,7 +44,7 @@ public class PresenterProductViewImpl implements PresenterProductView<ContentVal
 			(res) -> {
 				if(res.getValueInteger("ok") == 1) {
 					ContentValues[] providers = res.getArrayContentValues("response");
-					if(providers.length != 0) this.productView.loadProviders(providers);
+					if(providers.length != 0) this.addProductView.loadProviders(providers);
 				} 	
 			}, 
 			(err) -> {}
@@ -57,7 +57,7 @@ public class PresenterProductViewImpl implements PresenterProductView<ContentVal
 			(res) -> {
 				if(res.getValueInteger("ok") == 1) {
 					ContentValues[] categories = res.getArrayContentValues("response");
-					if(categories.length != 0) this.productView.loadCategories(categories);
+					if(categories.length != 0) this.addProductView.loadCategories(categories);
 				} 	
 			}, 
 			(err) -> {}
@@ -65,8 +65,8 @@ public class PresenterProductViewImpl implements PresenterProductView<ContentVal
 	}
 
 	@Override
-	public ProductView<ContentValues> getProductView() {
-		return productView;
+	public AddProductView<ContentValues> getProductView() {
+		return addProductView;
 	}
 
 }
