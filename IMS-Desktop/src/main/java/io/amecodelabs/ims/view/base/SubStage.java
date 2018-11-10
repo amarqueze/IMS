@@ -1,7 +1,6 @@
 package io.amecodelabs.ims.view.base;
 
 public interface SubStage {
-	static PrimaryStage primary = null;
-	
+	default void setPrimaryStage(PrimaryStage primary) {}
 	String getName();
 }

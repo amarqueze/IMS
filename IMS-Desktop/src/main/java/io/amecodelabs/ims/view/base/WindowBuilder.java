@@ -48,7 +48,6 @@ public class WindowBuilder {
 	}
 	
 	public Window build() {
-		
 		return (Window) new AbstractWindow(stage, params) {
 			@Override
 			protected void config(Map<String, Object> params)  {
@@ -61,7 +60,7 @@ public class WindowBuilder {
 					if(isDecorated) setUndecoratedWindow(sceneGraph);
 					AbstractView viewHandler = (AbstractView) loader.getController();
 					
-					if(params != null) viewHandler.getClass().getField("params").set(null, params);
+					if(params != null) viewHandler.setParams(params);
 					
 					Scene scene = new Scene(sceneGraph);
 					stage.setScene(scene);
@@ -69,9 +68,9 @@ public class WindowBuilder {
 					stage.getIcons().add(new Image(iconLocation));
 					
 					this.show();
-				} catch (IOException | IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+				} catch (IOException | IllegalArgumentException | SecurityException e) {
 					e.printStackTrace();
-				}			
+				} 	
 			}
 		};
 	}
