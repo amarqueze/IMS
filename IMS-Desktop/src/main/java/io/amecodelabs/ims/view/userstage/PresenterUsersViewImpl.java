@@ -3,11 +3,11 @@ package io.amecodelabs.ims.view.userstage;
 import io.amecodelabs.ims.models.utils.ContentValues;
 import io.amecodelabs.ims.service.UserService;
 
-public class PresenterUserViewImpl implements PresenterUsersView<ContentValues> {
+public class PresenterUsersViewImpl implements PresenterUsersView<ContentValues> {
 	private UsersView<ContentValues> usersView;
 	private UserService service;
 	
-	public PresenterUserViewImpl(UsersView<ContentValues> usersView) {
+	public PresenterUsersViewImpl(UsersView<ContentValues> usersView) {
 		this.usersView = usersView;
 		this.service = new UserService();
 	}

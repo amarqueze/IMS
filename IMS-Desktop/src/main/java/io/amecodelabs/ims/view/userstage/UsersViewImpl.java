@@ -243,7 +243,7 @@ public class UsersViewImpl implements UsersView<ContentValues>, Initializable {
     
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
-    	presenter = new PresenterUserViewImpl(this);
+    	presenter = new PresenterUsersViewImpl(this);
     	
     	Callback<TableColumn<DataModelUsers, String>, TableCell<DataModelUsers, String>> cellFactory = (p) -> new EditingCell();
 		
@@ -463,7 +463,7 @@ public class UsersViewImpl implements UsersView<ContentValues>, Initializable {
 	
 	@Override
 	public String getName() {
-		return "Users";
+		return "UsersView";
 	}
 
 	@Override
