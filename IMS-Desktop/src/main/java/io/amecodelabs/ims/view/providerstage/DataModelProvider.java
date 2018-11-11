@@ -3,7 +3,7 @@ package io.amecodelabs.ims.view.providerstage;
 import io.amecodelabs.ims.models.utils.ContentValues;
 import javafx.beans.property.SimpleStringProperty;
 
-public class DataModelProviders {
+public class DataModelProvider {
 	private final String id;
 	private final SimpleStringProperty provider;
 	private final SimpleStringProperty phone;
@@ -12,7 +12,7 @@ public class DataModelProviders {
 	private final SimpleStringProperty city;
 	private final SimpleStringProperty comments;
 
-	public DataModelProviders(String id, String provider, String phone, String email, String address, String city,
+	public DataModelProvider(String id, String provider, String phone, String email, String address, String city,
 			String comments) {
 		this.id = id;
 		this.provider = new SimpleStringProperty(provider);
@@ -23,7 +23,7 @@ public class DataModelProviders {
 		this.comments = new SimpleStringProperty(comments);
 	}
 	
-	public DataModelProviders(ContentValues contentValues) {
+	public DataModelProvider(ContentValues contentValues) {
 		this.id = contentValues.getValueString("_id");
 		this.provider = new SimpleStringProperty(contentValues.getValueString("name"));
 		this.phone = new SimpleStringProperty(contentValues.getValueString("phone"));

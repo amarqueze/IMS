@@ -72,21 +72,21 @@ public class ProvidersViewImpl implements ProvidersView<ContentValues>, Initiali
     @FXML
     private JFXTextField txtFiltered;
 	@FXML
-	private TableView<DataModelProviders> tbProviders;
+	private TableView<DataModelProvider> tbProviders;
 	@FXML
-	private TableColumn<DataModelProviders, String> colProvider;
+	private TableColumn<DataModelProvider, String> colProvider;
 	@FXML
-	private TableColumn<DataModelProviders, String> colPhone;
+	private TableColumn<DataModelProvider, String> colPhone;
 	@FXML
-	private TableColumn<DataModelProviders, String> colEmail;
+	private TableColumn<DataModelProvider, String> colEmail;
 	@FXML
-	private TableColumn<DataModelProviders, String> colAddress;
+	private TableColumn<DataModelProvider, String> colAddress;
 	@FXML
-	private TableColumn<DataModelProviders, String> colCity;
+	private TableColumn<DataModelProvider, String> colCity;
 	@FXML
-	private TableColumn<DataModelProviders, String> colComments;
+	private TableColumn<DataModelProvider, String> colComments;
 	@FXML
-	private TableColumn<DataModelProviders, DataModelProviders> colEdit;
+	private TableColumn<DataModelProvider, DataModelProvider> colEdit;
 	@FXML
     private ImageView lblLoadSave;
 	@FXML
@@ -95,10 +95,10 @@ public class ProvidersViewImpl implements ProvidersView<ContentValues>, Initiali
 
 	private PrimaryStage primary;
 	private Image load = new Image("/images/load.gif", true);
-	private final ObservableList<DataModelProviders> data = FXCollections.observableArrayList();
+	private final ObservableList<DataModelProvider> data = FXCollections.observableArrayList();
 	private PresenterProvidersView<ContentValues> presenter;
 	
-	private class ButtonCell extends TableCell<DataModelProviders, DataModelProviders> {
+	private class ButtonCell extends TableCell<DataModelProvider, DataModelProvider> {
 		Group group = new Group();
         final Button btnEdit = new Button("Edit");
         final Button btnDelete = new Button("Delete");
@@ -155,7 +155,7 @@ public class ProvidersViewImpl implements ProvidersView<ContentValues>, Initiali
         }
         
         @Override
-        protected void updateItem(DataModelProviders t, boolean empty) {
+        protected void updateItem(DataModelProvider t, boolean empty) {
         	super.updateItem(t, empty);
             if(!empty && t != null) {
                 setGraphic(group);
@@ -166,7 +166,7 @@ public class ProvidersViewImpl implements ProvidersView<ContentValues>, Initiali
         }
     }
 
-	private class EditingCell extends TableCell<DataModelProviders, String> {
+	private class EditingCell extends TableCell<DataModelProvider, String> {
         private TextField textField;
           
         public EditingCell() {}
@@ -238,45 +238,45 @@ public class ProvidersViewImpl implements ProvidersView<ContentValues>, Initiali
 	public void initialize(URL location, ResourceBundle resources) {
 		this.presenter = new PresenterProvidersViewImpl(this);
 		
-		Callback<TableColumn<DataModelProviders, String>, TableCell<DataModelProviders, String>> cellFactory = (p) -> new EditingCell();
+		Callback<TableColumn<DataModelProvider, String>, TableCell<DataModelProvider, String>> cellFactory = (p) -> new EditingCell();
 		
 		colProvider.setCellValueFactory(
-			new PropertyValueFactory<DataModelProviders, String>("provider")
+			new PropertyValueFactory<DataModelProvider, String>("provider")
 		);
 		colProvider.setCellFactory(cellFactory);
 		colProvider.setOnEditCommit( event -> event.getRowValue().setProvider(event.getNewValue()) );
 		
 		colPhone.setCellValueFactory(
-			new PropertyValueFactory<DataModelProviders, String>("phone")
+			new PropertyValueFactory<DataModelProvider, String>("phone")
 		);
 		colPhone.setCellFactory(cellFactory);
 		colPhone.setOnEditCommit( event -> event.getRowValue().setPhone(event.getNewValue()) );
 		
 		colEmail.setCellValueFactory(
-			new PropertyValueFactory<DataModelProviders, String>("email")
+			new PropertyValueFactory<DataModelProvider, String>("email")
 		);
 		colEmail.setCellFactory(cellFactory);
 		colEmail.setOnEditCommit( event -> event.getRowValue().setEmail(event.getNewValue()) );
 		
 		colAddress.setCellValueFactory(
-			new PropertyValueFactory<DataModelProviders, String>("address")
+			new PropertyValueFactory<DataModelProvider, String>("address")
 		);
 		colAddress.setCellFactory(cellFactory);
 		colAddress.setOnEditCommit( event -> event.getRowValue().setAddress(event.getNewValue()) );
 		
 		colCity.setCellValueFactory(
-			new PropertyValueFactory<DataModelProviders, String>("city")
+			new PropertyValueFactory<DataModelProvider, String>("city")
 		);
 		colCity.setCellFactory(cellFactory);
 		colCity.setOnEditCommit( event -> event.getRowValue().setCity(event.getNewValue()) );
 		
 		colComments.setCellValueFactory(
-			new PropertyValueFactory<DataModelProviders, String>("comments")
+			new PropertyValueFactory<DataModelProvider, String>("comments")
 		);
 		colComments.setCellFactory(cellFactory);
 		colComments.setOnEditCommit( event -> event.getRowValue().setComments(event.getNewValue()) );
 		
-		colEdit.setCellValueFactory( (p) -> new SimpleObjectProperty<DataModelProviders>(p.getValue()));
+		colEdit.setCellValueFactory( (p) -> new SimpleObjectProperty<DataModelProvider>(p.getValue()));
 		colEdit.setCellFactory( (p) -> new ButtonCell());
 		
 		configFiltered();
@@ -285,7 +285,7 @@ public class ProvidersViewImpl implements ProvidersView<ContentValues>, Initiali
 	}
 	
 	private void configFiltered() {
-		FilteredList<DataModelProviders> filteredData = new FilteredList<>(data, p -> true);
+		FilteredList<DataModelProvider> filteredData = new FilteredList<>(data, p -> true);
 		
         txtFiltered.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(dataModel -> {
@@ -301,7 +301,7 @@ public class ProvidersViewImpl implements ProvidersView<ContentValues>, Initiali
             });
         });
         
-        SortedList<DataModelProviders> sortedData = new SortedList<>(filteredData);
+        SortedList<DataModelProvider> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(tbProviders.comparatorProperty());
         tbProviders.setItems(sortedData);
 	}
@@ -311,7 +311,7 @@ public class ProvidersViewImpl implements ProvidersView<ContentValues>, Initiali
 		Platform.runLater(
 			() -> {
 				for(ContentValues provider: providers) {
-					DataModelProviders dataModel = new DataModelProviders(provider);
+					DataModelProvider dataModel = new DataModelProvider(provider);
 					data.add(dataModel);
 				}
 			}
@@ -322,7 +322,7 @@ public class ProvidersViewImpl implements ProvidersView<ContentValues>, Initiali
 	public void update(ContentValues provider) {
 		Platform.runLater(
 			() -> {
-				DataModelProviders dataModel = new DataModelProviders(provider);
+				DataModelProvider dataModel = new DataModelProvider(provider);
 				data.add(dataModel);
 			}
 		);
