@@ -72,6 +72,30 @@ public class ProductService implements Service {
 		} 
 	}
 	
+	public void findProduct(String id, Consumer<ContentValues> success, Consumer<String> fail) {
+		HttpConnect httpConnect = HttpBroker.getHttpConnect();
+		
+		HttpGetRequest request = null;
+		try {
+			request = new HttpGetRequest(LOCATION_URI + "/find/" + id);
+			addHead(request);
+			
+			httpConnect
+				.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
+				.setSuccessHandler( (res) -> {
+					try {
+						success.accept(ContentValues.newInstanceOfImportJSON("response", res.getBody()));
+					} catch (JSONImportException e) {
+						fail.accept(e.getMessage());
+					}
+				});
+			
+			httpConnect.execute(request);
+		} catch (URISyntaxException e) {
+			fail.accept(e.getMessage());
+		} 
+	}
+	
 	public void editProduct(ContentValues updatedProduct, Consumer<ContentValues> success, Consumer<String> fail) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 		
@@ -93,7 +117,6 @@ public class ProductService implements Service {
 			});
 		
 			httpConnect.execute(request);
-			
 		} catch (URISyntaxException e) {
 			fail.accept(e.getMessage());
 		} 
