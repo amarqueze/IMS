@@ -75,21 +75,21 @@ public class UsersViewImpl implements UsersView<ContentValues>, Initializable {
     @FXML
     private TextField txtAddress;
     @FXML
-    private TableView<DataModelUsers> tbUsers;
+    private TableView<DataModelUser> tbUsers;
     @FXML
-    private TableColumn<DataModelUsers, String> colFirstName;
+    private TableColumn<DataModelUser, String> colFirstName;
     @FXML
-    private TableColumn<DataModelUsers, String> colLastName;
+    private TableColumn<DataModelUser, String> colLastName;
     @FXML
-    private TableColumn<DataModelUsers, String> colEmail;
+    private TableColumn<DataModelUser, String> colEmail;
     @FXML
-    private TableColumn<DataModelUsers, String> colDNI;
+    private TableColumn<DataModelUser, String> colDNI;
     @FXML
-    private TableColumn<DataModelUsers, String> colPhone;
+    private TableColumn<DataModelUser, String> colPhone;
     @FXML
-    private TableColumn<DataModelUsers, String> colAddress;
+    private TableColumn<DataModelUser, String> colAddress;
     @FXML
-    private TableColumn<DataModelUsers, DataModelUsers> colEdit;
+    private TableColumn<DataModelUser, DataModelUser> colEdit;
     @FXML
     private ImageView lblLoad;
     /* Fin JavaFX Components */
@@ -100,14 +100,14 @@ public class UsersViewImpl implements UsersView<ContentValues>, Initializable {
     private final Node providerIcon =  new ImageView(new Image("/images/delivery-truck.png", true));
     private final Node productIcon =  new ImageView(new Image("/images/product.png", true));
     
-    private final ObservableList<DataModelUsers> data = FXCollections.observableArrayList();
+    private final ObservableList<DataModelUser> data = FXCollections.observableArrayList();
     private PrimaryStage primary;
     private PresenterUsersView<ContentValues> presenter;
     private boolean userPrivileges;
     private boolean providerPrivileges;
     private boolean productPrivileges;
     
-    private class ButtonCell extends TableCell<DataModelUsers, DataModelUsers> {
+    private class ButtonCell extends TableCell<DataModelUser, DataModelUser> {
 		Group group = new Group();
         final Button btnEdit = new Button("Edit");
         final Button btnDelete = new Button("Delete");
@@ -164,7 +164,7 @@ public class UsersViewImpl implements UsersView<ContentValues>, Initializable {
         }
         
         @Override
-        protected void updateItem(DataModelUsers t, boolean empty) {
+        protected void updateItem(DataModelUser t, boolean empty) {
         	super.updateItem(t, empty);
             if(!empty && t != null) {
                 setGraphic(group);
@@ -175,7 +175,7 @@ public class UsersViewImpl implements UsersView<ContentValues>, Initializable {
         }
     }
     
-    private class EditingCell extends TableCell<DataModelUsers, String> {
+    private class EditingCell extends TableCell<DataModelUser, String> {
         private TextField textField;
           
         public EditingCell() {}
@@ -247,45 +247,45 @@ public class UsersViewImpl implements UsersView<ContentValues>, Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
     	presenter = new PresenterUsersViewImpl(this);
     	
-    	Callback<TableColumn<DataModelUsers, String>, TableCell<DataModelUsers, String>> cellFactory = (p) -> new EditingCell();
+    	Callback<TableColumn<DataModelUser, String>, TableCell<DataModelUser, String>> cellFactory = (p) -> new EditingCell();
 		
     	colFirstName.setCellValueFactory(
-			new PropertyValueFactory<DataModelUsers, String>("firstName")
+			new PropertyValueFactory<DataModelUser, String>("firstName")
 		);
     	colFirstName.setCellFactory(cellFactory);
     	colFirstName.setOnEditCommit( event -> event.getRowValue().setFirstName(event.getNewValue()) );
 		
     	colLastName.setCellValueFactory(
-			new PropertyValueFactory<DataModelUsers, String>("lastName")
+			new PropertyValueFactory<DataModelUser, String>("lastName")
 		);
     	colLastName.setCellFactory(cellFactory);
     	colLastName.setOnEditCommit( event -> event.getRowValue().setLastName(event.getNewValue()) );
 		
 		colEmail.setCellValueFactory(
-			new PropertyValueFactory<DataModelUsers, String>("email")
+			new PropertyValueFactory<DataModelUser, String>("email")
 		);
 		colEmail.setCellFactory(cellFactory);
 		colEmail.setOnEditCommit( event -> event.getRowValue().setEmail(event.getNewValue()) );
 		
 		colAddress.setCellValueFactory(
-			new PropertyValueFactory<DataModelUsers, String>("address")
+			new PropertyValueFactory<DataModelUser, String>("address")
 		);
 		colAddress.setCellFactory(cellFactory);
 		colAddress.setOnEditCommit( event -> event.getRowValue().setAddress(event.getNewValue()) );
 		
 		colDNI.setCellValueFactory(
-			new PropertyValueFactory<DataModelUsers, String>("dni")
+			new PropertyValueFactory<DataModelUser, String>("dni")
 		);
 		colDNI.setCellFactory(cellFactory);
 		colDNI.setOnEditCommit( event -> event.getRowValue().setDni(event.getNewValue()) );
 		
 		colPhone.setCellValueFactory(
-			new PropertyValueFactory<DataModelUsers, String>("phone")
+			new PropertyValueFactory<DataModelUser, String>("phone")
 		);
 		colPhone.setCellFactory(cellFactory);
 		colPhone.setOnEditCommit( event -> event.getRowValue().setPhone(event.getNewValue()) );
 		
-		colEdit.setCellValueFactory( (p) -> new SimpleObjectProperty<DataModelUsers>(p.getValue()));
+		colEdit.setCellValueFactory( (p) -> new SimpleObjectProperty<DataModelUser>(p.getValue()));
 		colEdit.setCellFactory( (p) -> new ButtonCell());
 		
 		tbUsers.setItems(data);
@@ -369,7 +369,7 @@ public class UsersViewImpl implements UsersView<ContentValues>, Initializable {
        	Platform.runLater(
        		() -> {
        			for(ContentValues user: users) {
-       				DataModelUsers dataModel = new DataModelUsers(user);
+       				DataModelUser dataModel = new DataModelUser(user);
        				data.add(dataModel);
        			}
        		}
@@ -380,7 +380,7 @@ public class UsersViewImpl implements UsersView<ContentValues>, Initializable {
 	public void update(ContentValues user) {
 		Platform.runLater(
 	       	() -> {
-	       		DataModelUsers dataModel = new DataModelUsers(user);
+	       		DataModelUser dataModel = new DataModelUser(user);
 	       		data.add(dataModel);
 	       	}
 	    );

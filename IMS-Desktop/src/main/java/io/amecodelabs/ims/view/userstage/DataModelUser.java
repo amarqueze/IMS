@@ -3,7 +3,7 @@ package io.amecodelabs.ims.view.userstage;
 import io.amecodelabs.ims.models.utils.ContentValues;
 import javafx.beans.property.SimpleStringProperty;
 
-public class DataModelUsers {
+public class DataModelUser {
 	private final String id;
 	private final SimpleStringProperty firstName;
 	private final SimpleStringProperty lastName;
@@ -12,7 +12,7 @@ public class DataModelUsers {
 	private final SimpleStringProperty address;
 	private final SimpleStringProperty phone;
 	
-	public DataModelUsers(String id, String firstName, String lastName, String email, 
+	public DataModelUser(String id, String firstName, String lastName, String email, 
 			String dni, String address, String phone) {
 		this.id = id;
 		this.firstName = new SimpleStringProperty(firstName);
@@ -23,7 +23,7 @@ public class DataModelUsers {
 		this.phone = new SimpleStringProperty(phone);
 	}
 
-	public DataModelUsers(ContentValues user) {
+	public DataModelUser(ContentValues user) {
 		this.id = user.getValueString("_id");
 		this.firstName = new SimpleStringProperty(user.getValueString("firstname"));
 		this.lastName = new SimpleStringProperty(user.getValueString("lastname"));
