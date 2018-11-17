@@ -1,0 +1,13 @@
+=========== Users ==========
+
+-> Admin:
+email: admin@ims.com
+password: 364hyrHosoeklgptieo
+
+-> User:
+email: bertonsuarez96@gmail.com
+password: berton123456
+
+-> User:
+email: yolanda42@hotmail.com
+password: yolada123456
