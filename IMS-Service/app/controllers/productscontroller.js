@@ -13,7 +13,9 @@ module.exports = function (router, applicationContext) {
             });
         })
         .get("/list", function(req, res) {
+            var skip = parseInt(req.query.skip) || 0;
             productmapper.find({},
+                skip,
                 (response) => res.json({ok: 1, response}),
                 (err) => {
                     applicationContext.getLog().error(err.message);

@@ -9,7 +9,7 @@ module.exports = function(objectmapper) {
         update(params, updatedDocument, success, fail) {
             objectmapper.update(collectionName, params, {$set: updatedDocument}, success, fail);
         },
-        find(params, success, fail) {
+        find(params, skip, success, fail) {
             connector.open(
                 (dbo) => {
                     dbo.collection(collectionName).aggregate([
@@ -24,7 +24,7 @@ module.exports = function(objectmapper) {
                                 as: 'categorydetail'
                             }
                         }
-                    ]).toArray(function(err, res) {
+                    ]).skip(skip).limit(11).toArray(function(err, res) {
                         if (err) fail(err);
                         success(res);
                         connector.close();
