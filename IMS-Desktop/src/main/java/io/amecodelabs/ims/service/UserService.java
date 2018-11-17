@@ -80,7 +80,7 @@ public class UserService implements Service {
 			request = new HttpPostRequest(LOCATION_URI + "/edit");
 			addHead(request);
 			request.addParams("_id", updatedUser.getValueString("_id"));
-			request.setContent(updatedUser.exportJSON(), "application/json");
+			request.setContent(updatedUser.exportJSON(), "application/json; charset=utf-8");
 			
 			httpConnect
 			.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
@@ -132,6 +132,6 @@ public class UserService implements Service {
 	}
 	
 	protected void addBody(HttpPostRequest request, JSONExportable content) {
-		request.setContent("[" + content.exportJSON() + "]", "application/json");
+		request.setContent("[" + content.exportJSON() + "]", "application/json; charset=utf-8");
 	}
 }

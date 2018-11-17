@@ -80,6 +80,6 @@ private final String LOCATION_URI = "http://localhost/stock";
 	}
 	
 	protected void addBody(HttpPostRequest request, JSONExportable content) {
-		request.setContent("[" + content.exportJSON() + "]", "application/json");
+		request.setContent("[" + content.exportJSON() + "]", "application/json; charset=utf-8");
 	}
 }

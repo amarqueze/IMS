@@ -31,28 +31,28 @@ public class ProductService implements Service {
 			addBody(request, product);
 			
 			httpConnect
-			.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
-			.setSuccessHandler( (res) -> {
-				try {
-					success.accept(ContentValues.newInstanceOfImportJSON("response", res.getBody()), product);
-				} catch (JSONImportException e) {
-					fail.accept(e.getMessage());
-				}
-			});
+				.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
+				.setSuccessHandler( (res) -> {
+					try {
+						success.accept(ContentValues.newInstanceOfImportJSON("response", res.getBody()), product);
+					} catch (JSONImportException e) {
+						fail.accept(e.getMessage());
+					}
+				});
 			
 			httpConnect.execute(request);
-			
 		}catch (URISyntaxException e) {
 			fail.accept(e.getMessage());
 		} 
 	}
 	
-	public void getProduct(Consumer<ContentValues> success, Consumer<String> fail) {
+	public void getProduct(int skip, Consumer<ContentValues> success, Consumer<String> fail) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 		
 		HttpGetRequest request = null;
 		try {
 			request = new HttpGetRequest(LOCATION_URI + "/list");
+			request.addParams("skip", String.valueOf(skip));
 			addHead(request);
 			
 			httpConnect
@@ -66,7 +66,6 @@ public class ProductService implements Service {
 				});
 			
 			httpConnect.execute(request);
-			
 		} catch (URISyntaxException e) {
 			fail.accept(e.getMessage());
 		} 
@@ -102,19 +101,19 @@ public class ProductService implements Service {
 		HttpPostRequest request = null;
 		try {
 			request = new HttpPostRequest(LOCATION_URI + "/edit");
-			addHead(request);
 			request.addParams("_id", updatedProduct.getValueString("_id"));
-			request.setContent(updatedProduct.exportJSON(), "application/json");
+			addHead(request);
+			request.setContent(updatedProduct.exportJSON(), "application/json; charset=utf-8");
 			
 			httpConnect
-			.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
-			.setSuccessHandler( (res) -> {
-				try {
-					success.accept(ContentValues.newInstanceOfImportJSON("response", res.getBody()));
-				} catch (JSONImportException e) {
-					fail.accept(e.getMessage());
-				}
-			});
+				.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
+				.setSuccessHandler( (res) -> {
+					try {
+						success.accept(ContentValues.newInstanceOfImportJSON("response", res.getBody()));
+					} catch (JSONImportException e) {
+						fail.accept(e.getMessage());
+					}
+				});
 		
 			httpConnect.execute(request);
 		} catch (URISyntaxException e) {
@@ -155,7 +154,7 @@ public class ProductService implements Service {
 	}
 	
 	protected void addBody(HttpPostRequest request, JSONExportable content) {
-		request.setContent("[" + content.exportJSON() + "]", "application/json");
+		request.setContent("[" + content.exportJSON() + "]", "application/json; charset=utf-8");
 	}
 	
 }

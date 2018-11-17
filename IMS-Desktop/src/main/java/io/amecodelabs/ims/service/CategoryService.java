@@ -80,7 +80,7 @@ private final String LOCATION_URI = "http://localhost/categories";
 			request = new HttpPostRequest(LOCATION_URI + "/edit");
 			addHead(request);
 			request.addParams("_id", updatedCategory.getValueString("_id"));
-			request.setContent(updatedCategory.exportJSON(), "application/json");
+			request.setContent(updatedCategory.exportJSON(), "application/json; charset=utf-8");
 			
 			httpConnect
 			.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
@@ -132,7 +132,7 @@ private final String LOCATION_URI = "http://localhost/categories";
 	}
 	
 	protected void addBody(HttpPostRequest request, JSONExportable content) {
-		request.setContent("[" + content.exportJSON() + "]", "application/json");
+		request.setContent("[" + content.exportJSON() + "]", "application/json; charset=utf-8");
 	}
 	
 }
