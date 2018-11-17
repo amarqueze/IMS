@@ -32,9 +32,13 @@ public class DataModelProduct {
 		this.availableStock = new SimpleIntegerProperty(product.getValueInteger("available_stock"));
 		this.unit = new SimpleStringProperty(product.getValueString("unit"));
 		this.providerMain = new SimpleStringProperty(product.getValueString("provider_main"));
-		this.category = new SimpleStringProperty(product.getArrayContentValues("categorydetail")[0].getValueString("name"));
 		this.minimumStock = new SimpleIntegerProperty(product.getValueInteger("minimum_stock"));
 		this.maximumStock = new SimpleIntegerProperty(product.getValueInteger("maximum_stock"));
+		
+		if(product.getValueString("categoryname") != null)
+			this.category = new SimpleStringProperty(product.getValueString("categoryname"));
+		else 
+			this.category = new SimpleStringProperty(product.getArrayContentValues("categorydetail")[0].getValueString("name"));
 	}
 
 	public String getId() {

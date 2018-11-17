@@ -133,6 +133,7 @@ public class AddProductViewImpl implements AddProductView<ContentValues>, Initia
 	
 	@Override
 	public void updateProduct(ContentValues product) {
+		product.put("categoryname", cbCategories.getSelectionModel().getSelectedItem().getValueString("name"));
 		primary.updateStage(this, product);
 	}
 	
@@ -152,18 +153,21 @@ public class AddProductViewImpl implements AddProductView<ContentValues>, Initia
 				!txtAvailableStock.getText().equals("") &&
 				!txtMaximumStock.getText().equals("") && 
 				!txtMinimumStock.getText().equals("")) {
-			
-			ContentValues product = ContentValues.newInstanceEmpy("product");
-			product.put("_id", UUID.randomUUID().toString());
-			product.put("description", txtDescription.getText());
-			product.put("unit", txtUnit.getText());
-			product.put("available_stock", Integer.parseInt(txtAvailableStock.getText()));
-			product.put("maximum_stock", Integer.parseInt(txtMaximumStock.getText()));
-			product.put("minimum_stock", Integer.parseInt(txtMinimumStock.getText()));
-			product.put("provider_main", cbProviders.getSelectionModel().getSelectedItem().getValueString("name"));
-			product.put("category", cbCategories.getSelectionModel().getSelectedItem().getValueString("_id"));
-			
-			presenter.saveProduct(product);
+			try {
+				ContentValues product = ContentValues.newInstanceEmpy("product");
+				product.put("_id", UUID.randomUUID().toString());
+				product.put("description", txtDescription.getText());
+				product.put("unit", txtUnit.getText());
+				product.put("available_stock", Integer.parseInt(txtAvailableStock.getText()));
+				product.put("maximum_stock", Integer.parseInt(txtMaximumStock.getText()));
+				product.put("minimum_stock", Integer.parseInt(txtMinimumStock.getText()));
+				product.put("provider_main", cbProviders.getSelectionModel().getSelectedItem().getValueString("name"));
+				product.put("category", cbCategories.getSelectionModel().getSelectedItem().getValueString("_id"));
+				
+				presenter.saveProduct(product);
+			} catch(Exception e) {
+				showMessage("Error", "Product not insert");
+			}
 		} else {
 			showMessage("Empty fields", "Minimum fields required are empty");
 		}
@@ -229,7 +233,7 @@ public class AddProductViewImpl implements AddProductView<ContentValues>, Initia
 	
 	@Override
 	public String getName() {
-		return "ProductView";
+		return "AddProductView";
 	}
 
 	@Override

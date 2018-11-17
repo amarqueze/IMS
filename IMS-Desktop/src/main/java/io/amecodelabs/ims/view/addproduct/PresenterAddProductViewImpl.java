@@ -26,6 +26,7 @@ public class PresenterAddProductViewImpl implements PresenterAddProductView<Cont
 				this.addProductView.hiddenRegisterProgress();
 				if(res.getValueInteger("ok") == 1) {
 					this.addProductView.showMessage("Success", "Product has been successfully added");
+					this.addProductView.updateProduct(document);
 					this.addProductView.clearForm();
 				} else {
 					this.addProductView.showMessage("Error", "Product could not be added");

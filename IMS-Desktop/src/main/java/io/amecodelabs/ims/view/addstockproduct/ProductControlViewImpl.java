@@ -128,8 +128,8 @@ public class ProductControlViewImpl implements ProductControlView<ContentValues>
 	@Override
 	public void update(ContentValues productControl) {
 		int newAvailableStock = productControl.getValueInteger("available_stock");
-		modelProduct.setAvailableStock(newAvailableStock);
-		primary.updateStage(this, productControl);
+		Object[] object = new Object[] {newAvailableStock, modelProduct};
+		primary.updateStage(this, object);
 		onCloseStage(null);
 	}
 	
