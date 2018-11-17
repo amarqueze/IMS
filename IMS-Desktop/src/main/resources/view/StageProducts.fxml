@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="1143.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.amecodelabs.ims.view.productstage.ProductsViewImpl">
+   <children>
+      <StackPane fx:id="stackPane" layoutX="-1.0" layoutY="1.0" onMouseClicked="#onCloseStackPane" prefHeight="478.0" prefWidth="1143.0">
+         <children>
+            <Pane fx:id="panelPagination" prefHeight="24.0" prefWidth="200.0" />
+         </children></StackPane>
+      <AnchorPane prefHeight="55.0" prefWidth="1143.0" style="-fx-background-color: #0984e3;">
+         <children>
+            <FontAwesomeIcon fill="WHITE" iconName="TIMES" layoutX="1110.0" layoutY="36.0" onMouseClicked="#onCloseStage" size="2em">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIcon>
+            <Label layoutX="524.0" layoutY="14.0" text="Warehouse" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btnNewProduct" layoutX="14.0" layoutY="12.0" onAction="#onNewProduct" style="-fx-background-color: #70a1ff;" text="New Product" textFill="WHITE">
+               <graphic>
+                  <FontAwesomeIcon fill="WHITE" iconName="PLUS" size="2em" />
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+            <ImageView fx:id="lblLoad" fitHeight="18.0" fitWidth="19.0" layoutX="133.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </AnchorPane>
+      <TableView fx:id="tbProducts" layoutX="12.0" layoutY="76.0" prefHeight="324.0" prefWidth="1119.0">
+        <columns>
+          <TableColumn fx:id="colDescription" prefWidth="346.4000062942505" text="Description" />
+          <TableColumn fx:id="colAvailableStock" prefWidth="103.20001220703125" text="Available Stock" />
+            <TableColumn fx:id="colUnit" prefWidth="92.0" text="Unit" />
+            <TableColumn fx:id="colProviderMain" prefWidth="164.0" text="Provider Main" />
+            <TableColumn fx:id="colCategory" prefWidth="168.00006103515625" text="Category" />
+            <TableColumn fx:id="colStockMin" prefWidth="84.0" text="Stock Min." />
+            <TableColumn fx:id="colStockMax" prefWidth="76.7999267578125" text="Stock Max." />
+            <TableColumn fx:id="colControl" prefWidth="83.2000732421875" text="Control" />
+        </columns>
+      </TableView>
+      <Pagination fx:id="pagination" layoutX="472.0" layoutY="423.0" prefHeight="32.0" prefWidth="200.0" />
+   </children>
+</AnchorPane>
