@@ -8,8 +8,9 @@ import com.jfoenix.controls.JFXButton;
 import io.amecodelabs.ims.view.base.BuildWindowDirector;
 import io.amecodelabs.ims.view.base.SubStage;
 import io.amecodelabs.ims.view.context.ApplicationContext;
+import io.amecodelabs.ims.view.productstage.ProductsBuildable;
 import io.amecodelabs.ims.view.providerstage.ProvidersBuildable;
-import io.amecodelabs.ims.view.settingstage.SettingBuildable;
+import io.amecodelabs.ims.view.settingstage.SettingsBuildable;
 import io.amecodelabs.ims.view.userstage.UsersBuildable;
 import javafx.application.HostServices;
 import javafx.event.ActionEvent;
@@ -21,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MainViewImpl implements MainView, Initializable {
+	/* JavaFx Components */
 	@FXML
     private VBox root;
     @FXML
@@ -39,6 +41,7 @@ public class MainViewImpl implements MainView, Initializable {
     private JFXButton btnUsers;
     @FXML
     private JFXButton btnProviders;
+    /* Fin JavaFx Components */
     
     private PresenterMainView presenter;
     
@@ -70,17 +73,20 @@ public class MainViewImpl implements MainView, Initializable {
 
     @FXML
     void showProductsView(ActionEvent event) {
-    	
+    	BuildWindowDirector.getDirector().create(new ProductsBuildable(this));
+    	disableBtnProducts();
     }
 
     @FXML
     void showProvidersView(ActionEvent event) {
-    	BuildWindowDirector.getDirector().create(new ProvidersBuildable());
+    	BuildWindowDirector.getDirector().create(new ProvidersBuildable(this));
+    	disableBtnProviders();
     }
 
     @FXML
     void showSettingsView(ActionEvent event) {
-    	BuildWindowDirector.getDirector().create(new SettingBuildable());
+    	BuildWindowDirector.getDirector().create(new SettingsBuildable(this));
+    	disableBtnSettings();
     }
 
     @FXML
@@ -95,12 +101,35 @@ public class MainViewImpl implements MainView, Initializable {
 
     @FXML
     void showUsersView(ActionEvent event) {
-    	BuildWindowDirector.getDirector().create(new UsersBuildable());
+    	BuildWindowDirector.getDirector().create(new UsersBuildable(this));
+    	disableBtnUsers();
     }
     
     @Override
-	public void updateStage(SubStage subStage, Object info) {
-    	
+	public void updateStage(SubStage subStage, Object newness) {
+    	String msg = (String) newness;
+    	if(msg.equals("close")) {
+    		switch(subStage.getName()) {
+    			case "StatsView":  
+    				activeBtnStats();
+    				break;
+    			case "ProductsView": 
+    				activeBtnProducts();
+    				break;
+    			case "UsersView": 
+    				activeBtnUsers();
+    				break;
+    			case "ProvidersView":
+    				activeBtnProviders();
+    				break;
+    			case "TransactionsView":
+    				activeBtnTransactions();
+    				break;
+    			case "SettingsView":
+    				activeBtnSettings();
+    				break;
+    		}
+    	}
 	};
 	
 	@Override
@@ -109,7 +138,6 @@ public class MainViewImpl implements MainView, Initializable {
 	}
 	
 	/* Active & disable Button */
-
 	public void disableBtnTransactions() {
 		btnTransactions.setDisable(true);
 	}
