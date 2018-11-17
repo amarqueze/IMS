@@ -17,8 +17,9 @@ module.exports = function(certificate) {
     var onBindMiddleware;
 
     (function server() {
+        app.use(bodyParser.text({defaultCharset: 'utf-8'}));
+        app.use(bodyParser.urlencoded({ extended: false }));
         app.use(bodyParser.json());
-        app.use(bodyParser.urlencoded({ extended: true }));
     })();
 
     return {
