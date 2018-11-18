@@ -90,7 +90,7 @@
                <children>
                   <JFXButton fx:id="btnStats" contentDisplay="TOP" layoutX="561.0" layoutY="48.0" onAction="#showStatsView" prefHeight="90.0" prefWidth="118.0" style="-fx-background-color: #70a1ff;" text="Statistics" textFill="WHITE">
                      <graphic>
-                        <FontAwesomeIcon fill="WHITE" iconName="SIGNAL" size="4em" />
+                        <FontAwesomeIcon fill="WHITE" iconName="BAR_CHART" size="4em" />
                      </graphic>
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="60.0" top="10.0" />

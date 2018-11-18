@@ -8,9 +8,11 @@ import com.jfoenix.controls.JFXButton;
 import io.amecodelabs.ims.view.base.BuildWindowDirector;
 import io.amecodelabs.ims.view.base.SubStage;
 import io.amecodelabs.ims.view.context.ApplicationContext;
+import io.amecodelabs.ims.view.context.Session;
 import io.amecodelabs.ims.view.productstage.ProductsBuildable;
 import io.amecodelabs.ims.view.providerstage.ProvidersBuildable;
 import io.amecodelabs.ims.view.settingstage.SettingsBuildable;
+import io.amecodelabs.ims.view.statstage.StatsBuildable;
 import io.amecodelabs.ims.view.userstage.UsersBuildable;
 import javafx.application.HostServices;
 import javafx.event.ActionEvent;
@@ -48,7 +50,15 @@ public class MainViewImpl implements MainView, Initializable {
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
 		presenter = new PresenterMainViewImpl(this);
+		configPermits();
 	}
+    
+    private void configPermits() {
+    	Session session = Session.getSession();
+    	if(!session.isManagerProduct()) disableBtnProducts();
+    	if(!session.isManagerProviders()) disableBtnProviders();
+    	if(!session.isManagerUsers()) disableBtnUsers();
+    }
 	
 	@Override
 	public void setUserEmailCurrent(String email) {
@@ -91,7 +101,8 @@ public class MainViewImpl implements MainView, Initializable {
 
     @FXML
     void showStatsView(ActionEvent event) {
-    	
+    	BuildWindowDirector.getDirector().create(new StatsBuildable(this));
+    	disableBtnStats();
     }
 
     @FXML
