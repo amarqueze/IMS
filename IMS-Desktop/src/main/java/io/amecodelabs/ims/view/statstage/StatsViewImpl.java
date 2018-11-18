@@ -126,7 +126,6 @@ public class StatsViewImpl implements StatsView<ContentValues>, Initializable {
 
 				txtProductsIncome.setText(String.valueOf(summaryInputs));
 				txtOutputProducts.setText(String.valueOf(summaryOutputs));
-				stackedBar.getYAxis().setAnimated(true);
 				for (DataModelStat dataModel : dataModelStats) {
 					seriesBar[0].getData().add(new XYChart.Data<String, Number>(dataModel.getMonth().getAcronym(), dataModel.getValueInput()));
 					seriesBar[1].getData().add(new XYChart.Data<String, Number>(dataModel.getMonth().getAcronym(), dataModel.getValueOutput()));
@@ -138,7 +137,6 @@ public class StatsViewImpl implements StatsView<ContentValues>, Initializable {
 	}
 	
 	public void clearStage() {
-		stackedBar.getYAxis().setAnimated(false);
 		txtOutputProducts.setText("0");
 		txtProductsIncome.setText("0");
 		seriesBar[0].getData().clear();
