@@ -46,12 +46,13 @@ private final String LOCATION_URI = "http://localhost/stock";
 		} 
 	}
 	
-	public void getStockProducts(Consumer<ContentValues> success, Consumer<String> fail) {
+	public void getStockProducts(int year, Consumer<ContentValues> success, Consumer<String> fail) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 		
 		HttpGetRequest request = null;
 		try {
-			request = new HttpGetRequest(LOCATION_URI + "/list");
+			request = new HttpGetRequest(LOCATION_URI + "/find");
+			request.addParams("date", String.valueOf(year));
 			addHead(request);
 			
 			httpConnect
@@ -65,7 +66,6 @@ private final String LOCATION_URI = "http://localhost/stock";
 				});
 			
 			httpConnect.execute(request);
-			
 		} catch (URISyntaxException e) {
 			fail.accept(e.getMessage());
 		} 
