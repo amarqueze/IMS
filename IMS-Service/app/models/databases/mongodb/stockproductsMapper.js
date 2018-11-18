@@ -10,6 +10,7 @@ module.exports = function(objectmapper) {
             objectmapper.update(collectionName, params, {$set: updatedDocument}, success, fail);
         },
         find(params, success, fail) {
+            params.date = new RegExp(params.date + ".*", "g");
             objectmapper.find(collectionName, params, success, fail);
         },
         delete(params, success, fail) {
