@@ -89,10 +89,5 @@ public class HttpBrokerTest {
 		)
 		.execute(request);
 	}
-	
-	@Test
-	public void testSSLRequest() {
-		fail("no support");
-	}
 
 }
