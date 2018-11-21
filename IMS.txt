@@ -10,4 +10,8 @@ password: berton123456
 
 -> User:
 email: yolanda42@hotmail.com
-password: yolada123456
+password: yolanda123456
+
+-> User:
+email: service_products@ims.com
+password: testing
