@@ -15,7 +15,7 @@ import io.amecodelabs.ims.models.utils.JSONImportException;
 import io.amecodelabs.ims.view.context.Session;
 
 public class StockService implements Service {
-private final String LOCATION_URI = "http://localhost/stock";
+	private final String LOCATION_URI = "http://localhost/stock";
 	
 	public StockService() {
 		

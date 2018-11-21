@@ -81,7 +81,7 @@ public class ProductControlViewImpl implements ProductControlView<ContentValues>
 	
 	@FXML
 	void onConfirm(ActionEvent event) {
-		if( Integer.parseInt(txtQuantity.getText()) > 0  ) {
+		if( Integer.parseInt(txtQuantity.getText()) > 0 ) {
 			ContentValues stock = ContentValues.newInstanceEmpy("stock");
 			ContentValues stockProduct = ContentValues.newInstanceEmpy("stockProduct");
 			ContentValues product = ContentValues.newInstanceEmpy("product");
@@ -94,6 +94,9 @@ public class ProductControlViewImpl implements ProductControlView<ContentValues>
 			
 			product.put("_id", modelProduct.getId());
 			product.put("available_stock", modelProduct.getAvailableStock());
+			product.put("description", modelProduct.getDescription());
+			product.put("minimum_stock", modelProduct.getMinimumStock());
+			product.put("maximum_stock", modelProduct.getMaximumStock());
 			
 			stock.put(stockProduct);
 			stock.put(product);
