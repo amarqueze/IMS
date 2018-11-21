@@ -19,6 +19,17 @@ module.exports = function(router, applicationContext) {
                         else {
                             var token = jwtAuthentication.auth(response[0]);
                             res.json({ok: 1, token, response: response[0]});
+
+                            var time = applicationContext.getAtrribute("time");
+                            var notification = applicationContext.getAtrribute("notification");
+                            notification.send("IMS Notification",
+                                "New Login",
+                                { title: 'New Login',
+                                  date: time(),
+                                  text: response[0].email + " is Connected",
+                                  type: 'User'
+                                }
+                            );
                         }
                     },
                     (err) => {

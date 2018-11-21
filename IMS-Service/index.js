@@ -17,6 +17,7 @@ limitations under the License.
 var Server = require("./app/server/server");
 var Certificate = require("./app/server/certificate");
 var Log = require("./app/models/log/logger");
+var Notifications = require('./app/models/notification/notification.js');
 var ApplicationContext = require('./app/models/applicationcontext');
 
 /* import controllers */
@@ -35,6 +36,11 @@ var log = Log.Logger('Server Nodejs', [
     {filename: "temp/server"}
 ])
 var applicationContext = ApplicationContext(log);
+applicationContext.setAtrribute("notification", Notifications.getInstance());
+applicationContext.setAtrribute("time", () => {
+    var date = new Date();
+    return date.toDateString() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+});
 
 dispatcher
     .setControllerListener((path, router) => applicationContext.getLog().info(`Controller linked to '${path}'`))

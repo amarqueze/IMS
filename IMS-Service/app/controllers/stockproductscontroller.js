@@ -59,7 +59,25 @@ module.exports = function (router, applicationContext) {
         })
         .post("/create", function(req, res) {
             stockproductsmapper.insert(req.body,
-                (response) => res.json({ok: 1, response}),
+                (response) => {
+                    res.json({ok: 1, response});
+                    
+                    var extra;
+                    if(response.ops[0].type === "input")
+                        extra = "appended to stock";
+                    else
+                        extra = "subtracted from stock";
+                    var time = applicationContext.getAtrribute("time");
+                    var notification = applicationContext.getAtrribute("notification");
+                    notification.send("IMS Notification",
+                        "Entry products",
+                        { title: 'Entry products',
+                          date: time(),
+                          text: response.ops[0].product + " " + extra,
+                          type: 'Product'
+                        }
+                    );
+                },
                 (err) => {
                     applicationContext.getLog().error(err.message);
                     res.json({ok: 0, message: err.message})
