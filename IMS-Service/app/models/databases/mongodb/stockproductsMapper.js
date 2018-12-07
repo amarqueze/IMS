@@ -1,5 +1,4 @@
 module.exports = function(objectmapper) {
-    var connect = objectmapper.getConnector();
     var collectionName = "stockproducts";
 
     return {
