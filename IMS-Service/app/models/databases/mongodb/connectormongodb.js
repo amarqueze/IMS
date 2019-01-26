@@ -5,7 +5,7 @@ exports.createConnector = function() {
 }
 
 function ConnectorMongodb() {
-    var url = "mongodb://localhost:27017/";
+    var url = "mongodb://database-demo-mongodb:27017/";
     var client;
 
     return {
