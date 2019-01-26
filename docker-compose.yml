@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+  
+  service-demo-node:
+    image: node
+    container_name: service-demo-node
+    networks: 
+      - demo-compose
+    volumes:
+      - ./IMS-Service:/home/node/app
+    ports:
+      - 80:80
+    depends_on: 
+      - database-demo-mongodb
+    working_dir: /home/node/app
+    command: ["node", "index.js"]
+
+  database-demo-mongodb:
+    image: mongo
+    container_name: database-demo-mongodb
+    networks: 
+      - demo-compose
+    volumes:
+      - ./Mongodb/ims:/backup
+      - ./Mongodb/db:/data/db
+      - ./Mongodb/restore:/docker-entrypoint-initdb.d 
+    expose: 
+      - "27017"
+
+  viewhelper-mongo-express:
+    image: mongo-express
+    container_name: viewhelper-mongo-express
+    environment: 
+      - ME_CONFIG_MONGODB_SERVER=database-demo-mongodb
+    networks: 
+      - demo-compose
+    ports:
+      - 8080:8081
+    depends_on: 
+      - database-demo-mongodb
+    expose:
+      - "8081"
+
+networks: 
+  demo-compose:
