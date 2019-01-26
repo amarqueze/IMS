@@ -33,10 +33,10 @@ Install dependencies IMS-Service
 ### Desktop App - Setup
 Windows: [ims-desktop-1.0-windows-x86_64.exe](dist/ims-desktop-1.0-windows-x86_64.exe)
 Linux rpm: [ims-desktop-1.0-linux-x86_64.rpm](dist/ims-desktop-1.0-linux-x86_64.rpm)
-Linux deb: [ims-desktop-1.0-linux-x86_64.rpm](dist/ims-desktop-1.0-linux-x86_64.deb)
+Linux deb: [ims-desktop-1.0-linux-x86_64.deb](dist/ims-desktop-1.0-linux-x86_64.deb)
 
 ### Package Jar
 portable: [ims-desktop-1.0-portable-x86_64_jar.zip](dist/ims-desktop-1.0-portable-x86_64_jar.zip)
 
 ### Movil App (android)
-IMS Notification: [app-debug.apk](dist/)
+IMS Notification: [app-debug.apk](dist/app-debug.apk)
