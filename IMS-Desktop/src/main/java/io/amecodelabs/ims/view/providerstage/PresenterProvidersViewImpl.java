@@ -4,18 +4,16 @@ import io.amecodelabs.ims.models.utils.ContentValues;
 import io.amecodelabs.ims.service.ProviderService;
 
 public class PresenterProvidersViewImpl implements PresenterProvidersView<ContentValues> {
-	private ProviderService service;
 	private ProvidersView<ContentValues> providerView;
 	
 	public PresenterProvidersViewImpl(ProvidersView<ContentValues> providerView) {
 		this.providerView = providerView;
-		service = new ProviderService();
 	}
 	
 	@Override
 	public void saveProvider(ContentValues providers) {
 		this.providerView.showRegisterProgress();
-		service.createProvider(providers, 
+		ProviderService.createProvider(providers, 
 			(response, document) -> {
 				this.providerView.hiddenRegisterProgress();
 				if(response.getValueInteger("ok") == 1) {
@@ -41,7 +39,7 @@ public class PresenterProvidersViewImpl implements PresenterProvidersView<Conten
 	@Override
 	public void getProviders() {
 		this.providerView.showLoadProgress();
-		service.getProviders(
+		ProviderService.getProviders(
 			(response) -> {
 				this.providerView.hiddenloadProgress();
 					if(response.getValueInteger("ok") == 1) {
@@ -60,7 +58,7 @@ public class PresenterProvidersViewImpl implements PresenterProvidersView<Conten
 	@Override
 	public void editProvider(ContentValues updateProvider) {
 		this.providerView.showLoadProgress();
-		service.EditProvider(updateProvider, 
+		ProviderService.EditProvider(updateProvider, 
 			(response) -> {
 				this.providerView.hiddenloadProgress();
 				if(response.getValueInteger("ok") == 1) {
@@ -79,7 +77,7 @@ public class PresenterProvidersViewImpl implements PresenterProvidersView<Conten
 	@Override
 	public void deleteProvider(String id) {
 		this.providerView.showLoadProgress();
-		service.deleteProviders(id, 
+		ProviderService.deleteProviders(id, 
 			(response) -> {
 				this.providerView.hiddenloadProgress();
 				if(response.getValueInteger("ok") == 1) {

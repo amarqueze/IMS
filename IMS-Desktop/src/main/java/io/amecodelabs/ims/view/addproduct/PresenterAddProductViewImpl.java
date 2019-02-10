@@ -7,21 +7,15 @@ import io.amecodelabs.ims.service.ProviderService;
 
 public class PresenterAddProductViewImpl implements PresenterAddProductView<ContentValues> {
 	private AddProductView<ContentValues> addProductView;
-	private ProductService productService;
-	private ProviderService providerService;
-	private CategoryService categoryService;
 	
 	public PresenterAddProductViewImpl(AddProductView<ContentValues> productView) {
 		this.addProductView = productView;
-		productService = new ProductService();
-		providerService = new ProviderService();
-		categoryService = new CategoryService();
 	}
 
 	@Override
 	public void saveProduct(ContentValues product) {
 		this.addProductView.showRegisterProgress();
-		productService.createProduct(product, 
+		ProductService.createProduct(product, 
 			(res, document) -> {
 				this.addProductView.hiddenRegisterProgress();
 				if(res.getValueInteger("ok") == 1) {
@@ -41,7 +35,7 @@ public class PresenterAddProductViewImpl implements PresenterAddProductView<Cont
 
 	@Override
 	public void getProviders() {
-		providerService.getProviders(
+		ProviderService.getProviders(
 			(res) -> {
 				if(res.getValueInteger("ok") == 1) {
 					ContentValues[] providers = res.getArrayContentValues("response");
@@ -54,7 +48,7 @@ public class PresenterAddProductViewImpl implements PresenterAddProductView<Cont
 
 	@Override
 	public void getCategories() {
-		categoryService.getCategories(
+		CategoryService.getCategories(
 			(res) -> {
 				if(res.getValueInteger("ok") == 1) {
 					ContentValues[] categories = res.getArrayContentValues("response");

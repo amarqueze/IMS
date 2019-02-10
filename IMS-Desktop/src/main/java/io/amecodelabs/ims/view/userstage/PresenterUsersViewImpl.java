@@ -5,17 +5,15 @@ import io.amecodelabs.ims.service.UserService;
 
 public class PresenterUsersViewImpl implements PresenterUsersView<ContentValues> {
 	private UsersView<ContentValues> usersView;
-	private UserService service;
 	
 	public PresenterUsersViewImpl(UsersView<ContentValues> usersView) {
 		this.usersView = usersView;
-		this.service = new UserService();
 	}
 
 	@Override
 	public void addUser(ContentValues user) {
 		this.usersView.showLoadProgress();
-		service.createUser(user, 
+		UserService.createUser(user, 
 			(response, document) -> {
 				this.usersView.hiddenloadProgress();
 				if(response.getValueInteger("ok") == 1) {
@@ -36,7 +34,7 @@ public class PresenterUsersViewImpl implements PresenterUsersView<ContentValues>
 	@Override
 	public void getUsers() {
 		this.usersView.showLoadProgress();
-		service.getUsers(
+		UserService.getUsers(
 			(response) -> {
 				this.usersView.hiddenloadProgress();
 				if(response.getValueInteger("ok") == 1) {
@@ -55,7 +53,7 @@ public class PresenterUsersViewImpl implements PresenterUsersView<ContentValues>
 	@Override
 	public void editUser(ContentValues user) {
 		this.usersView.showLoadProgress();
-		service.editUsers(user, 
+		UserService.editUsers(user, 
 			(response) -> {
 				this.usersView.hiddenloadProgress();
 				if(response.getValueInteger("ok") == 1) {
@@ -74,7 +72,7 @@ public class PresenterUsersViewImpl implements PresenterUsersView<ContentValues>
 	@Override
 	public void deleteUser(String id) {
 		this.usersView.showLoadProgress();
-		service.deleteUsers(id, 
+		UserService.deleteUsers(id, 
 			(response) -> {
 				this.usersView.hiddenloadProgress();
 				if(response.getValueInteger("ok") == 1) {

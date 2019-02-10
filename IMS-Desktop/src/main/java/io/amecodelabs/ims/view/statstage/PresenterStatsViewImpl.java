@@ -6,19 +6,15 @@ import io.amecodelabs.ims.service.StockService;
 
 public class PresenterStatsViewImpl implements PresenterStatsView<ContentValues> {
 	private StatsView<ContentValues> statsView;
-	private ProviderService providerService;
-	private StockService stockService;
 	
 	
 	public PresenterStatsViewImpl(StatsView<ContentValues> statsView) {
 		this.statsView = statsView;
-		providerService = new ProviderService();
-		stockService = new StockService();
 	}
 
 	@Override
 	public void getStockProducts(int year) {
-		stockService.getStockProducts(year,
+		StockService.getStockProducts(year,
 			(response) -> {
 				if(response.getValueInteger("ok") == 1) {
 					this.statsView.loadStockProducts(response.getArrayContentValues("response")); 
@@ -34,7 +30,7 @@ public class PresenterStatsViewImpl implements PresenterStatsView<ContentValues>
 
 	@Override
 	public void getProviders() {
-		providerService.getProviders(
+		ProviderService.getProviders(
 			(response) -> {
 				if(response.getValueInteger("ok") == 1)
 					this.statsView.loadProviders(response.getArrayContentValues("response")); 

@@ -5,17 +5,15 @@ import io.amecodelabs.ims.service.ProductService;
 
 public class PresenterProductsViewImpl implements PresenterProductsView<ContentValues> {
 	private ProductsView<ContentValues> productsView;
-	private ProductService productService;
 	
 	public PresenterProductsViewImpl(ProductsView<ContentValues> productsView) {
 		this.productsView = productsView;
-		this.productService = new ProductService();
 	}
 
 	@Override
 	public void getLoadProducts(int skip) {
 		this.productsView.showProgress();
-		productService.getProduct(skip, 
+		ProductService.getProduct(skip, 
 			(res) -> {
 				this.productsView.hiddenProgress();
 				if(res.getValueInteger("ok") == 1) {

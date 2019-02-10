@@ -6,13 +6,9 @@ import io.amecodelabs.ims.service.StockService;
 
 public class PresenterProductControlViewImpl implements PresenterProductControlView<ContentValues> {
 	private ProductControlView<ContentValues> productControlView;
-	private ProductService productService;
-	private StockService stockService;
 	
 	public PresenterProductControlViewImpl(ProductControlView<ContentValues> productControlView) {
 		this.productControlView = productControlView;
-		this.productService = new ProductService();
-		this.stockService = new StockService();
 	}
 
 	@Override
@@ -25,10 +21,10 @@ public class PresenterProductControlViewImpl implements PresenterProductControlV
 		
 		if(product.getValueInteger("available_stock") >= 0) {
 			this.productControlView.showProgress();
-			stockService.createStockProduct(stockProduct, 
+			StockService.createStockProduct(stockProduct, 
 				(res, document) -> {
 					if(res.getValueInteger("ok") == 1) {
-						productService.editProduct(product, 
+						ProductService.editProduct(product, 
 						(response) -> {
 							this.productControlView.hiddenProgress();
 							this.productControlView.update(product);
