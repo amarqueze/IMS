@@ -57,6 +57,15 @@ module.exports = function (router, applicationContext) {
                 }
             );
         })
+        .get("/count", function(req, res) {
+            stockproductsmapper.count(req.query,
+                (response) => res.json({ok: 1, response}),
+                (err) => {
+                    applicationContext.getLog().error(err.message);
+                    res.json({ok: 0, message: err.message})
+                }
+            );
+        })
         .post("/create", function(req, res) {
             stockproductsmapper.insert(req.body,
                 (response) => {

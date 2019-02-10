@@ -72,6 +72,15 @@ module.exports = function (router, applicationContext) {
                 }
             );
         })
+        .get("/count", function(req, res) {
+            productmapper.count(req.query,
+                (response) => res.json({ok: 1, response}),
+                (err) => {
+                    applicationContext.getLog().error(err.message);
+                    res.json({ok: 0, message: err.message})
+                }
+            );
+        })
         .post("/create", function(req, res) {
             productmapper.insert(req.body,
                 (response) => res.json({ok: 1, response}),
