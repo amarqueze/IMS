@@ -52,6 +52,18 @@ module.exports = function() {
                 (err) => fail(err)
             );
         },
+        count(collectionName, params, success, fail) {
+            connector.open(
+                (dbo) => {
+                    dbo.collection(collectionName).countDocuments(params, function(err, res) {
+                        if (err) fail(err);
+                        else success(res);
+                        connector.close();
+                    });
+                },
+                (err) => fail(err)
+            );
+        },
         getConnector() {
             return connector;
         }
