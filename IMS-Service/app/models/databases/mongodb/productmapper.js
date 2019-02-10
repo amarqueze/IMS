@@ -35,6 +35,9 @@ module.exports = function(objectmapper) {
         },
         delete(params, success, fail) {
             objectmapper.delete(collectionName, params, success, fail);
+        },
+        count(params, success, fail) {
+            objectmapper.count(collectionName, params, success, fail);
         }
     }
 }
