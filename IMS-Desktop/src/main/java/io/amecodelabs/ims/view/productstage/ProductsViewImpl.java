@@ -143,7 +143,6 @@ public class ProductsViewImpl implements ProductsView<ContentValues>, Initializa
     	colControl.setCellFactory( (p) -> new ButtonCell());
     	
     	tbProducts.setItems(data);
-    	//pagination.setPageCount(10);
     	pagination.setPageFactory((pageIndex) -> {
     		presenter.getLoadProducts(pageIndex * 11);
     		return panelPagination;
@@ -224,7 +223,7 @@ public class ProductsViewImpl implements ProductsView<ContentValues>, Initializa
     @FXML
     void onCloseStage(MouseEvent event) {
     	((Stage) root.getScene().getWindow()).close();
-		primary.updateStage(this, "close");
+		if(primary != null) primary.updateStage(this, "close");
     }
 
     @FXML

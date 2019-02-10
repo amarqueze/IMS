@@ -461,7 +461,7 @@ public class UsersViewImpl implements UsersView<ContentValues>, Initializable {
     @FXML
     void onCloseStage(ActionEvent event) {
     	((Stage) root.getScene().getWindow()).close();
-    	primary.updateStage(this, "close");
+    	if(primary != null) primary.updateStage(this, "close");
     }
     
     @Override

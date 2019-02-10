@@ -92,7 +92,7 @@ public class SettingsViewImpl implements SettingsView, Initializable {
     @FXML
     void onCloseStage(MouseEvent event) {
     	((Stage) root.getScene().getWindow()).close();
-    	primary.updateStage(this, "close");
+    	if(primary != null) primary.updateStage(this, "close");
     }
     
     @Override
