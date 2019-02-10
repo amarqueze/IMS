@@ -5,30 +5,27 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import io.amecodelabs.ims.broker.client.HttpConnect;
-import io.amecodelabs.ims.broker.client.HttpRequest;
 import io.amecodelabs.ims.broker.impl.client.HttpBroker;
 import io.amecodelabs.ims.broker.impl.client.HttpGetRequest;
 import io.amecodelabs.ims.broker.impl.client.HttpPostRequest;
 import io.amecodelabs.ims.models.utils.ContentValues;
-import io.amecodelabs.ims.models.utils.JSONExportable;
 import io.amecodelabs.ims.models.utils.JSONImportException;
-import io.amecodelabs.ims.view.context.Session;
 
-public class ProductService implements Service {
-	private final String LOCATION_URI = "http://localhost/products";
+public class ProductService {
+	private static final String LOCATION_URI = "http://localhost/products";
 	
-	public ProductService() {
+	protected ProductService() {
 		
 	}
 	
-	public void createProduct(ContentValues product, BiConsumer<ContentValues, ContentValues> success, Consumer<String> fail) {
+	public static void createProduct(ContentValues product, BiConsumer<ContentValues, ContentValues> success, Consumer<String> fail) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 	
 		HttpPostRequest request = null;
 		try {
 			request = new HttpPostRequest(LOCATION_URI + "/create");
-			addHead(request);
-			addBody(request, product);
+			AbstractService.addHead(request);
+			AbstractService.addBody(request, product);
 			
 			httpConnect
 				.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
@@ -46,14 +43,14 @@ public class ProductService implements Service {
 		} 
 	}
 	
-	public void getProduct(int skip, Consumer<ContentValues> success, Consumer<String> fail) {
+	public static void getProduct(int skip, Consumer<ContentValues> success, Consumer<String> fail) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 		
 		HttpGetRequest request = null;
 		try {
 			request = new HttpGetRequest(LOCATION_URI + "/list");
 			request.addParams("skip", String.valueOf(skip));
-			addHead(request);
+			AbstractService.addHead(request);
 			
 			httpConnect
 				.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
@@ -71,13 +68,13 @@ public class ProductService implements Service {
 		} 
 	}
 	
-	public void findProduct(String id, Consumer<ContentValues> success, Consumer<String> fail) {
+	public static void findProduct(String id, Consumer<ContentValues> success, Consumer<String> fail) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 		
 		HttpGetRequest request = null;
 		try {
 			request = new HttpGetRequest(LOCATION_URI + "/find/" + id);
-			addHead(request);
+			AbstractService.addHead(request);
 			
 			httpConnect
 				.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
@@ -95,14 +92,14 @@ public class ProductService implements Service {
 		} 
 	}
 	
-	public void editProduct(ContentValues updatedProduct, Consumer<ContentValues> success, Consumer<String> fail) {
+	public static void editProduct(ContentValues updatedProduct, Consumer<ContentValues> success, Consumer<String> fail) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 		
 		HttpPostRequest request = null;
 		try {
 			request = new HttpPostRequest(LOCATION_URI + "/edit");
 			request.addParams("_id", updatedProduct.getValueString("_id"));
-			addHead(request);
+			AbstractService.addHead(request);
 			request.setContent(updatedProduct.exportJSON(), "application/json; charset=utf-8");
 			
 			httpConnect
@@ -121,13 +118,13 @@ public class ProductService implements Service {
 		} 
 	}
 	
-	public void deleteProduct(String id, Consumer<ContentValues> success, Consumer<String> fail) {
+	public static void deleteProduct(String id, Consumer<ContentValues> success, Consumer<String> fail) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 		
 		HttpGetRequest request = null;
 		try {
 			request = new HttpGetRequest(LOCATION_URI + "/delete/" + id);
-			addHead(request);
+			AbstractService.addHead(request);
 			
 			httpConnect
 				.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
@@ -143,18 +140,6 @@ public class ProductService implements Service {
 		} catch (URISyntaxException e) {
 			fail.accept(e.getMessage());
 		} 
-	}
-	
-	protected void addHead(HttpRequest request) {
-		request.addHeader("User-Agent", USER_AGENT);
-		request.addHeader("Accept", ACCEPT);
-		request.addHeader("Accept-Charset", ACCEPT_CHARSET);
-		request.addHeader("Accept-Language", ACCEPT_LANGUAGE);
-		request.setAuth("Bearer", Session.getSession().getToken());
-	}
-	
-	protected void addBody(HttpPostRequest request, JSONExportable content) {
-		request.setContent("[" + content.exportJSON() + "]", "application/json; charset=utf-8");
 	}
 	
 }

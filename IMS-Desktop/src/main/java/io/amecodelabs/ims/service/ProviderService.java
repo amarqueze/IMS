@@ -5,30 +5,27 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import io.amecodelabs.ims.broker.client.HttpConnect;
-import io.amecodelabs.ims.broker.client.HttpRequest;
 import io.amecodelabs.ims.broker.impl.client.HttpBroker;
 import io.amecodelabs.ims.broker.impl.client.HttpGetRequest;
 import io.amecodelabs.ims.broker.impl.client.HttpPostRequest;
 import io.amecodelabs.ims.models.utils.ContentValues;
-import io.amecodelabs.ims.models.utils.JSONExportable;
 import io.amecodelabs.ims.models.utils.JSONImportException;
-import io.amecodelabs.ims.view.context.Session;
 
-public class ProviderService implements Service {
-	private final String LOCATION_URI = "http://localhost/providers";
+public class ProviderService implements AbstractService {
+	private static final String LOCATION_URI = "http://localhost/providers";
 	
-	public ProviderService() {
+	protected ProviderService() {
 		
 	}
 	
-	public void createProvider(ContentValues provider, BiConsumer<ContentValues, ContentValues> success, Consumer<String> fail) {
+	public static void createProvider(ContentValues provider, BiConsumer<ContentValues, ContentValues> success, Consumer<String> fail) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 	
 		HttpPostRequest request = null;
 		try {
 			request = new HttpPostRequest(LOCATION_URI + "/create");
-			addHead(request);
-			addBody(request, provider);
+			AbstractService.addHead(request);
+			AbstractService.addBody(request, provider);
 			
 			httpConnect
 			.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
@@ -46,13 +43,13 @@ public class ProviderService implements Service {
 		} 
 	}
 	
-	public void getProviders(Consumer<ContentValues> success, Consumer<String> fail) {
+	public static void getProviders(Consumer<ContentValues> success, Consumer<String> fail) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 		
 		HttpGetRequest request = null;
 		try {
 			request = new HttpGetRequest(LOCATION_URI + "/list");
-			addHead(request);
+			AbstractService.addHead(request);
 			
 			httpConnect
 				.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
@@ -71,14 +68,14 @@ public class ProviderService implements Service {
 		} 
 	}
 	
-	public void EditProvider(ContentValues updatedprovider, Consumer<ContentValues> success, Consumer<String> fail) {
+	public static void EditProvider(ContentValues updatedprovider, Consumer<ContentValues> success, Consumer<String> fail) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 		
 		HttpPostRequest request = null;
 		try {
 			request = new HttpPostRequest(LOCATION_URI + "/edit");
 			request.addParams("_id", updatedprovider.getValueString("_id"));
-			addHead(request);
+			AbstractService.addHead(request);
 			request.setContent(updatedprovider.exportJSON(), "application/json; charset=utf-8");
 			
 			httpConnect
@@ -98,13 +95,13 @@ public class ProviderService implements Service {
 		} 
 	}
 	
-	public void deleteProviders(String id, Consumer<ContentValues> success, Consumer<String> fail) {
+	public static void deleteProviders(String id, Consumer<ContentValues> success, Consumer<String> fail) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 		
 		HttpGetRequest request = null;
 		try {
 			request = new HttpGetRequest(LOCATION_URI + "/delete/" + id);
-			addHead(request);
+			AbstractService.addHead(request);
 			
 			httpConnect
 				.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
@@ -120,18 +117,6 @@ public class ProviderService implements Service {
 		} catch (URISyntaxException e) {
 			fail.accept(e.getMessage());
 		} 
-	}
-	
-	protected void addHead(HttpRequest request) {
-		request.addHeader("User-Agent", USER_AGENT);
-		request.addHeader("Accept", ACCEPT);
-		request.addHeader("Accept-Charset", ACCEPT_CHARSET);
-		request.addHeader("Accept-Language", ACCEPT_LANGUAGE);
-		request.setAuth("Bearer", Session.getSession().getToken());
-	}
-	
-	protected void addBody(HttpPostRequest request, JSONExportable content) {
-		request.setContent("[" + content.exportJSON() + "]", "application/json; charset=utf-8");
 	}
 	
 }

@@ -10,7 +10,7 @@ import io.amecodelabs.ims.models.utils.ContentValues;
 import io.amecodelabs.ims.models.utils.JSONExportable;
 import io.amecodelabs.ims.models.utils.JSONImportException;
 
-public class AuthenticationService implements Service {
+public class AuthenticationService implements AbstractService {
 	private final String LOCATION_URI = "http://localhost/auth";
 	private Consumer<ContentValues> success;
 	private Consumer<String> fail;
