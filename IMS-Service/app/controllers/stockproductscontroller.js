@@ -37,6 +37,15 @@ module.exports = function (router, applicationContext) {
                 }
             );
         })
+        .get("/all", function(req, res) {  
+            stockproductsmapper.findAll(req.query,
+                (response) => res.json({ok: 1, response}),
+                (err) => {
+                    applicationContext.getLog().error(err.message);
+                    res.json({ok: 0, message: err.message})
+                }
+            );
+        })
         .get("/find/:id", function(req, res) {
             stockproductsmapper.find({_id: req.params.id},
                 0,
