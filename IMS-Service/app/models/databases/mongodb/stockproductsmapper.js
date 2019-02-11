@@ -28,6 +28,11 @@ module.exports = function(objectmapper) {
                 (err) => fail(err)
             );
         },
+        findAll(params, success, fail) {
+            if(params.date)
+                params.date = new RegExp(params.date + ".*", "g");
+            objectmapper.find(collectionName, params, success, fail);
+        },
         delete(params, success, fail) {
             objectmapper.delete(collectionName, params, success, fail);
         },
