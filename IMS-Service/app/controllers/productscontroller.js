@@ -37,7 +37,12 @@ module.exports = function (router, applicationContext) {
             );
         })
         .get("/find", function(req, res) {
+            var skip = parseInt(req.query.skip) || 0;
+            if(req.query.skip)
+                delete req.query.skip;
+                
             productmapper.find(req.query,
+                skip,
                 (response) => res.json({ok: 1, response}),
                 (err) => {
                     applicationContext.getLog().error(err.message);
@@ -47,6 +52,7 @@ module.exports = function (router, applicationContext) {
         })
         .get("/find/:id", function(req, res) {
             productmapper.find({_id: req.params.id},
+                0,
                 (response) => res.json((response[0]) ? {ok: 1, response: response[0]} : {}),
                 (err) => {
                     applicationContext.getLog().error(err.message);
