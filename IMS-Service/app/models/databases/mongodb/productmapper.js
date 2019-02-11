@@ -33,6 +33,9 @@ module.exports = function(objectmapper) {
                 (err) => fail(err)
             );
         },
+        findAll(params, sucess, fail) {
+            objectmapper.find(collectionName, params, sucess, fail);
+        },
         delete(params, success, fail) {
             objectmapper.delete(collectionName, params, success, fail);
         },
