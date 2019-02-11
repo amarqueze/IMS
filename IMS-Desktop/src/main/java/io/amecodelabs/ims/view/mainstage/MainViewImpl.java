@@ -9,10 +9,11 @@ import io.amecodelabs.ims.view.base.BuildWindowDirector;
 import io.amecodelabs.ims.view.base.SubStage;
 import io.amecodelabs.ims.view.context.ApplicationContext;
 import io.amecodelabs.ims.view.context.Session;
+import io.amecodelabs.ims.view.dashboardstage.DashBoardBuildable;
 import io.amecodelabs.ims.view.productstage.ProductsBuildable;
 import io.amecodelabs.ims.view.providerstage.ProvidersBuildable;
 import io.amecodelabs.ims.view.settingstage.SettingsBuildable;
-import io.amecodelabs.ims.view.statstage.StatsBuildable;
+import io.amecodelabs.ims.view.transactionstage.TransactionsBuildable;
 import io.amecodelabs.ims.view.userstage.UsersBuildable;
 import javafx.application.HostServices;
 import javafx.event.ActionEvent;
@@ -50,14 +51,32 @@ public class MainViewImpl implements MainView, Initializable {
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
 		presenter = new PresenterMainViewImpl(this);
+		
+		BuildWindowDirector.getDirector()
+			.prepare("StatsView", new DashBoardBuildable(this))
+			.prepare("SettingsView", new SettingsBuildable(this))
+			.prepare("TransactionsView", new TransactionsBuildable(this));
+		
+		disableBtnProducts();
+		disableBtnProviders();
+		disableBtnUsers();
 		configPermits();
 	}
     
     private void configPermits() {
     	Session session = Session.getSession();
-    	if(!session.isManagerProduct()) disableBtnProducts();
-    	if(!session.isManagerProviders()) disableBtnProviders();
-    	if(!session.isManagerUsers()) disableBtnUsers();
+    	if(session.isManagerProduct()) {
+    		activeBtnProducts();
+    		BuildWindowDirector.getDirector().prepare("ProductsView", new ProductsBuildable(this));
+    	}
+    	if(session.isManagerProviders()) {
+    		activeBtnProviders();
+    		BuildWindowDirector.getDirector().prepare("ProvidersView", new ProvidersBuildable(this));
+    	}
+    	if(session.isManagerUsers()) {
+    		activeBtnUsers();
+    		BuildWindowDirector.getDirector().prepare("UsersView", new UsersBuildable(this));
+    	}
     }
 	
 	@Override
@@ -83,36 +102,37 @@ public class MainViewImpl implements MainView, Initializable {
 
     @FXML
     void showProductsView(ActionEvent event) {
-    	BuildWindowDirector.getDirector().create(new ProductsBuildable(this));
+    	BuildWindowDirector.getDirector().create("ProductsView");
     	disableBtnProducts();
     }
 
     @FXML
     void showProvidersView(ActionEvent event) {
-    	BuildWindowDirector.getDirector().create(new ProvidersBuildable(this));
+    	BuildWindowDirector.getDirector().create("ProvidersView");
     	disableBtnProviders();
     }
 
     @FXML
     void showSettingsView(ActionEvent event) {
-    	BuildWindowDirector.getDirector().create(new SettingsBuildable(this));
+    	BuildWindowDirector.getDirector().create("SettingsView");
     	disableBtnSettings();
     }
 
     @FXML
     void showStatsView(ActionEvent event) {
-    	BuildWindowDirector.getDirector().create(new StatsBuildable(this));
+    	BuildWindowDirector.getDirector().create("StatsView");
     	disableBtnStats();
     }
 
     @FXML
     void showTransactionsView(ActionEvent event) {
-    	
+    	BuildWindowDirector.getDirector().create("TransactionsView");
+    	disableBtnTransactions();
     }
 
     @FXML
     void showUsersView(ActionEvent event) {
-    	BuildWindowDirector.getDirector().create(new UsersBuildable(this));
+    	BuildWindowDirector.getDirector().create("UsersView");
     	disableBtnUsers();
     }
     
