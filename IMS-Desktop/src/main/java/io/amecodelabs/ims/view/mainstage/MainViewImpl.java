@@ -141,7 +141,7 @@ public class MainViewImpl implements MainView, Initializable {
     	String msg = (String) newness;
     	if(msg.equals("close")) {
     		switch(subStage.getName()) {
-    			case "StatsView":  
+    			case "DashBoardView":  
     				activeBtnStats();
     				break;
     			case "ProductsView": 
