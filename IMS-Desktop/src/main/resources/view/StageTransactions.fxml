@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.amecodelabs.ims.view.transactionstage.TransactionsViewImpl">
+   <children>
+      <StackPane fx:id="stackPane" layoutX="-2.0" prefHeight="478.0" prefWidth="726.0">
+         <children>
+            <Pane fx:id="panelPagination" prefHeight="200.0" prefWidth="200.0" />
+         </children></StackPane>
+      <AnchorPane prefHeight="64.0" prefWidth="719.0" style="-fx-background-color: #0984e3;">
+         <children>
+            <FontAwesomeIcon fill="WHITE" iconName="LIST" layoutX="24.0" layoutY="44.0" size="3em" />
+            <Label layoutX="66.0" layoutY="18.0" text="Transactions" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <FontAwesomeIcon fill="WHITE" iconName="CLOSE" layoutX="686.0" layoutY="40.0" onMouseClicked="#onClose" size="2em">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIcon>
+            <ImageView fx:id="loadTransactions" fitHeight="24.0" fitWidth="19.0" layoutX="181.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </AnchorPane>
+      <TableView fx:id="tbTransactions" layoutX="14.0" layoutY="85.0" prefHeight="306.0" prefWidth="692.0">
+        <columns>
+          <TableColumn fx:id="colDescription" prefWidth="372.0000305175781" text="Description" />
+          <TableColumn fx:id="colQuantity" prefWidth="162.39996337890625" text="Quantity" />
+            <TableColumn fx:id="colDate" prefWidth="153.59991455078125" text="Date" />
+        </columns>
+      </TableView>
+      <Pagination fx:id="pagination" layoutX="472.0" layoutY="415.0" prefHeight="48.0" prefWidth="200.0" />
+   </children>
+</AnchorPane>
