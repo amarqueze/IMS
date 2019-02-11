@@ -36,6 +36,15 @@ module.exports = function (router, applicationContext) {
                 }
             );
         })
+        .get("/all", function(req, res) {  
+            productmapper.findAll(req.query,
+                (response) => res.json({ok: 1, response}),
+                (err) => {
+                    applicationContext.getLog().error(err.message);
+                    res.json({ok: 0, message: err.message})
+                }
+            );
+        })
         .get("/find", function(req, res) {
             var skip = parseInt(req.query.skip) || 0;
             if(req.query.skip)
