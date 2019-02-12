@@ -49,6 +49,11 @@ public abstract class AbstractWindow implements Window {
 		stage.close();
 	}
 	
+	@Override
+	public Stage getStage() {
+		return stage;
+	}
+	
 	protected abstract void config(Map<String, Object> params);
 	
 }

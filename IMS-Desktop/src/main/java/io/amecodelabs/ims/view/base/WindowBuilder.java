@@ -60,6 +60,7 @@ public class WindowBuilder {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlLocation));
 				Parent sceneGraph;
 				
+				
 				try {
 					sceneGraph = loader.load();
 					
@@ -67,7 +68,10 @@ public class WindowBuilder {
 					AbstractView viewHandler = (AbstractView) loader.getController();
 					
 					if(viewHandler instanceof SubStage) ((SubStage)viewHandler).setPrimaryStage(primary);
-					if(params != null) viewHandler.setParams(params);
+					if(params != null)  {
+						params.put("window", this);
+						viewHandler.setParams(params);
+					}
 					
 					Scene scene = new Scene(sceneGraph);
 					stage.setScene(scene);
