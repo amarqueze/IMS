@@ -43,13 +43,15 @@ public class StockService implements AbstractService {
 		} 
 	}
 	
-	public static void getStockProducts(int year, Consumer<ContentValues> success, Consumer<String> fail) {
+	public static void getStockProducts(String name ,int year, String type, Consumer<ContentValues> success, Consumer<String> fail) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 		
 		HttpGetRequest request = null;
 		try {
-			request = new HttpGetRequest(LOCATION_URI + "/find");
+			request = new HttpGetRequest(LOCATION_URI + "/all");
 			request.addParams("date", String.valueOf(year));
+			request.addParams("product", name);
+			request.addParams("type", type);
 			AbstractService.addHead(request);
 			
 			httpConnect
@@ -67,4 +69,57 @@ public class StockService implements AbstractService {
 			fail.accept(e.getMessage());
 		} 
 	}
+	
+	public static void getStockbyInputs(int skip, Consumer<ContentValues> success, Consumer<String> fail) {
+		HttpConnect httpConnect = HttpBroker.getHttpConnect();
+		
+		HttpGetRequest request = null;
+		try {
+			request = new HttpGetRequest(LOCATION_URI + "/find");
+			request.addParams("type", "input");
+			request.addParams("skip", String.valueOf(skip));
+			AbstractService.addHead(request);
+			
+			httpConnect
+				.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
+				.setSuccessHandler( (res) -> {
+					try {
+						success.accept(ContentValues.newInstanceOfImportJSON("response", res.getBody()));
+					} catch (JSONImportException e) {
+						fail.accept(e.getMessage());
+					}
+				});
+			
+			httpConnect.execute(request);
+		} catch (URISyntaxException e) {
+			fail.accept(e.getMessage());
+		}
+	}
+	
+	public static void getNumberTransactions(Consumer<ContentValues> success, Consumer<String> fail) {
+		HttpConnect httpConnect = HttpBroker.getHttpConnect();
+		
+		HttpGetRequest request = null;
+		try {
+			request = new HttpGetRequest(LOCATION_URI + "/count");
+			request.addParams("type", "input");
+			AbstractService.addHead(request);
+			
+			httpConnect
+				.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
+				.setSuccessHandler( (res) -> {
+					try {
+						success.accept(ContentValues.newInstanceOfImportJSON("response", res.getBody()));
+					} catch (JSONImportException e) {
+						fail.accept(e.getMessage());
+					}
+				});
+			
+			httpConnect.execute(request);
+			
+		} catch (URISyntaxException e) {
+			fail.accept(e.getMessage());
+		} 
+	}
+	
 }

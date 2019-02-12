@@ -120,4 +120,28 @@ public class UserService implements AbstractService {
 		} 
 	}
 	
+	public static void getNumberUsers(Consumer<ContentValues> success, Consumer<String> fail) {
+		HttpConnect httpConnect = HttpBroker.getHttpConnect();
+		
+		HttpGetRequest request = null;
+		try {
+			request = new HttpGetRequest(LOCATION_URI + "/count");
+			AbstractService.addHead(request);
+			
+			httpConnect
+				.setErrorHandler( (err) -> fail.accept(err.getMessage()) )
+				.setSuccessHandler( (res) -> {
+					try {
+						success.accept(ContentValues.newInstanceOfImportJSON("response", res.getBody()));
+					} catch (JSONImportException e) {
+						fail.accept(e.getMessage());
+					}
+				});
+			
+			httpConnect.execute(request);
+			
+		} catch (URISyntaxException e) {
+			fail.accept(e.getMessage());
+		} 
+	}
 }
