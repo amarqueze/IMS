@@ -5,6 +5,7 @@ import io.amecodelabs.ims.view.context.ApplicationContext;
 import io.amecodelabs.ims.view.context.Session;
 import io.amecodelabs.ims.view.loginstage.LoginBuildable;
 import io.amecodelabs.ims.view.mainstage.MainBuildable;
+import io.amecodelabs.ims.view.transactionstage.TransactionsBuildable;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -20,9 +21,7 @@ public class App extends Application {
 		context.addAttribute("host-services", getHostServices());
 		
 		BuildWindowDirector
-			.getDirector()
-				.prepare("login", new LoginBuildable())
-				.prepare("main", new MainBuildable());
+			.getDirector().prepare("main", new MainBuildable());
 	}
 
 	@Override
@@ -30,7 +29,7 @@ public class App extends Application {
 		if ( Session.isSession() ) 
 			BuildWindowDirector.getDirector().create("main");
 		else
-			BuildWindowDirector.getDirector().create("login");
+			BuildWindowDirector.getDirector().create(new LoginBuildable());
 	}
 
 }
