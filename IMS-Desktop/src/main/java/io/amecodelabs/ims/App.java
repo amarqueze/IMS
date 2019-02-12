@@ -5,7 +5,6 @@ import io.amecodelabs.ims.view.context.ApplicationContext;
 import io.amecodelabs.ims.view.context.Session;
 import io.amecodelabs.ims.view.loginstage.LoginBuildable;
 import io.amecodelabs.ims.view.mainstage.MainBuildable;
-import io.amecodelabs.ims.view.transactionstage.TransactionsBuildable;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
