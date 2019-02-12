@@ -43,15 +43,14 @@ public class StockService implements AbstractService {
 		} 
 	}
 	
-	public static void getStockProducts(String name ,int year, String type, Consumer<ContentValues> success, Consumer<String> fail) {
+	public static void getStockProducts(String name, String year, Consumer<ContentValues> success, Consumer<String> fail) {
 		HttpConnect httpConnect = HttpBroker.getHttpConnect();
 		
 		HttpGetRequest request = null;
 		try {
 			request = new HttpGetRequest(LOCATION_URI + "/all");
-			request.addParams("date", String.valueOf(year));
+			request.addParams("date", year);
 			request.addParams("product", name);
-			request.addParams("type", type);
 			AbstractService.addHead(request);
 			
 			httpConnect
