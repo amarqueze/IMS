@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1124.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.amecodelabs.ims.view.dashboardstage.DashBoardViewImpl">
+   <children>
+      <StackPane fx:id="stackPane" layoutX="-1.0" prefHeight="810.0" prefWidth="1124.0" />
+      <AnchorPane prefHeight="66.0" prefWidth="1124.0" style="-fx-background-color: #0984e3;">
+         <children>
+            <FontAwesomeIcon fill="WHITE" iconName="BAR_CHART" layoutX="37.0" layoutY="45.0" selectionFill="#fafafa" size="3em" wrappingWidth="41.71425151824951" />
+            <Label layoutX="88.0" layoutY="18.0" text="Dashboard" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <FontAwesomeIcon id="btnClose" fill="WHITE" iconName="CLOSE" layoutX="1091.0" layoutY="41.0" onMouseClicked="#onClose" size="2em">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></FontAwesomeIcon>
+         </children>
+      </AnchorPane>
+      <AreaChart fx:id="chartConsumed" layoutX="37.0" layoutY="327.0" prefHeight="245.0" prefWidth="1018.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </AreaChart>
+      <HBox alignment="CENTER" layoutY="90.0" prefHeight="134.0" prefWidth="1124.0">
+         <children>
+            <AnchorPane prefHeight="134.0" prefWidth="229.0" style="-fx-background-color: #74b9ff;">
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+               <children>
+                  <FontAwesomeIcon fill="WHITE" iconName="TRUCK" layoutX="168.0" layoutY="55.0" size="4em" />
+                  <Label layoutX="14.0" layoutY="14.0" text="Providers" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtProviders" layoutX="14.0" layoutY="67.0" prefHeight="20.0" prefWidth="203.0" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="loadProviders" fitHeight="16.0" fitWidth="19.0" layoutX="14.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="134.0" prefWidth="229.0" style="-fx-background-color: #70a1ff;">
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+               <children>
+                  <FontAwesomeIcon fill="WHITE" iconName="CUBES" layoutX="154.0" layoutY="55.0" size="4em" />
+                  <Label layoutX="14.0" layoutY="14.0" text="Supplies" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtSuppliers" layoutX="13.0" layoutY="67.0" prefHeight="20.0" prefWidth="203.0" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="loadSuppliers" fitHeight="16.0" fitWidth="19.0" layoutX="12.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="281.0" layoutY="10.0" prefHeight="134.0" prefWidth="230.0" style="-fx-background-color: #45aaf2;">
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+               <children>
+                  <FontAwesomeIcon fill="WHITE" iconName="LIST" layoutX="168.0" layoutY="55.0" size="4em" />
+                  <Label layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="115.0" text="Transactions" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtTransactions" layoutX="13.0" layoutY="67.0" prefHeight="20.0" prefWidth="203.0" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <ImageView id="loadNumTrans" fx:id="loadTransactions" fitHeight="16.0" fitWidth="19.0" layoutX="14.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="552.0" layoutY="10.0" prefHeight="134.0" prefWidth="229.0" style="-fx-background-color: #4bcffa;">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <children>
+                  <FontAwesomeIcon fill="WHITE" iconName="USER" layoutX="178.0" layoutY="55.0" size="4em" />
+                  <Label layoutX="14.0" layoutY="14.0" text="Users" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="txtUsers" layoutX="13.0" layoutY="67.0" prefHeight="20.0" prefWidth="203.0" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <ImageView id="loadNumUsers" fx:id="loadUsers" fitHeight="16.0" fitWidth="19.0" layoutX="14.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+         </children>
+         <opaqueInsets>
+            <Insets right="2.0" />
+         </opaqueInsets>
+      </HBox>
+      <TextField fx:id="txtYearNow" editable="false" layoutX="562.0" layoutY="257.0" prefHeight="26.0" prefWidth="86.0" />
+      <TextField fx:id="txtYearComparable" layoutX="427.0" layoutY="257.0" prefHeight="26.0" prefWidth="86.0" />
+      <Text layoutX="531.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To" />
+      <ComboBox fx:id="cbSuppliers" layoutX="251.0" layoutY="300.0" onAction="#onSuppliesChanged" prefHeight="26.0" prefWidth="574.0" />
+      <BarChart fx:id="chartBarProduct" layoutX="37.0" layoutY="573.0" prefHeight="202.0" prefWidth="336.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </BarChart>
+      <LineChart fx:id="chartPurchased" layoutX="398.0" layoutY="581.0" prefHeight="194.0" prefWidth="658.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </LineChart>
+      <ImageView fx:id="loadCharts" fitHeight="24.0" fitWidth="30.0" layoutX="832.0" layoutY="301.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+   <opaqueInsets>
+      <Insets right="10.0" />
+   </opaqueInsets>
+</AnchorPane>
