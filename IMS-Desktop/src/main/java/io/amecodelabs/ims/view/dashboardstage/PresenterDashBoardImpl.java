@@ -14,8 +14,21 @@ public class PresenterDashBoardImpl implements PresenterDashBoard<ContentValues>
 	}
 
 	@Override
-	public void getStockProduct(String description, int year) {
-		
+	public void getStockProduct(String description, String year) {
+		dashBoardView.showLoadProgressGraphics();
+		StockService.getStockProducts(description, year, (res) -> {
+			dashBoardView.hiddenLoadProgressGraphics();
+				if(res.getValueInteger("ok") == 1) {
+					this.dashBoardView.loadStockProducts(res.getArrayContentValues("response"), year);
+				} else {
+					this.dashBoardView.showMessage("Error", "Stock have not been downloaded");
+				}
+			},
+			(err) ->  {
+				dashBoardView.hiddenLoadProgressGraphics();
+				this.dashBoardView.showMessage("Error", "Connect failed or interrupted");
+			}
+		);
 	}
 	
 	@Override

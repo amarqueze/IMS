@@ -4,7 +4,7 @@ import io.amecodelabs.ims.view.base.AbstractView;
 import io.amecodelabs.ims.view.base.SubStage;
 
 public interface DashBoardView<T> extends AbstractView, SubStage {
-	void loadStockProducts(T[] stock);
+	void loadStockProducts(T[] stock, String year);
 	void showLoadProgressGraphics();
 	void hiddenLoadProgressGraphics();
 	

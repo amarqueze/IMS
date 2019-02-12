@@ -1,7 +1,7 @@
 package io.amecodelabs.ims.view.dashboardstage;
 
 public interface PresenterDashBoard<T> {
-	void getStockProduct(String description, int year);
+	void getStockProduct(String description, String year);
 	void getProducts();
 	void getNumberProviders();
 	void getNumberProducts();

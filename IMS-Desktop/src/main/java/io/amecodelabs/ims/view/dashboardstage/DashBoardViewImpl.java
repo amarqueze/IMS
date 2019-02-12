@@ -1,6 +1,8 @@
 package io.amecodelabs.ims.view.dashboardstage;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -9,11 +11,14 @@ import com.jfoenix.controls.JFXDialogLayout;
 
 import io.amecodelabs.ims.models.utils.ContentValues;
 import io.amecodelabs.ims.view.base.PrimaryStage;
-import io.amecodelabs.ims.view.statstage.Month;
+import io.amecodelabs.ims.view.base.Window;
 import javafx.application.Platform;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
@@ -23,6 +28,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -54,28 +61,37 @@ public class DashBoardViewImpl implements DashBoardView<ContentValues>, Initiali
 	@FXML
 	private ImageView loadUsers;
 	@FXML
-	private TextField txtYearNow;
-	@FXML
-	private TextField txtYearComparable;
+    private TextField txtYear;
+    @FXML
+    private TextField txtYearComparable;
 	@FXML
 	private ComboBox<String> cbSuppliers;
 	@FXML
 	private BarChart<String, Number> chartBarProduct;
 	@FXML
 	private LineChart<String, Number> chartPurchased;
-	@FXML
-	private ImageView loadCharts;
-
+	
+	private Map<String, Object> params;
 
 	private PrimaryStage primary;
 	private PresenterDashBoard<ContentValues> presenter;
+	private String suppliesSelected = "None";
+	private String yearSelected = "";
+	private String yearComparableSelected = "";
 	private Image load = new Image("/images/load.gif", true);
-	private XYChart.Series<String, Number> seriesBar;
-	private XYChart.Series<String, Number> seriesLine;
-
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		presenter = new PresenterDashBoardImpl(this);
+		
+		ChangeListener<String> listener = (observable, oldValue, newValue) -> {
+			if (!newValue.matches("\\d*")) {
+				StringProperty field = (StringProperty) observable;
+				field.setValue(oldValue);
+	        }
+		};
+		txtYear.textProperty().addListener(listener);
+		txtYearComparable.textProperty().addListener(listener);
 		
 		presenter.getNumberProviders();
 		presenter.getNumberProducts();
@@ -86,58 +102,91 @@ public class DashBoardViewImpl implements DashBoardView<ContentValues>, Initiali
 		configCharts();
 	}
 	
-	@SuppressWarnings("unchecked")
 	private void configCharts() {
-		seriesBar = new XYChart.Series<>();
         chartBarProduct.setTitle("Summary of Supply - I/O");
         chartBarProduct.getXAxis().setAnimated(false);
-        chartBarProduct.getData().add(seriesBar);
         
-        seriesBar.getData().add(new XYChart.Data<String, Number>("Product Incomes", 80));
-        seriesBar.getData().add(new XYChart.Data<String, Number>("Outputs of Product", 30));
-        
-        //-----
-        
-        seriesLine = new XYChart.Series<>();
         chartPurchased.setTitle("Purchased Supplies Per Month");
         chartPurchased.getXAxis().setAnimated(false);
-        chartPurchased.getData().add(seriesLine);
         
-        for(int i=0; i<Month.values().length; i++) {
-        	Month month = Month.values()[i];
-        	seriesLine.getData().add(new XYChart.Data<String, Number>(month.getAcronym(), Math.random() * 1000)); 
-        }
-        
-        //------
         chartConsumed.setTitle("Supplies consumption During One Year");
         chartConsumed.getXAxis().setAnimated(false);
-        
-        for(int i=2004; i<=2005; i++) {
-        	XYChart.Series<String, Number> seriesArea = new XYChart.Series<>(); 
-        	seriesArea.setName("" + i);
-        	for(int j=0; j<Month.values().length; j++) {
-        		Month month = Month.values()[j];
-        		seriesArea.getData().add(new XYChart.Data<String, Number>(month.getAcronym(), Math.random() * 1000)); 
-        	}
-        	chartConsumed.getData().add(seriesArea);
-        }
-        
-        
 	}
 	
 	@FXML
     void onSuppliesChanged(ActionEvent event) {
-		System.out.println((String) cbSuppliers.getValue());
+		
+    }
+	
+	@FXML
+    void onEnter(KeyEvent event) {
+		if(event.getCode() == KeyCode.ENTER) {
+			String valueFinderBefore = suppliesSelected + " " + yearSelected;
+			suppliesSelected = cbSuppliers.getValue();
+			yearSelected = txtYear.getText();
+			String valueFinderAfter = suppliesSelected + " " + yearSelected;
+			boolean isUpdateCharts = false;
+			
+			if( yearSelected.length() > 3  && !valueFinderAfter.equals(valueFinderBefore) ) {
+				clearStats();
+				presenter.getStockProduct(suppliesSelected, yearSelected);
+				isUpdateCharts = true;
+			} 
+			
+			String yearComparableSelectedbefore = yearComparableSelected;
+			yearComparableSelected = txtYearComparable.getText();
+			
+			if( ( yearComparableSelected.length() > 3 && !yearComparableSelected.equals(yearComparableSelectedbefore) 
+					&& !yearComparableSelected.equals(yearSelected) ) 
+					|| ( isUpdateCharts && yearComparableSelected.length() > 3 ) ) {
+				
+				presenter.getStockProduct(suppliesSelected, yearComparableSelected);
+			}
+		}
     }
 
-	@Override
-	public void setPrimaryStage(PrimaryStage primary) {
-		this.primary = primary;
+	private void clearStats() {
+		chartConsumed.getData().clear();
+		chartPurchased.getData().clear();
+		chartBarProduct.getData().clear();
 	}
 
 	@Override
-	public void loadStockProducts(ContentValues[] stock) {
-		
+	public void loadStockProducts(ContentValues[] stock, String year) {
+		Platform.runLater(() -> {
+			if(stock.length > 0) {
+				int summaryInputs = 0;
+				int summaryOutputs = 0;
+				
+				XYChart.Series<String, Number> seriesLine = new XYChart.Series<>(); 
+				seriesLine.setName(year);
+				chartPurchased.getData().add(seriesLine);
+				
+				XYChart.Series<String, Number> seriesArea = new XYChart.Series<>();
+				seriesArea.setName(year);
+				chartConsumed.getData().add(seriesArea);
+				
+				for(var item: stock) {
+					String posMonth = LocalDate.parse(item.getValueString("date")).getMonth().toString();
+					int quantity = item.getValueInteger("quantity");
+					if(item.getValueString("type").equals("input")) {
+						seriesLine.getData().add(new XYChart.Data<String, Number>(posMonth, quantity)); 
+						summaryInputs += quantity;
+					} else {
+						seriesArea.getData().add(new XYChart.Data<String, Number>(posMonth, quantity)); 
+						summaryOutputs += quantity;
+					}
+				}
+				
+				System.out.println(summaryInputs + " " + summaryOutputs);
+				XYChart.Series<String, Number> seriesBar = new XYChart.Series<>();
+				seriesBar.setName(year);
+				chartBarProduct.getData().add(seriesBar);
+				seriesBar.getData().add(new XYChart.Data<String, Number>("Product Incomes", summaryInputs));
+		        seriesBar.getData().add(new XYChart.Data<String, Number>("Outputs of Product", summaryOutputs));
+			} else 
+				showMessage("Stock empty", "No results found");
+		});
 	}
 	
 	@Override
@@ -149,6 +198,16 @@ public class DashBoardViewImpl implements DashBoardView<ContentValues>, Initiali
 				cbSuppliers.getItems().add(product.getValueString("description"));
 			}
 		});
+	}
+	
+	@Override
+	public void setPrimaryStage(PrimaryStage primary) {
+		this.primary = primary;
+	}
+	
+	@Override
+	public void setParams(Map<String, Object> params) {
+		this.params = params;
 	}
 
 	@Override
@@ -198,14 +257,24 @@ public class DashBoardViewImpl implements DashBoardView<ContentValues>, Initiali
 		if(primary != null) primary.updateStage(this, "close");
 	}
 	
+	public void showWaitCursor() {
+		Window window = (Window) params.get("window");
+		window.getStage().getScene().setCursor(Cursor.WAIT);
+	}
+	
+	public void hiddenWaitCursor() {
+		Window window = (Window) params.get("window");
+		window.getStage().getScene().setCursor(Cursor.DEFAULT);
+	}
+	
 	@Override
 	public void showLoadProgressGraphics() {
-		Platform.runLater(() -> loadCharts.setImage(load));
+		Platform.runLater(() -> showWaitCursor());
 	}
 
 	@Override
 	public void hiddenLoadProgressGraphics() {
-		Platform.runLater(() -> loadCharts.setImage(null));
+		Platform.runLater(() -> hiddenWaitCursor());
 	}
 
 	@Override

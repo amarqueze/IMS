@@ -1,5 +1,7 @@
 package io.amecodelabs.ims.view.dashboardstage;
 
+import java.util.HashMap;
+
 import io.amecodelabs.ims.view.base.BuildableWindow;
 import io.amecodelabs.ims.view.base.PrimaryStage;
 import io.amecodelabs.ims.view.base.Window;
@@ -22,6 +24,7 @@ public class DashBoardBuildable implements BuildableWindow  {
 			.setIcon(app.getIcon())
 			.setTitle(app.getName() + " - " + "Dashboard")
 			.setPrimaryStage(primary)
+			.setParams(new HashMap<String, Object>())
 			.undecorated()
 			.build();
 	}

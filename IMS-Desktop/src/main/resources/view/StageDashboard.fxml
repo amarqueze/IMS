@@ -16,12 +16,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1124.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.amecodelabs.ims.view.dashboardstage.DashBoardViewImpl">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onEnter" prefHeight="810.0" prefWidth="1124.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.amecodelabs.ims.view.dashboardstage.DashBoardViewImpl">
    <children>
-      <StackPane fx:id="stackPane" layoutX="-1.0" prefHeight="810.0" prefWidth="1124.0" />
-      <AnchorPane prefHeight="66.0" prefWidth="1124.0" style="-fx-background-color: #0984e3;">
+      <StackPane fx:id="stackPane" layoutX="-3.0" layoutY="54.0" prefHeight="757.0" prefWidth="1130.0" />
+      <AnchorPane prefHeight="56.0" prefWidth="1124.0" style="-fx-background-color: #0984e3;">
          <children>
             <FontAwesomeIcon fill="WHITE" iconName="BAR_CHART" layoutX="37.0" layoutY="45.0" selectionFill="#fafafa" size="3em" wrappingWidth="41.71425151824951" />
             <Label layoutX="88.0" layoutY="18.0" text="Dashboard" textFill="WHITE">
@@ -29,13 +28,13 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <FontAwesomeIcon id="btnClose" fill="WHITE" iconName="CLOSE" layoutX="1091.0" layoutY="41.0" onMouseClicked="#onClose" size="2em">
+            <FontAwesomeIcon id="btnClose" fill="WHITE" iconName="CLOSE" layoutX="1091.0" layoutY="36.0" onMouseClicked="#onClose" size="2em">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></FontAwesomeIcon>
          </children>
       </AnchorPane>
-      <AreaChart fx:id="chartConsumed" layoutX="37.0" layoutY="327.0" prefHeight="245.0" prefWidth="1018.0">
+      <AreaChart fx:id="chartConsumed" layoutX="37.0" layoutY="306.0" prefHeight="254.0" prefWidth="1018.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -43,7 +42,7 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </AreaChart>
-      <HBox alignment="CENTER" layoutY="90.0" prefHeight="134.0" prefWidth="1124.0">
+      <HBox alignment="CENTER" layoutY="69.0" prefHeight="134.0" prefWidth="1124.0">
          <children>
             <AnchorPane prefHeight="134.0" prefWidth="229.0" style="-fx-background-color: #74b9ff;">
                <HBox.margin>
@@ -126,11 +125,8 @@
             <Insets right="2.0" />
          </opaqueInsets>
       </HBox>
-      <TextField fx:id="txtYearNow" editable="false" layoutX="562.0" layoutY="257.0" prefHeight="26.0" prefWidth="86.0" />
-      <TextField fx:id="txtYearComparable" layoutX="427.0" layoutY="257.0" prefHeight="26.0" prefWidth="86.0" />
-      <Text layoutX="531.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To" />
-      <ComboBox fx:id="cbSuppliers" layoutX="251.0" layoutY="300.0" onAction="#onSuppliesChanged" prefHeight="26.0" prefWidth="574.0" />
-      <BarChart fx:id="chartBarProduct" layoutX="37.0" layoutY="573.0" prefHeight="202.0" prefWidth="336.0">
+      <ComboBox fx:id="cbSuppliers" layoutX="270.0" layoutY="221.0" onAction="#onSuppliesChanged" prefHeight="26.0" prefWidth="474.0" />
+      <BarChart fx:id="chartBarProduct" layoutX="37.0" layoutY="573.0" prefHeight="229.0" prefWidth="336.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -138,7 +134,7 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </BarChart>
-      <LineChart fx:id="chartPurchased" layoutX="398.0" layoutY="581.0" prefHeight="194.0" prefWidth="658.0">
+      <LineChart fx:id="chartPurchased" layoutX="398.0" layoutY="581.0" prefHeight="221.0" prefWidth="658.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -146,7 +142,13 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
-      <ImageView fx:id="loadCharts" fitHeight="24.0" fitWidth="30.0" layoutX="832.0" layoutY="301.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="662.0" layoutY="271.0" prefHeight="27.0" prefWidth="81.0" text="Compare">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtYear" alignment="CENTER_RIGHT" layoutX="765.0" layoutY="221.0" prefHeight="26.0" prefWidth="100.0" promptText="year" />
+      <TextField fx:id="txtYearComparable" alignment="CENTER_RIGHT" layoutX="765.0" layoutY="272.0" prefHeight="26.0" prefWidth="100.0" promptText="year" />
    </children>
    <opaqueInsets>
       <Insets right="10.0" />
