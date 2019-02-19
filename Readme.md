@@ -21,6 +21,11 @@
 
 ### How use/testing
 
+Edit IMS-Service/app/models/notification/notification.js
+```js
+const API_KEY = '<API_KEY>';
+```
+
 Install dependencies IMS-Service
 
 ```console
