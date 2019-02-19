@@ -14,7 +14,7 @@
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.amecodelabs.ims.view.transactionstage.TransactionsViewImpl">
    <children>
-      <StackPane fx:id="stackPane" layoutX="-2.0" layoutY="64.0" prefHeight="414.0" prefWidth="726.0">
+      <StackPane fx:id="stackPane" onMouseClicked="#toBackStackPane" layoutX="-2.0" layoutY="64.0" prefHeight="414.0" prefWidth="726.0">
          <children>
             <Pane fx:id="panelPagination" prefHeight="200.0" prefWidth="200.0" />
          </children></StackPane>

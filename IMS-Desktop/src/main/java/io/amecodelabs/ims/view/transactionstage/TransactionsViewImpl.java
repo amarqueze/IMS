@@ -127,6 +127,11 @@ public class TransactionsViewImpl implements TransactionsView<ContentValues>, In
 			}
 		);
 	}
+	
+	@FXML
+    void toBackStackPane(MouseEvent event) {
+		stackPane.toBack();
+    }
 
 	@Override
 	public void hiddenProgress() {

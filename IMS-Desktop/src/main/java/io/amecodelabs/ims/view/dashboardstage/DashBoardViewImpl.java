@@ -2,6 +2,7 @@ package io.amecodelabs.ims.view.dashboardstage;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -79,6 +80,8 @@ public class DashBoardViewImpl implements DashBoardView<ContentValues>, Initiali
 	private String yearSelected = "";
 	private String yearComparableSelected = "";
 	private Image load = new Image("/images/load.gif", true);
+	private boolean isActiveMessage;
+	DataModelStats[] dataModelStats;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -103,6 +106,11 @@ public class DashBoardViewImpl implements DashBoardView<ContentValues>, Initiali
 	}
 	
 	private void configCharts() {
+		Month[] months = Month.values();
+		dataModelStats = new DataModelStats[12];
+		for(int i=0; i<months.length; i++)
+			dataModelStats[i] = new DataModelStats(months[i].toString());
+			
         chartBarProduct.setTitle("Summary of Supply - I/O");
         chartBarProduct.getXAxis().setAnimated(false);
         
@@ -121,13 +129,11 @@ public class DashBoardViewImpl implements DashBoardView<ContentValues>, Initiali
 	@FXML
     void onEnter(KeyEvent event) {
 		if(event.getCode() == KeyCode.ENTER) {
-			String valueFinderBefore = suppliesSelected + " " + yearSelected;
 			suppliesSelected = cbSuppliers.getValue();
 			yearSelected = txtYear.getText();
-			String valueFinderAfter = suppliesSelected + " " + yearSelected;
 			boolean isUpdateCharts = false;
 			
-			if( yearSelected.length() > 3  && !valueFinderAfter.equals(valueFinderBefore) ) {
+			if( yearSelected.length() > 3  && !suppliesSelected.equals("None") ) {
 				clearStats();
 				presenter.getStockProduct(suppliesSelected, yearSelected);
 				isUpdateCharts = true;
@@ -138,7 +144,7 @@ public class DashBoardViewImpl implements DashBoardView<ContentValues>, Initiali
 			
 			if( ( yearComparableSelected.length() > 3 && !yearComparableSelected.equals(yearComparableSelectedbefore) 
 					&& !yearComparableSelected.equals(yearSelected) ) 
-					|| ( isUpdateCharts && yearComparableSelected.length() > 3 ) ) {
+					|| ( isUpdateCharts && yearComparableSelected.length() > 3 && !yearComparableSelected.equals(yearSelected) ) ) {
 				
 				presenter.getStockProduct(suppliesSelected, yearComparableSelected);
 			}
@@ -158,6 +164,9 @@ public class DashBoardViewImpl implements DashBoardView<ContentValues>, Initiali
 				int summaryInputs = 0;
 				int summaryOutputs = 0;
 				
+				for(var dataModel: dataModelStats)
+					dataModel.clear();
+				
 				XYChart.Series<String, Number> seriesLine = new XYChart.Series<>(); 
 				seriesLine.setName(year);
 				chartPurchased.getData().add(seriesLine);
@@ -165,27 +174,30 @@ public class DashBoardViewImpl implements DashBoardView<ContentValues>, Initiali
 				XYChart.Series<String, Number> seriesArea = new XYChart.Series<>();
 				seriesArea.setName(year);
 				chartConsumed.getData().add(seriesArea);
-				
 				for(var item: stock) {
-					String posMonth = LocalDate.parse(item.getValueString("date")).getMonth().toString();
+					int posMonth = LocalDate.parse(item.getValueString("date")).getMonth().getValue();
 					int quantity = item.getValueInteger("quantity");
 					if(item.getValueString("type").equals("input")) {
-						seriesLine.getData().add(new XYChart.Data<String, Number>(posMonth, quantity)); 
+						dataModelStats[posMonth - 1].plus(quantity);
 						summaryInputs += quantity;
 					} else {
-						seriesArea.getData().add(new XYChart.Data<String, Number>(posMonth, quantity)); 
+						dataModelStats[posMonth - 1].minus(quantity);
 						summaryOutputs += quantity;
 					}
 				}
 				
-				System.out.println(summaryInputs + " " + summaryOutputs);
+				for(var stats: dataModelStats) {
+					seriesArea.getData().add(new XYChart.Data<String, Number>(stats.getMonth(), stats.getValueOutput()));
+					seriesLine.getData().add(new XYChart.Data<String, Number>(stats.getMonth(), stats.getValueInput()));
+				}
+				
 				XYChart.Series<String, Number> seriesBar = new XYChart.Series<>();
 				seriesBar.setName(year);
 				chartBarProduct.getData().add(seriesBar);
 				seriesBar.getData().add(new XYChart.Data<String, Number>("Product Incomes", summaryInputs));
 		        seriesBar.getData().add(new XYChart.Data<String, Number>("Outputs of Product", summaryOutputs));
 			} else 
-				showMessage("Stock empty", "No results found");
+				showMessage("Stock empty", "No results found " + year);
 		});
 	}
 	
@@ -233,6 +245,8 @@ public class DashBoardViewImpl implements DashBoardView<ContentValues>, Initiali
 	@Override
 	public void showMessage(String title, String text) {
 		Platform.runLater(() -> {
+				if(!isActiveMessage) {
+					isActiveMessage = true;
 				JFXDialogLayout content = new JFXDialogLayout();
 				content.setHeading(new Text(title));
 				content.setBody(new Text(text));
@@ -242,14 +256,22 @@ public class DashBoardViewImpl implements DashBoardView<ContentValues>, Initiali
 				JFXButton btnDone = new JFXButton("Done");
 				btnDone.setOnAction((event) ->  {
 					dialog.close();
+					isActiveMessage = false;
 					stackPane.toBack();
 				});
 				content.setActions(btnDone);
 					
 				dialog.show();
+				}
 			}
 		);
 	}
+	
+	@FXML
+    void toBackStackPane(MouseEvent event) {
+		isActiveMessage = false;
+		stackPane.toBack();
+    }
 
 	@FXML
 	void onClose(MouseEvent event) {

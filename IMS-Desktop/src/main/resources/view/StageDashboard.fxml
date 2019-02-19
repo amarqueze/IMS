@@ -19,7 +19,7 @@
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onEnter" prefHeight="810.0" prefWidth="1124.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.amecodelabs.ims.view.dashboardstage.DashBoardViewImpl">
    <children>
-      <StackPane fx:id="stackPane" layoutX="-3.0" layoutY="54.0" prefHeight="757.0" prefWidth="1130.0" />
+      <StackPane fx:id="stackPane" onMouseClicked="#toBackStackPane" layoutX="-3.0" layoutY="54.0" prefHeight="757.0" prefWidth="1130.0" />
       <AnchorPane prefHeight="56.0" prefWidth="1124.0" style="-fx-background-color: #0984e3;">
          <children>
             <FontAwesomeIcon fill="WHITE" iconName="BAR_CHART" layoutX="37.0" layoutY="45.0" selectionFill="#fafafa" size="3em" wrappingWidth="41.71425151824951" />
