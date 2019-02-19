@@ -2,9 +2,9 @@ version: "3"
 
 services:
   
-  service-demo-node:
+  api-demo-node:
     image: node
-    container_name: service-demo-node
+    container_name: api-demo-node
     networks: 
       - demo-compose
     volumes:
@@ -23,14 +23,14 @@ services:
       - demo-compose
     volumes:
       - ./Mongodb/ims:/backup
-      - ./Mongodb/db:/data/db
       - ./Mongodb/restore:/docker-entrypoint-initdb.d 
+      - data-ims:/data/db
     expose: 
       - "27017"
 
-  viewhelper-mongo-express:
+  admin-mongo-express:
     image: mongo-express
-    container_name: viewhelper-mongo-express
+    container_name: admin-mongo-express
     environment: 
       - ME_CONFIG_MONGODB_SERVER=database-demo-mongodb
     networks: 
@@ -44,3 +44,6 @@ services:
 
 networks: 
   demo-compose:
+
+volumes:
+  data-ims:
